@@ -70,15 +70,24 @@ GO
 CREATE TABLE dbo.genre  
    (genre_id int PRIMARY KEY IDENTITY(1,1) NOT NULL,  
     genre_name varchar(50) NOT NULL,
-	title_id int NOT NULL,
 	created_on datetime,   
 	last_updated datetime
-	CONSTRAINT genre_table_title_id_fkey FOREIGN KEY (title_id)     
-    REFERENCES dbo.title(title_id)     
+	)  
+GO
+
+CREATE TABLE dbo.title_genre_map  
+	(title_id int NOT NULL,  
+	genre_id int NOT NULL,
+	created_on datetime,   
+	last_updated datetime
+	CONSTRAINT title_genre_map_table_title_id_fkey FOREIGN KEY (title_id)     
+    REFERENCES dbo.title(title_id),
+	CONSTRAINT title_genre_map_table_genre_id_fkey FOREIGN KEY (genre_id)     
+    REFERENCES dbo.genre(genre_id)     
     ON DELETE CASCADE    
     ON UPDATE CASCADE
-	)  
-GO  
+	)
+GO
 
 CREATE TABLE dbo.wishlist  
    (wishlist_id int PRIMARY KEY IDENTITY(1,1) NOT NULL,  
@@ -93,4 +102,4 @@ CREATE TABLE dbo.wishlist
     ON DELETE CASCADE    
     ON UPDATE CASCADE
 	)  
-GO  
+GO 
