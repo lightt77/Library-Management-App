@@ -59,3 +59,14 @@ INSERT INTO dbo.title_genre_map(title_id, genre_id,created_on,last_updated)
 VALUES (4,1,SYSDATETIME(),SYSDATETIME());
 
 SELECT * FROM dbo.title_genre_map;
+
+---------------------------------------------------------------------------------------------
+
+INSERT INTO dbo.rental(user_id, book_id,issue_date,return_date,rental_status,last_updated)
+VALUES (1,2,SYSDATETIME(),SYSDATETIME(),0,SYSDATETIME());
+INSERT INTO dbo.rental(user_id, book_id,issue_date,return_date,rental_status,last_updated)
+VALUES (1,1,SYSDATETIME(),SYSDATETIME(),0,SYSDATETIME());
+INSERT INTO dbo.rental(user_id, book_id,issue_date,return_date,rental_status,last_updated)
+VALUES (2,3,SYSDATETIME(),SYSDATETIME(),0,SYSDATETIME());
+
+SELECT * FROM dbo.rental;
