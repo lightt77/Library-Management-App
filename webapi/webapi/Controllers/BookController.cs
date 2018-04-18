@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using webapi.Dao;
 using webapi.Models;
 
 namespace webapi.Controllers
@@ -13,28 +14,35 @@ namespace webapi.Controllers
     [RoutePrefix("Books")]
     public class BookController : ApiController
     {
-        [HttpGet]
+        private readonly BookDao bookDao = new BookDao();
+        //[HttpGet]
+        //[Route("")]
+        //public List<string> GetAllBooks()
+        //{
+        //    var result = new List<string>();
+
+        //    String CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+        //    using (SqlConnection conn = new SqlConnection(CS))
+        //    {
+        //        String storedProc1 = "dbo.GetAllBooks";
+        //        SqlCommand cmd = new SqlCommand(storedProc1, conn);
+        //        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+        //        conn.Open();
+        //        SqlDataReader rdr = cmd.ExecuteReader();
+
+        //        while (rdr.Read())
+        //        {
+        //            result.Add((string)rdr["title_name"]);
+        //        }
+        //    }
+
+        //    return result;
+        //}
         [Route("")]
-        public List<string> GetAllBooks()
+        [HttpGet]
+        public List<Title> GetAllBooks()
         {
-            var result = new List<string>();
-
-            String CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            using (SqlConnection conn = new SqlConnection(CS))
-            {
-                String storedProc1 = "dbo.GetAllBooks";
-                SqlCommand cmd = new SqlCommand(storedProc1, conn);
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                conn.Open();
-                SqlDataReader rdr = cmd.ExecuteReader();
-
-                while (rdr.Read())
-                {
-                    result.Add((string)rdr["title_name"]);
-                }
-            }
-
-            return result;
+            return bookDao.GetAllBooks();
         }
 
         [HttpGet]
@@ -113,6 +121,8 @@ namespace webapi.Controllers
         //public string AddTitle([FromBody]string titleName, [FromBody]string author, [FromBody]int rating, [FromBody]int quantity, [FromBody]int price)
         public string AddTitle([FromBody]Title title)
         {
+            //validate if the user is admin
+
             string result = "Title added..";
 
             String CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
@@ -133,6 +143,14 @@ namespace webapi.Controllers
 
             return result;
         }
+
+        //[HttpGet]
+        //[Route("Delete")]
+        //public string DeleteTitle(string titleName)
+        //{
+        //    //validate if user is admin
+
+        //}
 
 
     }
