@@ -33,11 +33,11 @@ SELECT * from dbo.users;
 --------------------------------------------------------------------------------------------
 
 INSERT INTO dbo.book(title_id,created_on,last_updated)
-VALUES (3,SYSDATETIME(),SYSDATETIME());
+VALUES (1,SYSDATETIME(),SYSDATETIME());
 INSERT INTO dbo.book(title_id,created_on,last_updated)
-VALUES (4,SYSDATETIME(),SYSDATETIME());
+VALUES (2,SYSDATETIME(),SYSDATETIME());
 INSERT INTO dbo.book(title_id,created_on,last_updated)
-VALUES (3,SYSDATETIME(),SYSDATETIME());
+VALUES (1,SYSDATETIME(),SYSDATETIME());
 
 
 SELECT * from dbo.book;
@@ -52,11 +52,11 @@ SELECT * from dbo.genre;
 
 --------------------------------------------------------------------------------------------
 INSERT INTO dbo.title_genre_map(title_id, genre_id,created_on,last_updated)
-VALUES (3,1,SYSDATETIME(),SYSDATETIME());
+VALUES (1,1,SYSDATETIME(),SYSDATETIME());
 INSERT INTO dbo.title_genre_map(title_id, genre_id,created_on,last_updated)
-VALUES (3,2,SYSDATETIME(),SYSDATETIME());
+VALUES (1,2,SYSDATETIME(),SYSDATETIME());
 INSERT INTO dbo.title_genre_map(title_id, genre_id,created_on,last_updated)
-VALUES (4,1,SYSDATETIME(),SYSDATETIME());
+VALUES (2,1,SYSDATETIME(),SYSDATETIME());
 
 SELECT * FROM dbo.title_genre_map;
 
