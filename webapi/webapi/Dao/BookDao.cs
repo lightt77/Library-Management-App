@@ -38,8 +38,7 @@ namespace webapi.Dao
                 Book book = new Book();
 
                 int titleId = (int)titleTable.Rows[i]["title_id"];
-
-                book.Id = (int)titleTable.Rows[i]["book_id"];
+                
                 book.Price = (int)titleTable.Rows[i]["price"];
                 book.Rating = (int)titleTable.Rows[i]["rating"];
                 book.Title = (string)titleTable.Rows[i]["title_name"];
@@ -57,6 +56,41 @@ namespace webapi.Dao
             return result;
         }
 
+        public List<Book> GetBooksByGenre(string genreName)
+        {
+            List<Book> resultList = new List<Book>();
+
+            string storedProcName = "dbo.GetBooksByGenre";
+            var parameterDictionary = new Dictionary<string, object>();
+
+            parameterDictionary.Add("@genre_name", genreName);
+
+            DataSet resultDataSet = connectionDao.RunRetrievalStoredProc(storedProcName, parameterDictionary);
+
+            DataTable titleGenreJoinedTable = resultDataSet.Tables[0];
+
+            return MapToBookFromTitleGenreTable(titleGenreJoinedTable);
+        }
+
+        private List<Book> MapToBookFromTitleGenreTable(DataTable titleGenreTable)
+        {
+            return titleGenreTable.AsEnumerable().Select(
+                (row) =>
+                {
+                    Book book = new Book()
+                    {
+                        Author = (string)row["author"],
+                        Price = (int)row["price"],
+                        Rating = (int)row["rating"],
+                        Title = (string)row["title_name"]
+                    };
+
+                    book.Genre.Add((string)row["genre_name"]);
+
+                    return book;
+                }
+            ).ToList();
+        }
 
         // uncomment later
         //public List<Title> GetBookByGenre(string genreName)

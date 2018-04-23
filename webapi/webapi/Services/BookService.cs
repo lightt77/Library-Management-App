@@ -15,5 +15,10 @@ namespace webapi.Services
         {
             return bookDao.GetAllBooks();
         }
+
+        public List<Book> GetBooksByGenre(string genreName)
+        {
+            return bookDao.GetBooksByGenre(genreName);
+        }
     }
 }

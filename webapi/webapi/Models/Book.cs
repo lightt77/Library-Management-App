@@ -7,7 +7,11 @@ namespace webapi.Models
 {
     public class Book
     {
-        public int? Id { get; set; }
+        public Book()
+        {
+            Genre = new List<string>();
+        }
+
         public string Title { get; set; }
         public List<string> Genre { get; set; }
         public string Author { get; set; }

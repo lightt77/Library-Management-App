@@ -41,36 +41,44 @@ namespace webapi.Controllers
 
         //    return result;
         //}
-        [Route("")]
+        [Route("get/all")]
         [HttpGet]
         public List<Book> GetAllBooks()
         {
-            return bookDao.GetAllBooks();
+            return bookService.GetAllBooks();
         }
 
+        //[HttpGet]
+        //[Route("GetBookByGenre")]
+        //public List<string> GetBookByGenre(string GenreName)
+        //{
+        //    var result = new List<string>();
+
+        //    String CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+        //    using (SqlConnection conn = new SqlConnection(CS))
+        //    {
+        //        String storedProc1 = "dbo.GetBooksByGenre";
+        //        SqlCommand cmd = new SqlCommand(storedProc1, conn);
+        //        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+        //        cmd.Parameters.AddWithValue("@genre_name", GenreName);
+        //        conn.Open();
+        //        SqlDataReader rdr = cmd.ExecuteReader();
+
+        //        while (rdr.Read())
+        //        {
+        //            result.Add((string)rdr["title_name"]);
+        //        }
+        //    }
+
+        //    return result;
+        //}
+
         [HttpGet]
-        [Route("GetBookByGenre")]
-        public List<string> GetBookByGenre(string GenreName)
+        [Route("get/byGenre")]
+        public List<Book> GetBooksByGenre(string genreName)
         {
-            var result = new List<string>();
-
-            String CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            using (SqlConnection conn = new SqlConnection(CS))
-            {
-                String storedProc1 = "dbo.GetBooksByGenre";
-                SqlCommand cmd = new SqlCommand(storedProc1, conn);
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@genre_name", GenreName);
-                conn.Open();
-                SqlDataReader rdr = cmd.ExecuteReader();
-
-                while (rdr.Read())
-                {
-                    result.Add((string)rdr["title_name"]);
-                }
-            }
-
-            return result;
+            return bookService.GetBooksByGenre(genreName);
+            //return new List<Book>();
         }
 
         [HttpGet]
