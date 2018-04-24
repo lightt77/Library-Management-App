@@ -92,34 +92,39 @@ namespace webapi.Dao
             ).ToList();
         }
 
-        // uncomment later
-        //public List<Title> GetBookByGenre(string genreName)
-        //{
-        //    string storedProcName = "dbo.GetBooksByGenre";
+        public void AddBook(Book book)
+        {
+            string storedProcName = "dbo.GetBooksByGenre";
+            var parameterDictionary = new Dictionary<string, object>();
 
-        //    var parameterDictionary = new Dictionary<string, object>();
-        //    parameterDictionary.Add("@genre_name", genreName);
+            int titleId = GetTitleIdByTitleName(book.Title, book.Author);
 
-        //   // List<Title> titleList = new List<Title>();
+            if (titleId == 0)
+            {
+                //create a new title
 
-        //    DataSet resultDataSet = connectionDao.RunRetrievalStoredProc(storedProcName, parameterDictionary);
-        //    return resultDataSet.Tables[0].AsEnumerable().Select(x => new Title()
-        //    {
-        //        TitleId = x.Field<int>("title_id"),
-        //        TitleName = x.Field<string>("title_name")
-        //    }).ToList();
-        //    //for (int i = 0; i < resultDataSet.Tables[0].Rows.Count; i++)
-        //    //{
-        //    //    titleList.Add(new Title()
-        //    //    {
-        //    //        TitleId = (int)resultDataSet.Tables[0].Rows[i]["title_id"],
-        //    //        TitleName = (string)resultDataSet.Tables[0].Rows[i]["title_name"]
-        //    //    });
-        //    //}
+            }
+        }
 
-        //    //return titleList;
-        //}
+        // returns titleId of the book if title exists else returns 0
+        private int GetTitleIdByTitleName(string titleName, string authorName)
+        {
+            string storedProcName = "dbo.GetTitleIdForTitleNameAndAuthorName";
+            var parameterDictionary = new Dictionary<string, object>
+            {
+                { "@title_name", titleName },
+                { "@author_name", authorName }
+            };
 
-    
+            DataSet resultDataSet = connectionDao.RunRetrievalStoredProc(storedProcName, parameterDictionary);
+
+            // checks if title is already present
+            if (resultDataSet.Tables[0].Rows.Count != 0)
+            {
+                return (int)resultDataSet.Tables[0].Rows[0]["title_id"];
+            }
+
+            return 0;
+        }
     }
 }

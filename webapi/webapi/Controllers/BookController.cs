@@ -41,7 +41,7 @@ namespace webapi.Controllers
 
         //    return result;
         //}
-        [Route("get/all")]
+        [Route("")]
         [HttpGet]
         public List<Book> GetAllBooks()
         {
@@ -74,16 +74,16 @@ namespace webapi.Controllers
         //}
 
         [HttpGet]
-        [Route("get/byGenre")]
-        public List<Book> GetBooksByGenre(string genreName)
+        [Route("")]
+        public List<Book> GetBooksByGenre([FromUri]string genreName)
         {
             return bookService.GetBooksByGenre(genreName);
             //return new List<Book>();
         }
 
         [HttpGet]
-        [Route("GetBookByAuthor")]
-        public List<string> GetBookByAuthor(string AuthorName)
+        [Route("")]
+        public List<string> GetBooksByAuthor([FromUri]string AuthorName)
         {
             var result = new List<string>();
 
