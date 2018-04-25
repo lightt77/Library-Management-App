@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Web.Http;
 using webapi.Dao;
 using webapi.Models;
+using webapi.Services;
 
 namespace webapi.Controllers
 {
@@ -15,6 +16,8 @@ namespace webapi.Controllers
     public class BookController : ApiController
     {
         private readonly BookDao bookDao = new BookDao();
+        private readonly BookService bookService = new BookService();
+
         //[HttpGet]
         //[Route("")]
         //public List<string> GetAllBooks()
@@ -40,39 +43,47 @@ namespace webapi.Controllers
         //}
         [Route("")]
         [HttpGet]
-        public List<Title> GetAllBooks()
+        public List<Book> GetAllBooks()
         {
-            return bookDao.GetAllBooks();
+            return bookService.GetAllBooks();
+        }
+
+        //[HttpGet]
+        //[Route("GetBookByGenre")]
+        //public List<string> GetBookByGenre(string GenreName)
+        //{
+        //    var result = new List<string>();
+
+        //    String CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+        //    using (SqlConnection conn = new SqlConnection(CS))
+        //    {
+        //        String storedProc1 = "dbo.GetBooksByGenre";
+        //        SqlCommand cmd = new SqlCommand(storedProc1, conn);
+        //        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+        //        cmd.Parameters.AddWithValue("@genre_name", GenreName);
+        //        conn.Open();
+        //        SqlDataReader rdr = cmd.ExecuteReader();
+
+        //        while (rdr.Read())
+        //        {
+        //            result.Add((string)rdr["title_name"]);
+        //        }
+        //    }
+
+        //    return result;
+        //}
+
+        [HttpGet]
+        [Route("")]
+        public List<Book> GetBooksByGenre([FromUri]string genreName)
+        {
+            return bookService.GetBooksByGenre(genreName);
+            //return new List<Book>();
         }
 
         [HttpGet]
-        [Route("GetBookByGenre")]
-        public List<string> GetBookByGenre(string GenreName)
-        {
-            var result = new List<string>();
-
-            String CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            using (SqlConnection conn = new SqlConnection(CS))
-            {
-                String storedProc1 = "dbo.GetBooksByGenre";
-                SqlCommand cmd = new SqlCommand(storedProc1, conn);
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@genre_name", GenreName);
-                conn.Open();
-                SqlDataReader rdr = cmd.ExecuteReader();
-
-                while (rdr.Read())
-                {
-                    result.Add((string)rdr["title_name"]);
-                }
-            }
-
-            return result;
-        }
-
-        [HttpGet]
-        [Route("GetBookByAuthor")]
-        public List<string> GetBookByAuthor(string AuthorName)
+        [Route("")]
+        public List<string> GetBooksByAuthor([FromUri]string AuthorName)
         {
             var result = new List<string>();
 
@@ -116,33 +127,34 @@ namespace webapi.Controllers
             return quantity;
         }
 
-        [HttpPost]
-        [Route("AddBook")]
-        //public string AddTitle([FromBody]string titleName, [FromBody]string author, [FromBody]int rating, [FromBody]int quantity, [FromBody]int price)
-        public string AddTitle([FromBody]Title title)
-        {
-            //validate if the user is admin
+        //uncomment later
+        //[HttpPost]
+        //[Route("AddBook")]
+        ////public string AddTitle([FromBody]string titleName, [FromBody]string author, [FromBody]int rating, [FromBody]int quantity, [FromBody]int price)
+        //public string AddTitle([FromBody]Title title)
+        //{
+        //    //validate if the user is admin
 
-            string result = "Title added..";
+        //    string result = "Title added..";
 
-            String CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            using (SqlConnection conn = new SqlConnection(CS))
-            {
-                String storedProc1 = "dbo.AddTitle";
-                SqlCommand cmd = new SqlCommand(storedProc1, conn);
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@title_name", title.TitleName);
-                cmd.Parameters.AddWithValue("@author_name", title.Author);
-                cmd.Parameters.AddWithValue("@rating", title.Rating);
-                cmd.Parameters.AddWithValue("@quantity", title.Quantity);
-                cmd.Parameters.AddWithValue("@price", title.Price);
+        //    String CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+        //    using (SqlConnection conn = new SqlConnection(CS))
+        //    {
+        //        String storedProc1 = "dbo.AddTitle";
+        //        SqlCommand cmd = new SqlCommand(storedProc1, conn);
+        //        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+        //        cmd.Parameters.AddWithValue("@title_name", title.TitleName);
+        //        cmd.Parameters.AddWithValue("@author_name", title.Author);
+        //        cmd.Parameters.AddWithValue("@rating", title.Rating);
+        //        cmd.Parameters.AddWithValue("@quantity", title.Quantity);
+        //        cmd.Parameters.AddWithValue("@price", title.Price);
 
-                conn.Open();
-                var rdr = cmd.ExecuteNonQuery();
-            }
+        //        conn.Open();
+        //        var rdr = cmd.ExecuteNonQuery();
+        //    }
 
-            return result;
-        }
+        //    return result;
+        //}
 
         //[HttpGet]
         //[Route("Delete")]

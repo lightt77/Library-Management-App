@@ -12,30 +12,31 @@ namespace webapi.Controllers
     [RoutePrefix("titles")]
     public class TitleController : ApiController
     {
-        private readonly TitleService titleService = new TitleService(); 
+        //uncomment later
+        //private readonly TitleService titleService = new TitleService(); 
 
-        [HttpPost]
-        [Route("Add")]
-        public string AddTitle([FromBody] Title title)
-        {
-            titleService.AddTitle(title);
+        //[HttpPost]
+        //[Route("Add")]
+        //public string AddTitle([FromBody] Title title)
+        //{
+        //    titleService.AddTitle(title);
 
-            return "title added...";
-        }
+        //    return "title added...";
+        //}
 
-        [Route("Get/All")]
-        [HttpGet]
-        public List<Title> GetAllTitles()
-        {
-            return titleService.GetAllTitles();
-        }
+        //[Route("Get/All")]
+        //[HttpGet]
+        //public List<Title> GetAllTitles()
+        //{
+        //    return titleService.GetAllTitles();
+        //}
         
-        [Route("Remove")]
-        [HttpPost]
-        public string RemoveTitle([FromBody]Title title)
-        {
-            titleService.RemoveTitle(title);
-            return "title removed..";
-        }
+        //[Route("Remove")]
+        //[HttpPost]
+        //public string RemoveTitle([FromBody]Title title)
+        //{
+        //    titleService.RemoveTitle(title);
+        //    return "title removed..";
+        //}
     }
 }

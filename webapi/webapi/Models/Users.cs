@@ -7,14 +7,11 @@ namespace webapi.Models
 {
     public class Users
     {
-        public int UserId { get; set; }
-        public int RoleId { get; set; }
+        public string Role { get; set; }
         public string UserName { get; set; }
         public string EmailAddress { get; set; }
         public string Password { get; set; }
         public string MobileNumber { get; set; }
         public string ResidentialAddress { get; set; }
-        public DateTime CreatedOn { get; set; }
-        public DateTime LastUpdated { get; set; }
     }
 }

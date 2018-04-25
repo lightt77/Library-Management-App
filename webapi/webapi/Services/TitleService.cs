@@ -10,26 +10,27 @@ namespace webapi.Services
     public class TitleService
     {
         private readonly TitleDao titleDao = new TitleDao();
-        private readonly UserDao userDao = new UserDao();
+        //uncomment later
+        //private readonly UserDao userDao = new UserDao();
 
-        public bool AddTitle(Title title)
-        {
-            //verify if the user is admin
-            titleDao.AddTitle(title);
+        //public bool AddTitle(Title title)
+        //{
+        //    //verify if the user is admin
+        //    titleDao.AddTitle(title);
 
-            return false;
-        }
+        //    return false;
+        //}
 
-        public List<Title> GetAllTitles()
-        {
-            return titleDao.GetAllTitles();
-        }
+        //public List<Title> GetAllTitles()
+        //{
+        //    return titleDao.GetAllTitles();
+        //}
 
-        public void RemoveTitle(Title title)
-        {
-            //verify if the user is admin
+        //public void RemoveTitle(Title title)
+        //{
+        //    //verify if the user is admin
 
-            titleDao.RemoveTitle(title);
-        }
+        //    titleDao.RemoveTitle(title);
+        //}
     }
 }
