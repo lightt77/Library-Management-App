@@ -44,15 +44,6 @@ END
 EXEC dbo.GetQuantity @title_name = 'abc', @author_name='xyz';
 
 ------------------------------------------------------------------------------------------------------------------------------------------
-
-
-CREATE OR ALTER PROCEDURE dbo.AddTitle(@title_name VARCHAR(50), @author_name VARCHAR(50), @rating INT, @quantity INT, @price INT, @genre_name VARCHAR(50))
-AS
-	INSERT INTO dbo.title(title_name,author,)
-GO
-EXEC GetBooksByGenre @genre_name='Fantasy';
-
-------------------------------------------------------------------------------------------------------------------------------------------
 --works
 CREATE OR ALTER PROCEDURE dbo.DeleteTitle (@title_name nvarchar(50))
 AS

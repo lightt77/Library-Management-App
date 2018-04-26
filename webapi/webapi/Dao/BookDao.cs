@@ -92,39 +92,32 @@ namespace webapi.Dao
             ).ToList();
         }
 
-        public void AddBook(Book book)
+        public void AddBook(string title,string author,int? price,int rating,string genre)
         {
-            string storedProcName = "dbo.GetBooksByGenre";
-            var parameterDictionary = new Dictionary<string, object>();
-
-            int titleId = GetTitleIdByTitleName(book.Title, book.Author);
-
-            if (titleId == 0)
-            {
-                //create a new title
-
-            }
-        }
-
-        // returns titleId of the book if title exists else returns 0
-        private int GetTitleIdByTitleName(string titleName, string authorName)
-        {
-            string storedProcName = "dbo.GetTitleIdForTitleNameAndAuthorName";
+            string storedProcName = "dbo.AddBook";
             var parameterDictionary = new Dictionary<string, object>
             {
-                { "@title_name", titleName },
-                { "@author_name", authorName }
+                { "@title_name", title },
+                { "@author_name", author},
+                { "@price", price },
+                { "@rating", rating },
+                { "@genre_name", genre}
+            };
+            
+            connectionDao.RunCUDStoredProc(storedProcName, parameterDictionary);
+        }
+
+        public void AddNewGenreToTitle(string title, string author, string genre)
+        {
+            string storedProcName = "dbo.AddNewGenreToTitle"; ;
+            var parameterDictionary = new Dictionary<string, object>
+            {
+                { "@title_name", title },
+                { "@author_name", author },
+                { "@genre_name", genre }
             };
 
-            DataSet resultDataSet = connectionDao.RunRetrievalStoredProc(storedProcName, parameterDictionary);
-
-            // checks if title is already present
-            if (resultDataSet.Tables[0].Rows.Count != 0)
-            {
-                return (int)resultDataSet.Tables[0].Rows[0]["title_id"];
-            }
-
-            return 0;
+            connectionDao.RunCUDStoredProc(storedProcName, parameterDictionary);
         }
     }
 }

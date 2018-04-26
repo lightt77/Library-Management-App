@@ -20,5 +20,25 @@ namespace webapi.Services
         {
             return bookDao.GetBooksByGenre(genreName);
         }
+
+        public void AddBook(Book book)
+        {
+            if (book.Genre.Count == 0)
+            {
+                bookDao.AddBook(book.Title, book.Author, book.Price==null?100:book.Price, book.Rating, "General");
+            }
+            else
+            {
+                bookDao.AddBook(book.Title, book.Author, book.Price == null ? 100 : book.Price, book.Rating, book.Genre[0]);
+
+                // for multiple genres
+                for (int i = 1; i < book.Genre.Count; i++)
+                {
+                    bookDao.AddNewGenreToTitle(book.Title, book.Author, book.Genre[i]);
+                }
+
+            }
+
+        }
     }
 }

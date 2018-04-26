@@ -17,68 +17,26 @@ namespace webapi.Controllers
     {
         private readonly BookDao bookDao = new BookDao();
         private readonly BookService bookService = new BookService();
-
-        //[HttpGet]
-        //[Route("")]
-        //public List<string> GetAllBooks()
-        //{
-        //    var result = new List<string>();
-
-        //    String CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-        //    using (SqlConnection conn = new SqlConnection(CS))
-        //    {
-        //        String storedProc1 = "dbo.GetAllBooks";
-        //        SqlCommand cmd = new SqlCommand(storedProc1, conn);
-        //        cmd.CommandType = System.Data.CommandType.StoredProcedure;
-        //        conn.Open();
-        //        SqlDataReader rdr = cmd.ExecuteReader();
-
-        //        while (rdr.Read())
-        //        {
-        //            result.Add((string)rdr["title_name"]);
-        //        }
-        //    }
-
-        //    return result;
-        //}
-        [Route("")]
+        
+        [Route("all")]
         [HttpGet]
         public List<Book> GetAllBooks()
         {
             return bookService.GetAllBooks();
         }
 
-        //[HttpGet]
-        //[Route("GetBookByGenre")]
-        //public List<string> GetBookByGenre(string GenreName)
-        //{
-        //    var result = new List<string>();
-
-        //    String CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-        //    using (SqlConnection conn = new SqlConnection(CS))
-        //    {
-        //        String storedProc1 = "dbo.GetBooksByGenre";
-        //        SqlCommand cmd = new SqlCommand(storedProc1, conn);
-        //        cmd.CommandType = System.Data.CommandType.StoredProcedure;
-        //        cmd.Parameters.AddWithValue("@genre_name", GenreName);
-        //        conn.Open();
-        //        SqlDataReader rdr = cmd.ExecuteReader();
-
-        //        while (rdr.Read())
-        //        {
-        //            result.Add((string)rdr["title_name"]);
-        //        }
-        //    }
-
-        //    return result;
-        //}
-
         [HttpGet]
-        [Route("")]
+        [Route("genre")]
         public List<Book> GetBooksByGenre([FromUri]string genreName)
         {
             return bookService.GetBooksByGenre(genreName);
-            //return new List<Book>();
+        }
+
+        [HttpPost]
+        [Route("add")]
+        public void AddBook([FromBody]Book book)
+        {
+            bookService.AddBook(book);
         }
 
         [HttpGet]
