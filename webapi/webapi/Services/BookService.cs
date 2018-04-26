@@ -21,6 +21,11 @@ namespace webapi.Services
             return bookDao.GetBooksByGenre(genreName);
         }
 
+        public List<Book> GetBooksByAuthor(string authorName)
+        {
+            return bookDao.GetBooksByAuthor(authorName);
+        }
+
         public void AddBook(Book book)
         {
             //validate if the user is admin

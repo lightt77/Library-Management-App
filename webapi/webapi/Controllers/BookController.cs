@@ -17,7 +17,7 @@ namespace webapi.Controllers
     {
         private readonly BookDao bookDao = new BookDao();
         private readonly BookService bookService = new BookService();
-        
+
         [Route("all")]
         [HttpGet]
         public List<Book> GetAllBooks()
@@ -30,6 +30,13 @@ namespace webapi.Controllers
         public List<Book> GetBooksByGenre([FromUri]string genreName)
         {
             return bookService.GetBooksByGenre(genreName);
+        }
+
+        [HttpGet]
+        [Route("author")]
+        public List<Book> GetBooksByAuthor([FromUri]string authorName)
+        {
+            return bookService.GetBooksByAuthor(authorName);
         }
 
         [HttpPost]
@@ -47,36 +54,11 @@ namespace webapi.Controllers
         }
         
         [HttpGet]
-        [Route("")]
-        public List<string> GetBooksByAuthor([FromUri]string AuthorName)
-        {
-            var result = new List<string>();
-
-            String CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            using (SqlConnection conn = new SqlConnection(CS))
-            {
-                String storedProc1 = "dbo.GetBooksByAuthor";
-                SqlCommand cmd = new SqlCommand(storedProc1, conn);
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@author_name", AuthorName);
-                conn.Open();
-                SqlDataReader rdr = cmd.ExecuteReader();
-
-                while (rdr.Read())
-                {
-                    result.Add((string)rdr["title_name"]);
-                }
-            }
-
-            return result;
-        }
-
-        [HttpGet]
         [Route("GetBookQuantityByTitleName")]
         public int GetBookQuantityByTitleName(string TitleName)
         {
             var result = new List<string>();
-            int quantity = 0; 
+            int quantity = 0;
 
             String CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(CS))

@@ -92,6 +92,23 @@ namespace webapi.Dao
             ).ToList();
         }
 
+        public List<Book> GetBooksByAuthor(string authorName)
+        {
+            List<Book> resultList = new List<Book>();
+
+            string storedProcName = "dbo.GetBooksByAuthor";
+            var parameterDictionary = new Dictionary<string, object>
+            {
+                { "@author_name", authorName }
+            };
+
+            DataSet resultDataSet = connectionDao.RunRetrievalStoredProc(storedProcName, parameterDictionary);
+            DataTable titleTable = resultDataSet.Tables[0];
+            DataTable genreTable = resultDataSet.Tables[1];
+            
+            return MapToBook(titleTable, genreTable);
+        }
+        
         public void AddBook(string title,string author,int? price,int rating,string genre)
         {
             string storedProcName = "dbo.AddBook";
