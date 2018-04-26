@@ -11,9 +11,9 @@ SELECT * from dbo.roles;
 --------------------------------------------------------------------------------------------
 
 INSERT INTO dbo.title(title_name,author,rating,quantity,created_on,last_updated)
-VALUES ('abc','xyz',5,5,SYSDATETIME(),SYSDATETIME());
+VALUES ('HP','JKR',5,5,SYSDATETIME(),SYSDATETIME());
 INSERT INTO dbo.title(title_name,author,rating,quantity,created_on,last_updated)
-VALUES ('efg','jdjkas',5,5,SYSDATETIME(),SYSDATETIME());
+VALUES ('Goosebumps','R.L Stine',5,5,SYSDATETIME(),SYSDATETIME());
 
 SELECT * from dbo.title;
 
@@ -54,7 +54,7 @@ SELECT * from dbo.genre;
 INSERT INTO dbo.title_genre_map(title_id, genre_id,created_on,last_updated)
 VALUES (1,1,SYSDATETIME(),SYSDATETIME());
 INSERT INTO dbo.title_genre_map(title_id, genre_id,created_on,last_updated)
-VALUES (1,2,SYSDATETIME(),SYSDATETIME());
+VALUES (2,2,SYSDATETIME(),SYSDATETIME());
 INSERT INTO dbo.title_genre_map(title_id, genre_id,created_on,last_updated)
 VALUES (2,1,SYSDATETIME(),SYSDATETIME());
 
@@ -66,7 +66,5 @@ INSERT INTO dbo.rental(user_id, book_id,issue_date,return_date,rental_status,las
 VALUES (1,2,SYSDATETIME(),SYSDATETIME(),0,SYSDATETIME());
 INSERT INTO dbo.rental(user_id, book_id,issue_date,return_date,rental_status,last_updated)
 VALUES (1,1,SYSDATETIME(),SYSDATETIME(),0,SYSDATETIME());
-INSERT INTO dbo.rental(user_id, book_id,issue_date,return_date,rental_status,last_updated)
-VALUES (2,3,SYSDATETIME(),SYSDATETIME(),0,SYSDATETIME());
 
-SELECT * FROM dbo.rental;
+SELECT * FROM dbo.rental; 

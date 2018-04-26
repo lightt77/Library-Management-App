@@ -10,11 +10,11 @@ GO
 
 CREATE TABLE dbo.title  
    (title_id int PRIMARY KEY IDENTITY(1,1) NOT NULL,  
-    title_name varchar(50) NOT NULL,  
-    author varchar(50) NULL,  
-	rating int,
-	quantity int NOT NULL,
-	price int NULL,
+    title_name varchar(50) NOT NULL DEFAULT 'NA',  
+    author varchar(50) NOT NULL DEFAULT 'NA',  
+	rating int NOT NULL DEFAULT 0,
+	quantity int NOT NULL DEFAULT 1,
+	price int NOT NULL DEFAULT 100,
 	created_on datetime,   
 	last_updated datetime 
 	)  
@@ -22,12 +22,12 @@ GO
 
 CREATE TABLE dbo.users  
    (user_id int PRIMARY KEY IDENTITY(1,1) NOT NULL,  
-    role_id int NOT NULL,  
+    role_id int NOT NULL DEFAULT 2,  
     user_name varchar(50) NOT NULL,  
     email_address varchar(100) NOT NULL,
 	password varchar(MAX) NOT NULL,
 	mobile_number varchar(15) NOT NULL,
-	residential_address varchar(100) NULL,
+	residential_address varchar(100) NULL DEFAULT 'NA',
 	created_on datetime,   
 	last_updated datetime,
 	CONSTRAINT users_table_role_id_fkey FOREIGN KEY (role_id)     
@@ -39,7 +39,8 @@ GO
 
 CREATE TABLE dbo.book  
    (book_id int PRIMARY KEY IDENTITY(1,1) NOT NULL,  
-    title_id int NOT NULL,  
+    title_id int NOT NULL,
+	availability_status bit DEFAULT 1 NOT NULL,  
 	created_on datetime,   
 	last_updated datetime 
 	CONSTRAINT book_table_title_id_fkey FOREIGN KEY (title_id)     
@@ -55,7 +56,7 @@ CREATE TABLE dbo.rental
 	book_id int NOT NULL,
 	issue_date datetime NOT NULL,
 	return_date datetime NOT NULL,
-	rental_status int NOT NULL,  
+	rental_status int NOT NULL DEFAULT 0,  
 	created_on datetime,   
 	last_updated datetime 
 	CONSTRAINT rental_table_user_id_fkey FOREIGN KEY (user_id)     
@@ -102,4 +103,4 @@ CREATE TABLE dbo.wishlist
     ON DELETE CASCADE    
     ON UPDATE CASCADE
 	)  
-GO 
+GO

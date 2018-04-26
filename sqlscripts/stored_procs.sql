@@ -32,7 +32,7 @@ AS
 			join dbo.genre on dbo.title_genre_map.genre_id=dbo.genre.genre_id
 			where dbo.genre.genre_name=@genre_name;
 GO
-EXEC GetBooksByGenre @genre_name='Fantasy';
+EXEC GetBooksByGenre @genre_name='Horror';
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 --works
@@ -120,8 +120,8 @@ AS
 
 GO
 
-EXEC dbo.AddBook @title_name='HP', @author_name='JKR', @rating=5, @price=299,@genre_name='Fantasy';
-EXEC dbo.AddBook @title_name='HP', @author_name='JKR', @rating=5, @price=299,@genre_name='Fantasy';
+EXEC dbo.AddBook @title_name='title1', @author_name='author1', @rating=5, @price=299,@genre_name='Fantasy';
+EXEC dbo.AddBook @title_name='title2', @author_name='author2', @rating=5, @price=299,@genre_name='Horror';
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 --works
@@ -193,5 +193,3 @@ BEGIN
      WHERE dbo.title.title_name = @title_name;
 END
 EXEC dbo.FindUsersForBook @title_name = 'abc'
-
-------------------------------------------------------------------------------------------------------------------------------------------
