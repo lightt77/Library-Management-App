@@ -52,7 +52,14 @@ namespace webapi.Controllers
         {
             bookService.DeleteBook(book);
         }
-        
+
+        [HttpPost]
+        [Route("users")]
+        public List<Users> GetUsersForBook([FromBody]Book book)
+        {
+            return bookService.GetUsersForBook(book);
+        }
+
         [HttpGet]
         [Route("GetBookQuantityByTitleName")]
         public int GetBookQuantityByTitleName(string TitleName)
@@ -73,44 +80,5 @@ namespace webapi.Controllers
 
             return quantity;
         }
-
-        //uncomment later
-        //[HttpPost]
-        //[Route("AddBook")]
-        ////public string AddTitle([FromBody]string titleName, [FromBody]string author, [FromBody]int rating, [FromBody]int quantity, [FromBody]int price)
-        //public string AddTitle([FromBody]Title title)
-        //{
-        //    //validate if the user is admin
-
-        //    string result = "Title added..";
-
-        //    String CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-        //    using (SqlConnection conn = new SqlConnection(CS))
-        //    {
-        //        String storedProc1 = "dbo.AddTitle";
-        //        SqlCommand cmd = new SqlCommand(storedProc1, conn);
-        //        cmd.CommandType = System.Data.CommandType.StoredProcedure;
-        //        cmd.Parameters.AddWithValue("@title_name", title.TitleName);
-        //        cmd.Parameters.AddWithValue("@author_name", title.Author);
-        //        cmd.Parameters.AddWithValue("@rating", title.Rating);
-        //        cmd.Parameters.AddWithValue("@quantity", title.Quantity);
-        //        cmd.Parameters.AddWithValue("@price", title.Price);
-
-        //        conn.Open();
-        //        var rdr = cmd.ExecuteNonQuery();
-        //    }
-
-        //    return result;
-        //}
-
-        //[HttpGet]
-        //[Route("Delete")]
-        //public string DeleteTitle(string titleName)
-        //{
-        //    //validate if user is admin
-
-        //}
-
-
     }
 }

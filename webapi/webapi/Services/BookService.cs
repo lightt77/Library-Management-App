@@ -52,5 +52,10 @@ namespace webapi.Services
             
             bookDao.DeleteBook(book.Title, book.Author);
         }
+
+        public List<Users> GetUsersForBook(Book book)
+        {
+            return bookDao.GetUsersForBook(book.Title);
+        }
     }
 }

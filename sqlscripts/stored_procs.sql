@@ -181,3 +181,17 @@ END
 EXEC dbo.DeleteBook @title_name='ddd', @author_name='eee';
 
 ------------------------------------------------------------------------------------------------------------------------------------------
+--works
+CREATE OR ALTER PROCEDURE dbo.FindUsersForBook (@title_name nvarchar(50))
+AS
+BEGIN
+ Select user_name,email_address,password,mobile_number,residential_address,role_name from dbo.users 
+     JOIN dbo.rental ON dbo.rental.user_id = dbo.users.user_id
+     JOIN dbo.book ON dbo.rental.book_id = dbo.book.book_id  
+     JOIN dbo.title ON dbo.book.title_id = dbo.title.title_id
+	 JOIN dbo.roles ON dbo.users.role_id=dbo.roles.role_id
+     WHERE dbo.title.title_name = @title_name;
+END
+EXEC dbo.FindUsersForBook @title_name = 'abc'
+
+------------------------------------------------------------------------------------------------------------------------------------------

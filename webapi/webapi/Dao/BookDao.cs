@@ -38,12 +38,12 @@ namespace webapi.Dao
                 Book book = new Book();
 
                 int titleId = (int)titleTable.Rows[i]["title_id"];
-                
+
                 book.Price = (int)titleTable.Rows[i]["price"];
                 book.Rating = (int)titleTable.Rows[i]["rating"];
                 book.Title = (string)titleTable.Rows[i]["title_name"];
                 book.Genre = new List<string>();
-                book.Author= (string)titleTable.Rows[i]["author"];
+                book.Author = (string)titleTable.Rows[i]["author"];
 
                 for (int j = 0; j < genreTable.Rows.Count; j++)
                 {
@@ -61,9 +61,10 @@ namespace webapi.Dao
             List<Book> resultList = new List<Book>();
 
             string storedProcName = "dbo.GetBooksByGenre";
-            var parameterDictionary = new Dictionary<string, object>();
-
-            parameterDictionary.Add("@genre_name", genreName);
+            var parameterDictionary = new Dictionary<string, object>
+            {
+                { "@genre_name", genreName }
+            };
 
             DataSet resultDataSet = connectionDao.RunRetrievalStoredProc(storedProcName, parameterDictionary);
 
@@ -105,11 +106,11 @@ namespace webapi.Dao
             DataSet resultDataSet = connectionDao.RunRetrievalStoredProc(storedProcName, parameterDictionary);
             DataTable titleTable = resultDataSet.Tables[0];
             DataTable genreTable = resultDataSet.Tables[1];
-            
+
             return MapToBook(titleTable, genreTable);
         }
-        
-        public void AddBook(string title,string author,int? price,int rating,string genre)
+
+        public void AddBook(string title, string author, int? price, int rating, string genre)
         {
             string storedProcName = "dbo.AddBook";
             var parameterDictionary = new Dictionary<string, object>
@@ -120,7 +121,7 @@ namespace webapi.Dao
                 { "@rating", rating },
                 { "@genre_name", genre}
             };
-            
+
             connectionDao.RunCUDStoredProc(storedProcName, parameterDictionary);
         }
 
@@ -137,7 +138,7 @@ namespace webapi.Dao
             connectionDao.RunCUDStoredProc(storedProcName, parameterDictionary);
         }
 
-        public void DeleteBook(string title,string author)
+        public void DeleteBook(string title, string author)
         {
             string storedProcName = "dbo.DeleteBook"; ;
             var parameterDictionary = new Dictionary<string, object>
@@ -147,6 +148,38 @@ namespace webapi.Dao
             };
 
             connectionDao.RunCUDStoredProc(storedProcName, parameterDictionary);
+        }
+
+        public List<Users> GetUsersForBook(string title)
+        {
+            string storedProcName = "dbo.FindUsersForBook"; ;
+            var parameterDictionary = new Dictionary<string, object>
+            {
+                { "@title_name", title }
+            };
+
+            DataSet resultDataSet = connectionDao.RunRetrievalStoredProc(storedProcName, parameterDictionary);
+
+            DataTable userTable = resultDataSet.Tables[0];
+
+            return MapToUsers(userTable);
+        }
+
+        private List<Users> MapToUsers(DataTable userTable)
+        {
+            return userTable.AsEnumerable().Select(
+                    (row) =>
+                    {
+                        return new Users()
+                        {
+                            UserName = (string)row["user_name"],
+                            EmailAddress = (string)row["email_address"],
+                            MobileNumber = (string)row["mobile_number"],
+                            ResidentialAddress = row["residential_address"].ToString(),
+                            Role = (string)row["role_name"]
+                        };
+                    }
+            ).ToList();
         }
     }
 }
