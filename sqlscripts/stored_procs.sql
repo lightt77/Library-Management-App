@@ -305,3 +305,109 @@ END
 DECLARE @userExist nvarchar(50);
 Execute @userExist= dbo.CheckUserExists 'Karthik';
 PRINT @userExist;
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE OR ALTER PROCEDURE dbo.CheckAdmin(@user_name nvarchar(50), @checkAdmin int out)
+AS
+DECLARE @user_id int;
+DECLARE @role_id int;
+BEGIN
+ SET @user_id = (SELECT user_id FROM dbo.users WHERE dbo.users.user_name = @user_name);
+ SET @role_id = (SELECT role_id FROM dbo.users WHERE dbo.users.user_id = @user_id);
+ IF @role_id = 1 OR @role_id = 3
+  SET @checkAdmin = 1;
+ ELSE
+  SET @checkAdmin = 0; 
+END
+DECLARE @checkAdministrator int;
+Execute dbo.CheckAdmin 'user1', @checkAdministrator out;
+PRINT @checkAdministrator;
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE OR ALTER PROCEDURE dbo.AddRoles(@role_name nvarchar(50))
+AS
+DECLARE @roleExist int;
+BEGIN
+ SET @roleExist = (SELECT role_id FROM dbo.roles WHERE dbo.roles.role_name = @role_name);
+ IF @roleExist IS NULL
+  INSERT INTO dbo.roles (role_name,created_on,last_updated)
+   VALUES (@role_name,SYSDATETIME(),SYSDATETIME());
+END
+EXEC dbo.AddRoles 'ad';
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE OR ALTER PROCEDURE dbo.DeleteRoles(@role_name nvarchar(50))
+AS
+DECLARE @roleExist int;
+BEGIN
+ SET @roleExist = (SELECT role_id FROM dbo.roles WHERE dbo.roles.role_name = @role_name);
+ IF @roleExist IS NOT NULL
+  DELETE FROM dbo.roles WHERE role_name=@role_name
+END
+EXEC dbo.DeleteRoles @role_name='adf';
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE OR ALTER PROCEDURE dbo.CheckEmailExists(@emailAddress nvarchar(50), @emailExist nvarchar(50) out)
+AS
+BEGIN
+ SET @emailExist = (SELECT email_address FROM dbo.users WHERE dbo.users.email_address = @emailAddress);
+END
+DECLARE @emExist nvarchar(50);
+Execute dbo.CheckEmailExists 'kart@acc.com', @emExist out;
+PRINT @emExist;
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE OR ALTER PROCEDURE dbo.CheckRoleExists(@rolename nvarchar(50), @roleExist int out)
+AS
+BEGIN
+ SET @roleExist = (SELECT role_id FROM dbo.roles WHERE dbo.roles.role_name = @rolename);
+END
+DECLARE @rolExist int;
+Execute dbo.CheckRoleExists 'admin', @rolExist out;
+PRINT @rolExist;
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE OR ALTER PROCEDURE dbo.CheckTitleExists(@title_name nvarchar(50), @titleExist nvarchar(50) out)
+AS
+BEGIN
+ SET @titleExist = (SELECT title_name FROM dbo.title WHERE dbo.title.title_name = @title_name);
+END
+DECLARE @titlExist nvarchar(50);
+Execute dbo.CheckTitleExists 'abc', @titlExist out;
+PRINT @titlExist;
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE OR ALTER PROCEDURE dbo.RegisterUser (
+    @rolename nvarchar(50), 
+    @username nvarchar(50),
+    @email nvarchar(50), 
+    @password nvarchar(50),
+    @mobile_number nvarchar(50),
+    @address nvarchar(50))
+AS
+DECLARE @role_id int;
+DECLARE @emailExist nvarchar(50);
+DECLARE @roleExist int;
+BEGIN
+ Execute dbo.CheckEmailExists @email, @emailExist out;
+ IF @emailExist IS NULL
+ BEGIN
+  Execute dbo.CheckRoleExists @rolename, @roleExist out;
+  IF @roleExist IS NOT NULL
+  BEGIN
+   SET @role_id = (SELECT role_id FROM dbo.roles WHERE role_name = @rolename);
+   INSERT INTO dbo.users (role_id,user_name,email_address,password,mobile_number,created_on,last_updated)
+    VALUES (@role_id, @username, @email, @password, @mobile_number, SYSDATETIME(), SYSDATETIME());
+  END
+ END
+END
+EXEC dbo.RegisterUser 'admin', 'Sai', 'si@acc.com', 'sai', '8888888888', 'Chennai';
+
+------------------------------------------------------------------------------------------------------------------------------------------

@@ -177,11 +177,13 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BookController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\TitleController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Dao\AdminDao.cs" />
     <Compile Include="Dao\BookDao.cs" />
     <Compile Include="Dao\ConnectionDao.cs" />
     <Compile Include="Dao\TitleDao.cs" />
@@ -192,6 +194,7 @@
     <Compile Include="Models\Rental.cs" />
     <Compile Include="Models\Users.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AdminService.cs" />
     <Compile Include="Services\BookService.cs" />
     <Compile Include="Services\TitleService.cs" />
   </ItemGroup>
