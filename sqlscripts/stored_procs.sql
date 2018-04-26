@@ -36,6 +36,21 @@ EXEC GetBooksByGenre @genre_name='Fantasy';
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 --works
+CREATE OR ALTER PROCEDURE dbo.GetBooksByAuthor(@author_name VARCHAR(50))
+AS
+	DECLARE @title_id INT;
+	
+	SET @title_id=(SELECT title_id from dbo.title where dbo.title.author=@author_name);
+
+	SELECT * from dbo.title where dbo.title.author=@author_name
+	Select * from dbo.genre 
+			join dbo.title_genre_map on dbo.genre.genre_id=dbo.title_genre_map.genre_id
+			where dbo.title_genre_map.title_id=@title_id;
+GO
+EXEC GetBooksByAuthor @author_name='JKR';
+
+------------------------------------------------------------------------------------------------------------------------------------------
+--works
 CREATE OR ALTER PROCEDURE dbo.GetQuantity(@title_name nvarchar(50), @author_name nvarchar(50))
 AS
 BEGIN
@@ -109,7 +124,7 @@ EXEC dbo.AddBook @title_name='HP', @author_name='JKR', @rating=5, @price=299,@ge
 EXEC dbo.AddBook @title_name='HP', @author_name='JKR', @rating=5, @price=299,@genre_name='Fantasy';
 
 ------------------------------------------------------------------------------------------------------------------------------------------
-
+--works
 CREATE OR ALTER PROCEDURE dbo.AddNewGenreToTitle(@title_name VARCHAR(50), @author_name VARCHAR(50), @genre_name VARCHAR(50))
 AS
 	DECLARE @title_id INT;
@@ -144,7 +159,6 @@ AS
 GO
 
 EXEC dbo.AddNewGenreToTitle @title_name='HPP',@author_name='JKR',@genre_name='Magicc';
-
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 
