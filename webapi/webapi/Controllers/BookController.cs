@@ -15,7 +15,6 @@ namespace webapi.Controllers
     [RoutePrefix("Books")]
     public class BookController : ApiController
     {
-        private readonly BookDao bookDao = new BookDao();
         private readonly BookService bookService = new BookService();
 
         [Route("all")]

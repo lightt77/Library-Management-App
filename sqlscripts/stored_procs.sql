@@ -193,3 +193,115 @@ BEGIN
      WHERE dbo.title.title_name = @title_name;
 END
 EXEC dbo.FindUsersForBook @title_name = 'abc'
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE OR ALTER PROCEDURE dbo.AddRental (@user_name nvarchar(50), @title_name nvarchar(50), @no_of_days int)
+AS
+DECLARE @user_id int;
+DECLARE @book_id int;
+DECLARE @title_id int;
+BEGIN
+
+	SET @user_id = (SELECT user_id FROM dbo.users WHERE user_name = @user_name);
+	SET @title_id = (SELECT title_id FROM dbo.title WHERE title_name = @title_name); 
+ 
+	SET @book_id = (Select MIN(dbo.book.book_id) from dbo.book
+					where dbo.book.title_id=@title_id AND dbo.book.availability_status = 1);
+
+	INSERT INTO dbo.rental(user_id, book_id,issue_date,return_date,rental_status,created_on,last_updated)
+		VALUES (@user_id,@book_id,SYSDATETIME(),DATEADD(DAY,@no_of_days,SYSDATETIME()),0,SYSDATETIME(),SYSDATETIME());
+END
+
+EXEC dbo.AddRental @user_name = 'Abhishek', @title_name = 'CLRS', @no_of_days=15;
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE OR ALTER PROCEDURE dbo.CheckAdmin(@user_name nvarchar(50), @checkAdmin int out)
+AS
+DECLARE @user_id int;
+DECLARE @role_id int;
+BEGIN
+ SET @user_id = (SELECT user_id FROM dbo.users WHERE dbo.users.user_name = @user_name);
+ SET @role_id = (SELECT role_id FROM dbo.users WHERE dbo.users.user_id = @user_id);
+ IF @role_id = 1 OR @role_id = 3
+  SET @checkAdmin = 1;
+ ELSE
+  SET @checkAdmin = 0; 
+END
+DECLARE @checkAdministrator int;
+Execute dbo.CheckAdmin 'user1', @checkAdministrator out;
+PRINT @checkAdministrator;
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE OR ALTER PROCEDURE dbo.AddRoles(@role_name nvarchar(50))
+AS
+DECLARE @roleExist int;
+BEGIN
+ SET @roleExist = (SELECT role_id FROM dbo.roles WHERE dbo.roles.role_name = @role_name);
+ IF @roleExist IS NULL
+  INSERT INTO dbo.roles (role_name,created_on,last_updated)
+   VALUES (@role_name,SYSDATETIME(),SYSDATETIME());
+END
+EXEC dbo.AddRoles 'ad';
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE OR ALTER PROCEDURE dbo.DeleteRoles(@role_name nvarchar(50))
+AS
+DECLARE @roleExist int;
+BEGIN
+ SET @roleExist = (SELECT role_id FROM dbo.roles WHERE dbo.roles.role_name = @role_name);
+ IF @roleExist IS NOT NULL
+  DELETE FROM dbo.roles WHERE role_name=@role_name
+END
+EXEC dbo.DeleteRoles @role_name='adf';
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE OR ALTER PROCEDURE dbo.AddRental (@user_name nvarchar(50), @title_name nvarchar(50), @no_of_days int)
+AS
+DECLARE @user_id int;
+DECLARE @book_id int;
+DECLARE @title_id int;
+DECLARE @title_count int;
+DECLARE @user_count int;
+BEGIN
+
+		SET @user_id = (SELECT user_id FROM dbo.users WHERE user_name = @user_name);
+		SET @title_id = (SELECT title_id FROM dbo.title WHERE title_name = @title_name); 
+ 
+		SET @book_id = (Select MIN(dbo.book.book_id) from dbo.book
+						where dbo.book.title_id=@title_id AND dbo.book.availability_status = 1);
+
+		INSERT INTO dbo.rental(user_id, book_id,issue_date,return_date,rental_status,created_on,last_updated)
+			VALUES (@user_id,@book_id,SYSDATETIME(),DATEADD(DAY,@no_of_days,SYSDATETIME()),0,SYSDATETIME(),SYSDATETIME());
+	
+END
+
+EXEC dbo.AddRental @user_name = 'Abhishek', @title_name = 'CLRS', @no_of_days=15;
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE OR ALTER PROCEDURE dbo.CheckTitleExists(@title_name nvarchar(50))
+AS
+BEGIN
+	Select Count(title_name) as title_count from dbo.title where dbo.title.title_name=@title_name;
+END
+
+DECLARE @titlExist nvarchar(50);
+Execute @titlExist= dbo.CheckTitleExists 'Goosebumps';
+PRINT @titlExist;
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE OR ALTER PROCEDURE dbo.CheckUserExists(@user_name nvarchar(50))
+AS
+BEGIN
+	Select Count(user_name) as user_count from dbo.users where dbo.users.user_name=@user_name;
+END
+
+DECLARE @userExist nvarchar(50);
+Execute @userExist= dbo.CheckUserExists 'Karthik';
+PRINT @userExist;
