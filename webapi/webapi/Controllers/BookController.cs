@@ -39,6 +39,13 @@ namespace webapi.Controllers
             bookService.AddBook(book);
         }
 
+        [HttpPost]
+        [Route("delete")]
+        public void DeleteBook([FromBody]Book book)
+        {
+            bookService.DeleteBook(book);
+        }
+        
         [HttpGet]
         [Route("")]
         public List<string> GetBooksByAuthor([FromUri]string AuthorName)

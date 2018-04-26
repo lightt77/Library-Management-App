@@ -23,9 +23,11 @@ namespace webapi.Services
 
         public void AddBook(Book book)
         {
+            //validate if the user is admin
+
             if (book.Genre.Count == 0)
             {
-                bookDao.AddBook(book.Title, book.Author, book.Price==null?100:book.Price, book.Rating, "General");
+                bookDao.AddBook(book.Title, book.Author, book.Price == null ? 100 : book.Price, book.Rating, "General");
             }
             else
             {
@@ -36,9 +38,14 @@ namespace webapi.Services
                 {
                     bookDao.AddNewGenreToTitle(book.Title, book.Author, book.Genre[i]);
                 }
-
             }
+        }
 
+        public void DeleteBook(Book book)
+        {
+            //validate if the user is admin
+            
+            bookDao.DeleteBook(book.Title, book.Author);
         }
     }
 }

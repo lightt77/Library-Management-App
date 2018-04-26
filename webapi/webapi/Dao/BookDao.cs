@@ -119,5 +119,17 @@ namespace webapi.Dao
 
             connectionDao.RunCUDStoredProc(storedProcName, parameterDictionary);
         }
+
+        public void DeleteBook(string title,string author)
+        {
+            string storedProcName = "dbo.DeleteBook"; ;
+            var parameterDictionary = new Dictionary<string, object>
+            {
+                { "@title_name", title },
+                { "@author_name", author }
+            };
+
+            connectionDao.RunCUDStoredProc(storedProcName, parameterDictionary);
+        }
     }
 }
