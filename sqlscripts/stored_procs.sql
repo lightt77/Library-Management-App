@@ -72,15 +72,33 @@ EXEC dbo.DeleteTitle @title_name='efg';
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 
+CREATE OR ALTER PROCEDURE dbo.AddBook(@title_name VARCHAR(50))
+AS
+	--add book only if the title exists
+	IF((Select Count(*) from dbo.title where title_name=@title_name)!=0)
+	begin
+		DECLARE @title_id INT;
+
+		--add new entry in book table
+		SET @title_id=(Select title_id from dbo.title where title_name=@title_name);
+		INSERT INTO dbo.book(title_id,created_on,last_updated)
+			VALUES (@title_id,SYSDATETIME(),SYSDATETIME());
+	end
+GO
+
+EXEC dbo.AddBook @title_name='title4';
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
 --works for single genre
 --for multiple genres, make a call to AddGenre from server side
-CREATE OR ALTER PROCEDURE dbo.AddBook(@title_name VARCHAR(50), @author_name VARCHAR(50), @rating INT, @price INT, @genre_name VARCHAR(50))
+CREATE OR ALTER PROCEDURE dbo.AddTitle(@title_name VARCHAR(50), @author_name VARCHAR(50), @rating INT, @price INT, @genre_name VARCHAR(50))
 AS
 	DECLARE @title_id INT;
 	DECLARE @genre_id INT;
 	DECLARE @title_quantity INT;
 
-	--check if title of the book is absent
+	--add title only if the title is not already there 
 	IF((Select Count(title_id) from dbo.title where title_name=@title_name AND author=@author_name)=0)
 		begin
 			--add title
@@ -102,26 +120,15 @@ AS
 			--insert entry in title-genre map
 			INSERT INTO dbo.title_genre_map(title_id,genre_id,created_on,last_updated)
 						VALUES (@title_id,@genre_id,SYSDATETIME(),SYSDATETIME());
-		end
-	ELSE
-		begin
-			--increment title quantity as title is already present
-			SET @title_quantity=(Select quantity from dbo.title where title_name=@title_name AND author=@author_name);
-
-			UPDATE dbo.title
-				SET quantity=@title_quantity+1
-				where title_name=@title_name AND author=@author_name;
-		end;
-
-	--add new entry in book table
-	SET @title_id=(Select title_id from dbo.title where title_name=@title_name AND author=@author_name);
-	INSERT INTO dbo.book(title_id,created_on,last_updated)
+		
+			--add new entry in book table
+			SET @title_id=(Select title_id from dbo.title where title_name=@title_name AND author=@author_name);
+			INSERT INTO dbo.book(title_id,created_on,last_updated)
 				VALUES (@title_id,SYSDATETIME(),SYSDATETIME());
-
+		end
 GO
 
-EXEC dbo.AddBook @title_name='title1', @author_name='author1', @rating=5, @price=299,@genre_name='Fantasy';
-EXEC dbo.AddBook @title_name='title2', @author_name='author2', @rating=5, @price=299,@genre_name='Horror';
+EXEC dbo.AddTitle @title_name='title4', @author_name='author4', @rating=5, @price=299,@genre_name='Mathematics';
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 --works
@@ -456,3 +463,18 @@ END
 EXEC dbo.CheckIfWishlistEntryExists @title_name = 'HP', @user_name='Abhishek';
 
 ------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE OR ALTER PROCEDURE dbo.AddNotification(@type int,@user_name VARCHAR(50),@message VARCHAR(50),@status int)
+AS
+BEGIN
+	DECLARE @user_id int;
+	
+	SET @user_id=(Select user_id from dbo.users where dbo.users.user_name=@user_name);
+
+	Insert into dbo.notifications (notification_type, user_id, notification_status, notification_message, created_on, last_updated)
+		values(@type, @user_id, @status, @message, SYSDATETIME(), SYSDATETIME());
+END
+
+EXEC dbo.AddNotification @user_name='Abhishek',@type=1,@message='Hello World',@status=0;
+
+select * from dbo.notifications;
