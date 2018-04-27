@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 
@@ -24,8 +25,7 @@ namespace webapi.Dao
 
         public void AddToWishList(string userName, string bookName)
         {
-            // change this and test the api
-            string storedProcedure = "dbo.CheckUserExists";
+            string storedProcedure = "dbo.AddToWishList";
             var parameterDictionary = new Dictionary<string, object>
             {
                 { "@user_name", userName },
@@ -33,6 +33,22 @@ namespace webapi.Dao
             };
 
             connectionDao.RunCUDStoredProc(storedProcedure, parameterDictionary);
+        }
+
+        public bool CheckIfWishListEntryExists(string userName, string bookName)
+        {
+            string storedProcedure = "dbo.CheckIfWishlistEntryExists";
+            var parameterDictionary = new Dictionary<string, object>
+            {
+                { "@user_name", userName },
+                { "@title_name", bookName }
+            };
+
+            DataSet resultDataSet=connectionDao.RunRetrievalStoredProc(storedProcedure, parameterDictionary);
+
+            int entryCount = (int)resultDataSet.Tables[0].Rows[0]["result_count"];
+
+            return entryCount > 0;
         }
     }
 }

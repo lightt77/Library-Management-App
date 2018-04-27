@@ -6,22 +6,32 @@ using webapi.Dao;
 
 namespace webapi.Services
 {
-    public class UserServices
+    public class UserService
     {
         private readonly UserDao userDao = new UserDao();
         private readonly BookDao bookDao = new BookDao();
 
         public void AddToWishList(string userName, string bookName)
         {
-            if (userDao.CheckIfUserExists(userName) && bookDao.CheckIfBookExists(bookName))
-            {
-                userDao.AddToWishList(userName, bookName);
-            }
-            else
+            if (!userDao.CheckIfUserExists(userName))
             {
                 //TODO
-                //throw exceptions
+                return;
             }
+
+            if (!bookDao.CheckIfBookExists(bookName))
+            {
+                //TODO
+                return;
+            }
+
+            if (userDao.CheckIfWishListEntryExists(userName,bookName))
+            {
+                //TODO
+                return;
+            }
+
+            userDao.AddToWishList(userName, bookName);
         }
     }
 }

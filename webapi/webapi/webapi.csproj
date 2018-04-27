@@ -188,6 +188,7 @@
     <Compile Include="Dao\BookDao.cs" />
     <Compile Include="Dao\ConnectionDao.cs" />
     <Compile Include="Dao\TitleDao.cs" />
+    <Compile Include="Dao\UserDao.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -198,6 +199,7 @@
     <Compile Include="Services\AdminService.cs" />
     <Compile Include="Services\BookService.cs" />
     <Compile Include="Services\TitleService.cs" />
+    <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />

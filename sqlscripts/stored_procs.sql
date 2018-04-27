@@ -423,3 +423,36 @@ END
 EXEC dbo.DeleteUser 'si@acc.com';
 
 ------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE OR ALTER PROCEDURE dbo.AddToWishList(@user_name nvarchar(50), @title_name nvarchar(50))
+AS
+BEGIN
+	DECLARE @user_id INT;
+	DECLARE @title_id INT;
+
+	SET @user_id=(Select user_id from dbo.users where dbo.users.user_name=@user_name);
+	SET @title_id=(Select title_id from dbo.title where dbo.title.title_name=@title_name);
+
+	INSERT INTO dbo.wishlist(user_id,title_id,created_on,last_updated)
+		VALUES(@user_id,@title_id,SYSDATETIME(),SYSDATETIME());
+END
+
+EXEC dbo.AddToWishList @title_name = 'HP', @user_name='Abhishek';
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE OR ALTER PROCEDURE dbo.CheckIfWishlistEntryExists(@user_name nvarchar(50), @title_name nvarchar(50))
+AS
+BEGIN
+	DECLARE @user_id INT;
+	DECLARE @title_id INT;
+
+	SET @user_id=(Select user_id from dbo.users where dbo.users.user_name=@user_name);
+	SET @title_id=(Select title_id from dbo.title where dbo.title.title_name=@title_name);
+
+	Select Count(*) as result_count from dbo.wishlist where dbo.wishlist.user_id=@user_id AND dbo.wishlist.title_id=@title_id;
+END
+
+EXEC dbo.CheckIfWishlistEntryExists @title_name = 'HP', @user_name='Abhishek';
+
+------------------------------------------------------------------------------------------------------------------------------------------
