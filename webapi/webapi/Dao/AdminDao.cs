@@ -22,31 +22,5 @@ namespace webapi.Dao
 
             connectionDao.RunCUDStoredProc(storedProcedure, parameterDictionary);
         }
-
-        public bool CheckIfTitleExists(string titleName)
-        {
-            string storedProcedure = "dbo.CheckTitleExists";
-            var parameterDictionary = new Dictionary<string, object>
-            {
-                { "@title_name", titleName }
-            };
-
-            int titleCount = (int)connectionDao.RunRetrievalStoredProc(storedProcedure, parameterDictionary).Tables[0].Rows[0]["title_count"];
-
-            return titleCount != 0;
-        }
-
-        public bool CheckIfUserExists(string userName)
-        {
-            string storedProcedure = "dbo.CheckUserExists";
-            var parameterDictionary = new Dictionary<string, object>
-            {
-                { "@user_name", userName }
-            };
-
-            int userCount = (int)connectionDao.RunRetrievalStoredProc(storedProcedure, parameterDictionary).Tables[0].Rows[0]["user_count"];
-
-            return userCount != 0;
-        }
     }
 }

@@ -26,7 +26,6 @@ namespace webapi.Dao
             DataTable genreTable = resultDataSet.Tables[1];
 
             return MapToBook(titleTable, genreTable);
-            //    return resultDataSet.Tables[0].AsEnumerable().Select(x=>MapToBook(x)).ToList();
         }
 
         private List<Book> MapToBook(DataTable titleTable, DataTable genreTable)
@@ -180,6 +179,19 @@ namespace webapi.Dao
                         };
                     }
             ).ToList();
+        }
+
+        public bool CheckIfBookExists(string bookName)
+        {
+            string storedProcedure = "dbo.CheckTitleExists";
+            var parameterDictionary = new Dictionary<string, object>
+            {
+                { "@title_name", bookName }
+            };
+
+            int resultCount = (int)connectionDao.RunRetrievalStoredProc(storedProcedure, parameterDictionary).Tables[0].Rows[0]["title_count"];
+
+            return resultCount != 0;
         }
     }
 }

@@ -15,7 +15,7 @@ namespace webapi.Services
         {
             if (userDao.CheckIfUserExists(userName) && bookDao.CheckIfBookExists(bookName))
             {
-                userDao.AddToWishList(userName, bookName);
+                userDao.AddToWishList(userName,bookName);
             }
             else
             {

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
 using System.Linq;
 using System.Web;
 
@@ -9,23 +7,32 @@ namespace webapi.Dao
 {
     public class UserDao
     {
-        private readonly String CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
         private readonly ConnectionDao connectionDao = new ConnectionDao();
 
-        public string GetUserRole(string emailAddress)
+        public bool CheckIfUserExists(string userName)
         {
-            string storedProcName = "dbo.GetRoleByEmailAddress";
-            var parameterDictionary = new Dictionary<string, object>();
+            string storedProcedure = "dbo.CheckUserExists";
+            var parameterDictionary = new Dictionary<string, object>
+            {
+                { "@user_name", userName }
+            };
 
-            parameterDictionary.Add("@email_address", emailAddress);
+            int userCount = (int)connectionDao.RunRetrievalStoredProc(storedProcedure, parameterDictionary).Tables[0].Rows[0]["user_count"];
 
-            DataSet resultDataSet = connectionDao.RunRetrievalStoredProc(storedProcName, parameterDictionary);
+            return userCount != 0;
+        }
 
-            // check if no rows returned
-            if ((resultDataSet.Tables[0].Rows.Count == 0))
-                return "";
+        public void AddToWishList(string userName, string bookName)
+        {
+            // change this and test the api
+            string storedProcedure = "dbo.CheckUserExists";
+            var parameterDictionary = new Dictionary<string, object>
+            {
+                { "@user_name", userName },
+                { "@title_name", bookName }
+            };
 
-            return (string)resultDataSet.Tables[0].Rows[0]["role_name"];
+            connectionDao.RunCUDStoredProc(storedProcedure, parameterDictionary);
         }
     }
 }

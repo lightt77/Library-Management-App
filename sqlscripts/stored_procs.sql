@@ -411,3 +411,15 @@ END
 EXEC dbo.RegisterUser 'admin', 'Sai', 'si@acc.com', 'sai', '8888888888', 'Chennai';
 
 ------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE OR ALTER PROCEDURE dbo.DeleteUser (@email nvarchar(50))
+AS
+DECLARE @emailExist varchar(50);
+BEGIN
+ EXEC dbo.CheckEmailExists @email, @emailExist out;
+ IF @emailExist IS NOT NULL
+  DELETE FROM dbo.users WHERE email_address = @email
+END
+EXEC dbo.DeleteUser 'si@acc.com';
+
+------------------------------------------------------------------------------------------------------------------------------------------
