@@ -58,26 +58,5 @@ namespace webapi.Controllers
         {
             return bookService.GetUsersForBook(book);
         }
-
-        [HttpGet]
-        [Route("GetBookQuantityByTitleName")]
-        public int GetBookQuantityByTitleName(string TitleName)
-        {
-            var result = new List<string>();
-            int quantity = 0;
-
-            String CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            using (SqlConnection conn = new SqlConnection(CS))
-            {
-                String storedProc1 = "dbo.GetBookQuantityByTitleName";
-                SqlCommand cmd = new SqlCommand(storedProc1, conn);
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@title_name", TitleName);
-                conn.Open();
-                quantity = Convert.ToInt32(cmd.ExecuteScalar());
-            }
-
-            return quantity;
-        }
     }
 }

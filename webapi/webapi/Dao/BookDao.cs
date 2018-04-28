@@ -109,16 +109,29 @@ namespace webapi.Dao
             return MapToBook(titleTable, genreTable);
         }
 
-        public void AddBook(string title, string author, int? price, int rating, string genre)
+
+        // by default also adds an entry in the book table if a new title is added
+        public void AddTitle(string title,string author,int rating,int? price,string genre)
+        {
+            string storedProcName = "dbo.AddTitle";
+            var parameterDictionary = new Dictionary<string, object>
+            {
+                { "@title_name", title },
+                { "@author_name", author },
+                { "@rating", rating },
+                { "@price", price },
+                { "@genre_name", genre },
+            };
+
+            connectionDao.RunCUDStoredProc(storedProcName, parameterDictionary);
+        }
+
+        public void AddBook(string title)
         {
             string storedProcName = "dbo.AddBook";
             var parameterDictionary = new Dictionary<string, object>
             {
-                { "@title_name", title },
-                { "@author_name", author},
-                { "@price", price },
-                { "@rating", rating },
-                { "@genre_name", genre}
+                { "@title_name", title }
             };
 
             connectionDao.RunCUDStoredProc(storedProcName, parameterDictionary);
@@ -181,12 +194,12 @@ namespace webapi.Dao
             ).ToList();
         }
 
-        public bool CheckIfBookExists(string bookName)
+        public bool CheckIfBookTitleExists(string titleName)
         {
             string storedProcedure = "dbo.CheckTitleExists";
             var parameterDictionary = new Dictionary<string, object>
             {
-                { "@title_name", bookName }
+                { "@title_name", titleName }
             };
 
             int resultCount = (int)connectionDao.RunRetrievalStoredProc(storedProcedure, parameterDictionary).Tables[0].Rows[0]["title_count"];

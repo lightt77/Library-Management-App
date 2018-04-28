@@ -19,7 +19,7 @@ namespace webapi.Services
                 return;
             }
 
-            if (!bookDao.CheckIfBookExists(bookName))
+            if (!bookDao.CheckIfBookTitleExists(bookName))
             {
                 //TODO
                 return;

@@ -109,7 +109,8 @@ CREATE TABLE dbo.notifications
    (notification_id int PRIMARY KEY IDENTITY(1,1) NOT NULL,  
     notification_type int NOT NULL,  
     user_id int NOT NULL,  
-    notification_status int NOT NULL, 
+    notification_status int NOT NULL,
+	notification_message varchar(50), 
 	created_on datetime,   
 	last_updated datetime,
 	CONSTRAINT notification_table_user_id_fkey FOREIGN KEY (user_id)     

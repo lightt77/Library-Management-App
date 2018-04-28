@@ -9,7 +9,8 @@ namespace webapi.Services
 {
     public class BookService
     {
-        BookDao bookDao = new BookDao();
+        private readonly BookDao bookDao = new BookDao();
+        private readonly NotificationService notificationService = new NotificationService();
 
         public List<Book> GetAllBooks()
         {
@@ -28,22 +29,35 @@ namespace webapi.Services
 
         public void AddBook(Book book)
         {
-            //validate if the user is admin
+            //TODO: validate if the user is admin
 
-            if (book.Genre.Count == 0)
+            // add new title if the title doesnt already exist
+            if (!bookDao.CheckIfBookTitleExists(book.Title))
             {
-                bookDao.AddBook(book.Title, book.Author, book.Price == null ? 100 : book.Price, book.Rating, "General");
+                //set default genre to General and default to 100
+                if (book.Genre.Count == 0)
+                {
+                    AddTitle(book.Title, book.Author, book.Rating, book.Price == null ? 100 : book.Price, "General");
+                }
+                else
+                {
+                    AddTitle(book.Title, book.Author, book.Rating, book.Price == null ? 100 : book.Price, book.Genre[0]);
+
+                    //for multiple genres
+                    for (int i = 1; i < book.Genre.Count; i++)
+                        bookDao.AddNewGenreToTitle(book.Title,book.Author,book.Genre[i]);
+                }   
             }
             else
             {
-                bookDao.AddBook(book.Title, book.Author, book.Price == null ? 100 : book.Price, book.Rating, book.Genre[0]);
+                bookDao.AddBook(book.Title);
+            }   
+        }
 
-                // for multiple genres
-                for (int i = 1; i < book.Genre.Count; i++)
-                {
-                    bookDao.AddNewGenreToTitle(book.Title, book.Author, book.Genre[i]);
-                }
-            }
+        private void AddTitle(string title, string author, int rating, int? price, string genre)
+        {
+            bookDao.AddTitle(title, author, rating, price== null ? 100 : price, genre);
+            notificationService.GenerateNewBookArrivalNotifications(title,author);
         }
 
         public void DeleteBook(Book book)

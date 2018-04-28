@@ -14,7 +14,7 @@ namespace webapi.Services
 
         public void AddRental(string titleName, string userName, int? noOfDaysToIssueFor)
         {
-            if (bookDao.CheckIfBookExists(titleName) && userDao.CheckIfUserExists(userName))
+            if (bookDao.CheckIfBookTitleExists(titleName) && userDao.CheckIfUserExists(userName))
             {
                 // default issue perod is 15 days
                 adminDao.AddRental(titleName, userName, noOfDaysToIssueFor == null ? 15 : noOfDaysToIssueFor);
