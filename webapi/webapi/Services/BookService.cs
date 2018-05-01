@@ -62,7 +62,7 @@ namespace webapi.Services
 
         public void DeleteBook(Book book)
         {
-            //validate if the user is admin
+            //TODO: validate if the user is admin
             
             bookDao.DeleteBook(book.Title, book.Author);
         }

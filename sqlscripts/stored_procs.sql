@@ -517,3 +517,16 @@ END
 EXEC dbo.GetAllBookReturnDateDueRecords;
 
 ------------------------------------------------------------------------------------------------------------------------------------------
+
+-- for wishlist notifications
+CREATE OR ALTER PROCEDURE dbo.GetAllBooksInWishlistAvailableRecords
+AS
+BEGIN
+	Select dbo.users.user_name,dbo.title.title_name from dbo.wishlist
+		join dbo.title on dbo.wishlist.title_id=dbo.title.title_id
+		join dbo.users on dbo.wishlist.user_id=dbo.users.user_id
+		where dbo.title.quantity>0;
+
+END
+
+EXEC dbo.GetAllBooksInWishlistAvailableRecords;

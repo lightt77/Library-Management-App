@@ -13,9 +13,12 @@ namespace webapi.Services
 
         private void AddNotification(Notification notification)
         {
-            notificationDao.AddNotification(notification.Type, notification.User.UserName, notification.Message, notification.Status);
+            // add new notification only if the notfication is not already present
+            if(!CheckIfNotificationExists(notification))
+                notificationDao.AddNotification(notification.Type, notification.User.UserName, notification.Message, notification.Status);
         }
 
+        // called when a new title is added
         public void GenerateNewBookArrivalNotifications(string title, string author)
         {
             AddNotification(new Notification()
@@ -26,17 +29,53 @@ namespace webapi.Services
                 {
                     UserName = "All"
                 },
-                Message = "" + title + " by " + author + " is now available!",
+                Message = "" + title + " by " + author + " is now available!"
             });
         }
 
-        // this should be called by cron job
+        // called by cron job
         public void GenerateBookReturnDateDueNotifications(string bookName, string userName, DateTime dueDate)
         {
             AddNotification(new Notification()
             {
-
+                Type = (int)NotificationType.BOOK_RETURN_DATE_DUE,
+                Status = (int)NotificationStatus.PENDING,
+                User = new Users()
+                {
+                    UserName = userName
+                },
+                Message = "Please return " + bookName + " by " + dueDate.ToLongDateString()+"."
             });
+        }
+
+        // called by cron job
+        public void GenerateBookInWishlistAvailableNotifications(string bookName, string userName)
+        {
+            AddNotification(new Notification()
+            {
+                Type = (int)NotificationType.BOOK_IN_WISHLIST_AVAILABLE,
+                Status = (int)NotificationStatus.PENDING,
+                User = new Users()
+                {
+                    UserName = userName
+                },
+                Message = "" + bookName + " from your wishlist is now available" + "."
+            });
+        }
+
+        public List<Rental> GetAllBookReturnDateDueRecords()
+        {
+            return notificationDao.GetAllBookReturnDateDueRecords();
+        }
+
+        public List<Rental> GetBooksInWishlistAvailableRecords()
+        {
+            return notificationDao.GetBooksInWishlistAvailableRecords();
+        }
+
+        public bool CheckIfNotificationExists(Notification notification)
+        {
+            return notificationDao.CheckIfNotificationExists(notification.User.UserName, notification.Type, notification.Message);
         }
     }
 
