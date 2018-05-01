@@ -471,10 +471,49 @@ BEGIN
 	
 	SET @user_id=(Select user_id from dbo.users where dbo.users.user_name=@user_name);
 
+	-- to denote everyone, use reserved user_id=1
+	IF(@user_name='All')
+	begin
+		SET @user_id=1;
+	end
+
 	Insert into dbo.notifications (notification_type, user_id, notification_status, notification_message, created_on, last_updated)
 		values(@type, @user_id, @status, @message, SYSDATETIME(), SYSDATETIME());
 END
 
 EXEC dbo.AddNotification @user_name='Abhishek',@type=1,@message='Hello World',@status=0;
 
-select * from dbo.notifications;
+------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE OR ALTER PROCEDURE dbo.CheckIfNotificationExists(@user_name VARCHAR(50), @notification_type int,@message VARCHAR(50))
+AS
+BEGIN
+	DECLARE @user_id int;
+	
+	SET @user_id=(Select user_id from dbo.users where dbo.users.user_name=@user_name);
+
+	Select Count(*) as result_count from dbo.notifications where dbo.notifications.user_id=@user_id 
+				AND dbo.notifications.notification_type=@notification_type
+				AND dbo.notifications.notification_message=@message; 
+
+END
+
+EXEC dbo.CheckIfNotificationExists @user_name='Abhishek',@notification_type=1,@message='Hello World';
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+-- for return date due notifications
+CREATE OR ALTER PROCEDURE dbo.GetAllBookReturnDateDueRecords
+AS
+BEGIN
+	Select dbo.users.user_name, dbo.title.title_name, dbo.rental.return_date from dbo.rental
+		join dbo.book on dbo.rental.book_id=dbo.book.book_id
+		join dbo.users on dbo.rental.user_id=dbo.users.user_id
+		join dbo.title on dbo.book.title_id=dbo.title.title_id 
+		where DATEADD(DAY,-1,dbo.rental.return_date)<=SYSDATETIME();  
+
+END
+
+EXEC dbo.GetAllBookReturnDateDueRecords;
+
+------------------------------------------------------------------------------------------------------------------------------------------
