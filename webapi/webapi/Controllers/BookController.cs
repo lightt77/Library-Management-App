@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using webapi.Dao;
 using webapi.Models;
 using webapi.Services;
@@ -17,6 +18,7 @@ namespace webapi.Controllers
     {
         private readonly BookService bookService = new BookService();
 
+        [EnableCors(origins: "http://127.0.0.1:5500",headers:"*",methods:"*")]
         [Route("all")]
         [HttpGet]
         public List<Book> GetAllBooks()
@@ -56,6 +58,7 @@ namespace webapi.Controllers
         [Route("users")]
         public List<Users> GetUsersForBook([FromBody]Book book)
         {
+            //validate if admin
             return bookService.GetUsersForBook(book);
         }
     }

@@ -19,6 +19,10 @@ namespace webapi
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            // to enable cross-origin requests
+            config.EnableCors();
+            
         }
     }
 }
