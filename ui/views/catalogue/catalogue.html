@@ -1,0 +1,34 @@
+<div ng-controller="CatalogueController">
+    catalogue
+
+    <button ng-click="getAllBooks()">Get All Books</button>
+
+    <!-- <div ng-repeat="book in bookslist">
+        <div class="card" style="width: 18rem;">
+            <p>{{book}}</p>
+            <div class="card-body">
+                <h5 class="card-title">{{book.Title}}</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- <div ng-repeat="i in bookslist">
+        <!-- <p>{{book}}</p> -->
+    <!-- {{i}}
+    </div> -->
+
+    <!-- <div ng-repeat="i in booksList">{{i}}</div> -->
+    <div ng-repeat="book in booksList">
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">{{book.Title}}</h5>
+                <p class="card-text">{{book.Title}} by {{book.Author}} <br/>
+                    Genres: {{book.Genre[0]}}
+                </p>
+                <button class="btn btn-primary">Get this book</a>
+            </div>
+        </div>
+    </div>
+</div>

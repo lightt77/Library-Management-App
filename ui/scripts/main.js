@@ -1,5 +1,8 @@
-var app=angular.module("App",['ngRoute','BookModule'
-        ]);
+var app=angular.module("App",['ngRoute',
+                              'BookModule',
+                              'HomeModule',
+                              'CatalogueModule'
+]);
 
 app.config(['$routeProvider',function($routeProvider){
     $routeProvider
@@ -11,6 +14,18 @@ app.config(['$routeProvider',function($routeProvider){
         })
         .when('/register',{
             templateUrl:'views/register.html'
+        })
+        .when('/home/catalogue',{
+            templateUrl:'views/catalogue/catalogue.html',
+        })
+        .when('/home/wishlist',{
+            templateUrl:'views/wishlist/wishlist.html'
+        })
+        .when('/home/notifications',{
+            templateUrl:'views/notifications/notifications.html'
+        })
+        .when('/home/admin',{
+            templateUrl:'views/admin/admin.html'
         })
         .otherwise({
             redirectTo:'/home'
@@ -27,28 +42,28 @@ app.controller("LoginController",function($scope){
     };
 });
 
-app.controller("HomeController",['$scope','$http',function($scope,$http){
-    $http.get("http://localhost:59684/books/all")
-        .then(successCallBack,failureCallBack);
+// app.controller("HomeController",['$scope','$http',function($scope,$http){
+//     $http.get("http://localhost:59684/books/all")
+//         .then(successCallBack,failureCallBack);
 
-    function successCallBack(response){
-        console.log("success");
-        console.log(response);
+//     function successCallBack(response){
+//         console.log("success");
+//         console.log(response);
 
-        console.log(response.data);
-    };
+//         console.log(response.data);
+//     };
 
-    function failureCallBack(error){
-        console.log("failure");
-        console.log(error);
-    };
-        // .success(function(data){
-        //     console.log("request succeeded...");
-        // })
-        // .failure(function(data){
-        //     console.log("failed");
-        // });
-}]);
+//     function failureCallBack(error){
+//         console.log("failure");
+//         console.log(error);
+//     };
+//         // .success(function(data){
+//         //     console.log("request succeeded...");
+//         // })
+//         // .failure(function(data){
+//         //     console.log("failed");
+//         // });
+// }]);
 
 // angular.module("App").controller("BookController",function(){
 //     console.log("kdaksdkajdk");

@@ -2,19 +2,30 @@
 <html>
 
 <head>
-    <title>Page Title</title>
+    <title>Library Management App</title>
     <script src="scripts\lib\angular.min.js"></script>
     <script src="scripts\lib\angular-route.min.js"></script>
     <script src="scripts\main.js"></script>
     <script src="scripts\book\BookModule.js"></script>
     <script src="scripts\book\BookService.js"></script>
     <script src="scripts\book\BookController.js"></script>
+
+    <script src="scripts\home\HomeModule.js"></script>
+    <script src="scripts\home\HomeController.js"></script>
+
+    <script src="scripts\catalogue\CatalogueModule.js"></script>
+    <script src="scripts\catalogue\CatalogueController.js"></script>
+    <script src="scripts\catalogue\CatalogueService.js"></script>
     
-    <link rel="stylesheet" href="bootstrap-materia.js">
+    <link rel="stylesheet" href="bootstrap-materia.css">
 </head>
 
 <body ng-app="App" ng-controller="MainController">
 
+    <p>index</p>
+    <!--TODO: set isLoggedIn to true once login is successful, make it false with successful logout-->
+    <!-- <div ng-if="isLoggedIn" ng-include="'views/home/navs.html'"></div> -->
+    <div ng-if="true" ng-include="'views/home/navs.html'"></div>
     <div ng-view></div>
 
 

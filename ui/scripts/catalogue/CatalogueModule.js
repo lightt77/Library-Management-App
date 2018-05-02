@@ -1,0 +1,1 @@
+var catalogueModule=angular.module('CatalogueModule',[]);
