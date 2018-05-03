@@ -1,10 +1,25 @@
 <div ng-controller="CatalogueController">
     <!-- TODO: Add a search by dropdown -->
-    <input type="text" placeholder="Filter">
+    <input type="text" placeholder="Search" ng-model="search.Title" ng-change="foo()">
 
+    <input type="text" placeholder="Search" ng-model="searchBookInput">
+
+    <label>Search By:</label>
+    <select ng-model="searchBookBy" ng-change="setSearchBy()" required>
+        <option value="" selected>Choose here</option>
+        <option value="Title">Title</option>
+        <option value="Author">Author</option>
+        <option value="Genre">Genre</option>
+    </select>
+
+    searchBookBy={{searchBookBy}}<br>
+    search={{search}}<br>
+    search.Title={{search.Title}}<br>
+    searchBookInput={{searchBookInput}}
+    
     <br>
     <br>
-<!-- 
+    <!-- 
     <div class="container">
         <div class="row">
             <div class="col-sm-3" style="background-color: black">
@@ -27,7 +42,7 @@
 
 
     <div class="row">
-        <div ng-repeat="book in booksList">
+        <div ng-repeat="book in booksList | filter:search">
 
             <div class="col-sm-12">
                 <div class="card">

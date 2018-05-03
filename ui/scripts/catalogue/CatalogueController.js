@@ -1,6 +1,10 @@
 catalogueModule.controller('CatalogueController', ['$scope', 'CatalogueService', function ($scope, CatalogueService) {
 
-    CatalogueService.foo();
+    $scope.search={
+         Title:"",
+         Author:"",
+         Genre:""
+    };
 
     (function () {
         CatalogueService.getAllBooks().then((response) => {
@@ -11,6 +15,22 @@ catalogueModule.controller('CatalogueController', ['$scope', 'CatalogueService',
             console.log(error);
         });
     })();
+
+    $scope.setSearchBy = function () {
+        console.log("setSearchBy called");
+
+        switch ($scope.searchBookBy) {
+            case 'Title': console.log("jkd");$scope.search.Title = $scope.searchBookInput; break;
+            case 'Author': $scope.search.Author = $scope.searchBookInput; break;
+            case 'Genre': $scope.search.Genre = $scope.searchBookInput; break;
+            default: $scope.search.Title = $scope.searchBookInput; break;
+        }
+    };
+
+    $scope.foo=function()
+    {
+        console.log("jaldkjlakjdljaskdjalksjd");
+    };
 
     // $scope.getAllBooks = function () {
     //     CatalogueService.getAllBooks().then((response) => {
