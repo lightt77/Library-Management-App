@@ -1,21 +1,22 @@
 <div ng-controller="CatalogueController">
     <!-- TODO: Add a search by dropdown -->
-    <input type="text" placeholder="Search" ng-model="search.Title" ng-change="foo()">
 
-    <input type="text" placeholder="Search" ng-model="searchBookInput">
+    <input type="text" placeholder="Search" ng-model="search.Title" ng-show="searchBookBy=='Title'">
+    <input type="text" placeholder="Search" ng-model="search.Author" ng-show="searchBookBy=='Author'">
+    <input type="text" placeholder="Search" ng-model="search.Genre" ng-show="searchBookBy=='Genre'">
 
     <label>Search By:</label>
-    <select ng-model="searchBookBy" ng-change="setSearchBy()" required>
+    <select ng-model="searchBookBy" ng-change="clearSearchFields()" required>
         <option value="" selected>Choose here</option>
         <option value="Title">Title</option>
         <option value="Author">Author</option>
         <option value="Genre">Genre</option>
     </select>
 
-    searchBookBy={{searchBookBy}}<br>
+    <!-- searchBookBy={{searchBookBy}}<br>
     search={{search}}<br>
     search.Title={{search.Title}}<br>
-    searchBookInput={{searchBookInput}}
+    searchBookInput={{searchBookInput}} -->
     
     <br>
     <br>
