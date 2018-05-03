@@ -1,34 +1,50 @@
 <div ng-controller="CatalogueController">
-    catalogue
+    <!-- TODO: Add a search by dropdown -->
+    <input type="text" placeholder="Filter">
 
-    <button ng-click="getAllBooks()">Get All Books</button>
-
-    <!-- <div ng-repeat="book in bookslist">
-        <div class="card" style="width: 18rem;">
-            <p>{{book}}</p>
-            <div class="card-body">
-                <h5 class="card-title">{{book.Title}}</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+    <br>
+    <br>
+<!-- 
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3" style="background-color: black">
+                foo
+            </div>
+            <div class="col-sm-3" style="background-color: blue">
+                foo
+            </div>
+            <div class="col-sm-3" style="background-color: green">
+                foo
+            </div>
+            <div class="col-sm-3" style="background-color: red">
+                foo
+            </div>
+            <div class="col-sm-3" style="background-color: orange">
+                foo
             </div>
         </div>
     </div> -->
 
-    <!-- <div ng-repeat="i in bookslist">
-        <!-- <p>{{book}}</p> -->
-    <!-- {{i}}
-    </div> -->
 
-    <!-- <div ng-repeat="i in booksList">{{i}}</div> -->
-    <div ng-repeat="book in booksList">
-        <div class="card" style="width: 18rem;">
-            <div class="card-body">
-                <h5 class="card-title">{{book.Title}}</h5>
-                <p class="card-text">{{book.Title}} by {{book.Author}} <br/>
-                    Genres: {{book.Genre[0]}}
-                </p>
-                <button class="btn btn-primary">Get this book</a>
+    <div class="row">
+        <div ng-repeat="book in booksList">
+
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{book.Title}}</h5>
+                        <p class="card-text">{{book.Title}} by {{book.Author}}
+                            <br/> Genres: {{book.Genre[0]}}
+                        </p>
+                        <button class="btn btn-primary">Get this book</a>
+                    </div>
+                </div>
             </div>
+
+            <br>
+            <br>
         </div>
     </div>
+
+
 </div>
