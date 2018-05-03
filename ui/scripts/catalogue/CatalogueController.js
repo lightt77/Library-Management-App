@@ -7,6 +7,10 @@ catalogueModule.controller('CatalogueController', ['$scope', 'CatalogueService',
         Genre: ""
     };
 
+    $scope.issueBook=function(){
+        
+    };
+
     $scope.clearSearchFields = function () {
         switch ($scope.searchBookBy) {
             case 'Title': $scope.search.Author = ''; $scope.search.Genre = ''; break;
@@ -16,15 +20,15 @@ catalogueModule.controller('CatalogueController', ['$scope', 'CatalogueService',
         }
     };
 
-        (function () {
-            CatalogueService.getAllBooks().then((response) => {
-                $scope.booksList = response.data;
+    (function () {
+        CatalogueService.getAllBooks().then((response) => {
+            $scope.booksList = response.data;
 
-                console.log($scope.booksList);
-            }, (error) => {
-                console.log(error);
-            });
-        })();
+            console.log($scope.booksList);
+        }, (error) => {
+            console.log(error);
+        });
+    })();
 
     $scope.setSearchBy = function () {
         console.log("setSearchBy called");

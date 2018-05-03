@@ -1,6 +1,8 @@
 <div ng-controller="CatalogueController">
     <!-- TODO: Add a search by dropdown -->
 
+    <!-- <input style="margin: 10px;width: 400px; border-style: double; border-color: black; border-width: 1px" class="form-control"
+        type="text" placeholder="Search" ng-model="search.Title" ng-show="searchBookBy=='Title'"> -->
     <input type="text" placeholder="Search" ng-model="search.Title" ng-show="searchBookBy=='Title'">
     <input type="text" placeholder="Search" ng-model="search.Author" ng-show="searchBookBy=='Author'">
     <input type="text" placeholder="Search" ng-model="search.Genre" ng-show="searchBookBy=='Genre'">
@@ -13,34 +15,8 @@
         <option value="Genre">Genre</option>
     </select>
 
-    <!-- searchBookBy={{searchBookBy}}<br>
-    search={{search}}<br>
-    search.Title={{search.Title}}<br>
-    searchBookInput={{searchBookInput}} -->
-    
     <br>
     <br>
-    <!-- 
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-3" style="background-color: black">
-                foo
-            </div>
-            <div class="col-sm-3" style="background-color: blue">
-                foo
-            </div>
-            <div class="col-sm-3" style="background-color: green">
-                foo
-            </div>
-            <div class="col-sm-3" style="background-color: red">
-                foo
-            </div>
-            <div class="col-sm-3" style="background-color: orange">
-                foo
-            </div>
-        </div>
-    </div> -->
-
 
     <div class="row">
         <div ng-repeat="book in booksList | filter:search">
@@ -48,11 +24,11 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">{{book.Title}}</h5>
+                        <h5 class="card-title" ng-model="selectedBookTitle">{{book.Title}}</h5>
                         <p class="card-text">{{book.Title}} by {{book.Author}}
                             <br/> Genres: {{book.Genre[0]}}
                         </p>
-                        <button class="btn btn-primary">Get this book</a>
+                        <button class="btn btn-primary" ng-click="issueBook()">Get this book</a>
                     </div>
                 </div>
             </div>
@@ -61,6 +37,5 @@
             <br>
         </div>
     </div>
-
 
 </div>
