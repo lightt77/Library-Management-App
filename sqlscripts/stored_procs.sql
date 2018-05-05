@@ -530,3 +530,37 @@ BEGIN
 END
 
 EXEC dbo.GetAllBooksInWishlistAvailableRecords;
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE OR ALTER PROCEDURE dbo.GetUserDetailsForLoginValidation(@email_address VARCHAR(50))
+AS
+BEGIN
+
+	Select dbo.users.password from dbo.users where dbo.users.email_address=@email_address;
+
+END
+
+EXEC dbo.GetUserDetailsForLoginValidation @email_address='abhishek@acc.co';
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE OR ALTER PROCEDURE dbo.AddNewUserRegistration(@name VARCHAR(50),@email VARCHAR(50),@password VARCHAR(50),@mobile VARCHAR(50),@residential_address VARCHAR(100))
+AS
+BEGIN
+	INSERT INTO dbo.users (user_name,email_address,password,mobile_number,residential_address,created_on,last_updated)
+		VALUES(@name,@email,@password,@mobile,@residential_address,SYSDATETIME(),SYSDATETIME());
+END
+
+EXEC dbo.AddNewUserRegistration @name='NewUser1',@email='NewEmail',@password='HelloWorld',@mobile='1234598765',@residential_address='NewAddress';
+
+------------------------------------------------------------------------------------------------------------------------------------------
+-- for validation before registration
+CREATE OR ALTER PROCEDURE dbo.CheckIfEmailAddressAlreadyExists(@email_address VARCHAR(50))
+AS
+BEGIN
+	SELECT Count(*) as count from dbo.users where dbo.users.email_address=@email_address;
+END
+
+EXEC dbo.CheckIfEmailAddressAlreadyExists @email_address='NewEmaidsdl';
+

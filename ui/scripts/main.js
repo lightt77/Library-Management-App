@@ -1,7 +1,9 @@
 var app=angular.module("App",['ngRoute',
                               'BookModule',
                               'HomeModule',
-                              'CatalogueModule'
+                              'CatalogueModule',
+                              'LoginModule',
+                              'RegisterModule'
 ]);
 
 app.config(['$routeProvider',function($routeProvider){
@@ -10,10 +12,10 @@ app.config(['$routeProvider',function($routeProvider){
             templateUrl:'views/home.html',
         })
         .when('/login',{
-            templateUrl:'views/login.html'
+            templateUrl:'views/login/login.html'
         })
         .when('/register',{
-            templateUrl:'views/register.html'
+            templateUrl:'views/register/register.html'
         })
         .when('/home/catalogue',{
             templateUrl:'views/catalogue/catalogue.html',
