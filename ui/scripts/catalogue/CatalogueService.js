@@ -1,4 +1,4 @@
-catalogueModule.service('CatalogueService', ['$http', function ($http) {
+angular.module('CatalogueModule').service('catalogueService', ['$http', function ($http) {
 
     var DOMAIN_NAME = 'http://localhost:59684/';
     var GET_ALL_BOOKS = 'Books/all';
@@ -9,7 +9,7 @@ catalogueModule.service('CatalogueService', ['$http', function ($http) {
     var GET_USERS_FOR_BOOK = 'Books/users';
 
     this.foo = function () {
-        console.log("Service worksbdasdhkjs...");
+        console.log("Cataloguehadkjhaskjds Service works...");
     };
 
     this.getAllBooks = function () {

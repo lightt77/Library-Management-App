@@ -9,7 +9,7 @@ bookModule.service('BookService', ['$http', function ($http) {
     var GET_USERS_FOR_BOOK = 'Books/users';
 
     this.foo = function () {
-        console.log("Service works...");
+        //console.log("Service works...");
     };
 
     this.getAllBooks = function () {

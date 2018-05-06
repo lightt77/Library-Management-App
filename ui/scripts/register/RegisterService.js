@@ -4,7 +4,7 @@ angular.module('RegisterModule').service('RegisterService', ['$http', function (
     var REGISTER = 'users/register';
     
     this.serviceWorks = function () {
-        console.log("regisetr service works");
+        //console.log("regisetr service works");
     };
 
     this.register = function (registrationDetails) { 

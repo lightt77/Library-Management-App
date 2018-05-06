@@ -35,7 +35,7 @@ app.config(['$routeProvider',function($routeProvider){
 }]);
 
 app.controller("MainController",function(){
-    console.log("main controller running");
+    //console.log("main controller running");
 });
 
 app.controller("LoginController",function($scope){
