@@ -10,6 +10,6 @@ angular.module('RegisterModule').service('RegisterService', ['$http', function (
     this.register = function (registrationDetails) { 
         console.log(JSON.stringify(registrationDetails));
 
-        $http.post(REGISTER,JSON.stringify(registrationDetails));
+        $http.post(DOMAIN_NAME+REGISTER,JSON.stringify(registrationDetails));
     };
 }]);

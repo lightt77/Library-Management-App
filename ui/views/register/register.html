@@ -4,11 +4,11 @@
             <form name="RegistrationForm" ng-submit="register()" novalidate>
                 <div class="form-group">
                     <label for="Name">Name:</label>
-                    <input class="form-control" type="text" placeholder="Enter your name" ng-model="registerDetails.Name" ng-required="true">
+                    <input class="form-control" type="text" placeholder="Enter your name" ng-model="registerDetails.UserName" ng-required="true">
                 </div>
                 <div class="form-group">
                     <label for="Email Address">Email Address:</label>
-                    <input class="form-control" type="email" placeholder="Enter your email" ng-model="registerDetails.Email" ng-required="true">
+                    <input class="form-control" type="email" placeholder="Enter your email" ng-model="registerDetails.EmailAddress" ng-required="true">
                 </div>
                 <div class="form-group">
                     <label for="Password">Password:</label>
@@ -26,7 +26,7 @@
                 </div>
                 <div class="form-group">
                     <label for="Address">Residential Address:</label>
-                    <input class="form-control" type="text" placeholder="Enter your residential address" ng-model="registerDetails.Address" ng-required="true">
+                    <input class="form-control" type="text" placeholder="Enter your residential address" ng-model="registerDetails.ResidentialAddress" ng-required="true">
                 </div>
                 <button type="submit" class="btn btn-primary"> Register </button>
             </form>
