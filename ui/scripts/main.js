@@ -38,11 +38,6 @@ app.controller("MainController",function(){
     //console.log("main controller running");
 });
 
-app.controller("LoginController",function($scope){
-    $scope.clickFunction=function(){
-        console.log("button clicked");
-    };
-});
 
 // app.controller("HomeController",['$scope','$http',function($scope,$http){
 //     $http.get("http://localhost:59684/books/all")

@@ -10,11 +10,32 @@ namespace webapi.Controllers
     {
         private AccountService accountService = new AccountService();
 
+        [EnableCors(origins: "http://127.0.0.1:5500", headers: "*", methods: "*")]
         [Route("users/login")]
         [HttpPost]
         public HttpResponseMessage Login([FromBody]Users user)
         {
-            return accountService.ValidateLogin(user);
+            if (accountService.ValidateLoginFields(user) == false)
+            {
+                return new HttpResponseMessage()
+                {
+                    StatusCode = System.Net.HttpStatusCode.Unauthorized,
+                };
+
+            }
+
+            if (accountService.ValidateLogin(user) == true)
+            {
+                return new HttpResponseMessage()
+                {
+                    StatusCode = System.Net.HttpStatusCode.Accepted
+                };
+            }
+
+            return new HttpResponseMessage()
+            {
+                StatusCode = System.Net.HttpStatusCode.Unauthorized
+            };
         }
 
         [EnableCors(origins: "http://127.0.0.1:5500", headers: "*", methods: "*")]
@@ -27,5 +48,6 @@ namespace webapi.Controllers
                 StatusCode = accountService.Register(user)
             };
         }
+        
     }
 }

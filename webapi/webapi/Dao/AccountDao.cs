@@ -20,7 +20,7 @@ namespace webapi.Dao
 
             DataSet resultDataSet = connectionDao.RunRetrievalStoredProc(storedProcName, parameterDictionary);
 
-            // returns empty string if no password is found
+            // returns empty string if no record is found
             if (resultDataSet.Tables[0].Rows.Count == 0)
                 return "";
 

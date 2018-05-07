@@ -13,50 +13,57 @@ namespace webapi.Services
     {
         private readonly AccountDao accountDao = new AccountDao();
 
-        // returns appropriate http response message
-        public HttpResponseMessage ValidateLogin(Users user)
+        // returns appropriate http response status code
+        //public HttpStatusCode ValidateLogin(Users user)
+        //{
+        //    // TODO: field validation
+        //    if (user.Password.Length == 0 || user.EmailAddress.Length == 0)
+        //    {
+        //        return HttpStatusCode.Unauthorized;   
+        //    }
+
+        //    string actualPassword = accountDao.GetPasswordForEmailAddress(user.EmailAddress);
+
+        //    if (actualPassword.CompareTo("") == 0)
+        //    {
+        //        return HttpStatusCode.Unauthorized;
+        //    }
+
+        //    if (actualPassword.CompareTo(user.Password) == 0)
+        //    {
+        //        return HttpStatusCode.Accepted;
+        //    }
+
+        //    return HttpStatusCode.Unauthorized;
+        //}
+
+        public bool ValidateLoginFields(Users user)
         {
-            // TODO: field validation
-            if (user.Password.Length == 0)
-            {
-                return new HttpResponseMessage()
-                {
-                    StatusCode = HttpStatusCode.Unauthorized,
-                };
-            }
+            if (user == null || user.Password == null || user.EmailAddress == null || user.Password.Length == 0
+                || user.EmailAddress.Length == 0)
+                return false;
 
-            if (user.EmailAddress.Length == 0)
-            {
-                return new HttpResponseMessage()
-                {
-                    StatusCode = HttpStatusCode.Unauthorized,
-                };
-            }
-
-            string actualPassword = accountDao.GetPasswordForEmailAddress(user.EmailAddress);
-
-            if (actualPassword.CompareTo("") == 0)
-            {
-                return new HttpResponseMessage()
-                {
-                    StatusCode = HttpStatusCode.Unauthorized,
-                };
-            }
-
-            if (actualPassword.CompareTo(user.Password) == 0)
-            {
-                return new HttpResponseMessage()
-                {
-                    StatusCode = HttpStatusCode.Accepted
-                };
-            }
-
-            return new HttpResponseMessage()
-            {
-                StatusCode = HttpStatusCode.Unauthorized,
-            };
+            return true;
         }
 
+        public bool ValidateLogin(Users user)
+        {
+            string actualPassword = accountDao.GetPasswordForEmailAddress(user.EmailAddress);
+
+            // no such email present
+            if (actualPassword.CompareTo("") == 0)
+            {
+                return false;
+            }
+            
+            if (actualPassword.CompareTo(user.Password) == 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
+        
         public HttpStatusCode Register(Users user)
         {
             //check if a user with same email address is not already registered
