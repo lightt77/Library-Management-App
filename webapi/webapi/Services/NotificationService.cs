@@ -63,6 +63,20 @@ namespace webapi.Services
             });
         }
 
+        public void GenerateNewBookIssuerequestNotifications(string recipientName, string bookName)
+        {
+            AddNotification(new Notification()
+            {
+                Type = (int)NotificationType.ADMIN_NEW_BOOK_ISSUE_REQUEST,
+                Status = (int)NotificationStatus.PENDING,
+                User = new Users()
+                {
+                    UserName = recipientName
+                },
+                Message = "" + bookName + " from your wishlist is now available" + "."
+            });
+        }
+
         public List<Rental> GetAllBookReturnDateDueRecords()
         {
             return notificationDao.GetAllBookReturnDateDueRecords();
@@ -83,7 +97,8 @@ namespace webapi.Services
     {
         NEW_BOOK_ARRIVAL,
         BOOK_RETURN_DATE_DUE,
-        BOOK_IN_WISHLIST_AVAILABLE
+        BOOK_IN_WISHLIST_AVAILABLE,
+        ADMIN_NEW_BOOK_ISSUE_REQUEST
     }
 
     public enum NotificationStatus

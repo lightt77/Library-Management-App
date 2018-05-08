@@ -1,40 +1,43 @@
-var app=angular.module("App",['ngRoute',
-                              'BookModule',
-                              'HomeModule',
-                              'CatalogueModule',
-                              'LoginModule',
-                              'RegisterModule'
+var app = angular.module("App", ['ngRoute', 'ngCookies',
+    'BookModule',
+    'HomeModule',
+    'CatalogueModule',
+    'LoginModule',
+    'RegisterModule',
+    'NotificationModule'
 ]);
 
-app.config(['$routeProvider',function($routeProvider){
+app.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpProvider) {
     $routeProvider
-        .when('/home',{
-            templateUrl:'views/home.html',
+        .when('/home', {
+            templateUrl: 'views/home.html',
         })
-        .when('/login',{
-            templateUrl:'views/login/login.html'
+        .when('/login', {
+            templateUrl: 'views/login/login.html'
         })
-        .when('/register',{
-            templateUrl:'views/register/register.html'
+        .when('/register', {
+            templateUrl: 'views/register/register.html'
         })
-        .when('/home/catalogue',{
-            templateUrl:'views/catalogue/catalogue.html',
+        .when('/home/catalogue', {
+            templateUrl: 'views/catalogue/catalogue.html'
         })
-        .when('/home/wishlist',{
-            templateUrl:'views/wishlist/wishlist.html'
+        .when('/home/wishlist', {
+            templateUrl: 'views/wishlist/wishlist.html'
         })
-        .when('/home/notifications',{
-            templateUrl:'views/notifications/notifications.html'
+        .when('/home/notifications', {
+            templateUrl: 'views/notifications/notifications.html'
         })
-        .when('/home/admin',{
-            templateUrl:'views/admin/admin.html'
+        .when('/home/admin', {
+            templateUrl: 'views/admin/admin.html'
         })
         .otherwise({
-            redirectTo:'/home'
+            redirectTo: '/login'
         });
+
+        //$httpProvider.defaults.headers.common = { 'SessionId' : $cookies.get('session-id') };
 }]);
 
-app.controller("MainController",function(){
+app.controller("MainController", function () {
     //console.log("main controller running");
 });
 

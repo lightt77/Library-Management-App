@@ -15,7 +15,6 @@ namespace webapi.Controllers
         private AccountService accountService = new AccountService();
 
         [EnableCors(origins: "http://127.0.0.1:5500", headers: "*", methods: "*")]
-        //[WebMethod(EnableSession=true)]
         [Route("users/login")]
         [HttpPost]
         public HttpResponseMessage Login([FromBody]Users user)
@@ -36,19 +35,29 @@ namespace webapi.Controllers
                 //if (HttpContext.Current.Session == null)
                 //    throw new Exception("Session is null");
 
-                //HttpContext.Current.Session["email"] = user;
+                //HttpContext.Current.Session[HttpContext.Current.Session.SessionID] = user;
+                HttpContext.Current.Session.Add(HttpContext.Current.Session.SessionID, user);
 
+                var savedUser = HttpContext.Current.Session[HttpContext.Current.Session.SessionID];
                 // add a cookie to the response with email address of the user
                 //var cookie = new CookieHeaderValue("session-id", HttpContext.Current.Session.SessionID);
-                var cookie = new CookieHeaderValue("logged-in", "true");
+
+                // TODO: change this part once session is implemented
+                var cookie = new CookieHeaderValue("session-id", HttpContext.Current.Session.SessionID);
                 cookie.Expires = DateTimeOffset.Now.AddDays(1);
                 cookie.Domain = Request.RequestUri.Host;
                 cookie.Path = "/";
+
+                //var cookie1 = new CookieHeaderValue("email", user.EmailAddress);
+                //cookie.Expires = DateTimeOffset.Now.AddDays(1);
+                //cookie.Domain = Request.RequestUri.Host;
+                //cookie.Path = "/";
 
                 var response = new HttpResponseMessage();
 
                 response.Headers.AddCookies(new CookieHeaderValue[] { cookie });
                 response.StatusCode = System.Net.HttpStatusCode.Accepted;
+                response.Content = new StringContent(HttpContext.Current.Session.SessionID);
 
                 return response;
             }
