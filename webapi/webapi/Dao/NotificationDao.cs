@@ -11,6 +11,31 @@ namespace webapi.Dao
     {
         private readonly ConnectionDao connectionDao = new ConnectionDao();
 
+        public List<Notification> GetNotificationsForUser(string emailAddress)
+        {
+            string storedProcedure = "dbo.GetNotificationForUser";
+            var parameterDictionary = new Dictionary<string, object>
+            {
+                { "@email_address", emailAddress}
+            };
+
+            DataSet resultDataSet = connectionDao.RunRetrievalStoredProc(storedProcedure, parameterDictionary);
+
+            return resultDataSet.Tables[0].AsEnumerable().Select(
+                (row) =>
+                {
+                    return new Notification()
+                    {
+                        Type = (int)row["notification_type"],
+                        Status = (int)row["notification_status"],
+                        Message = (string)row["notification_message"],
+                        LastUpdateDate = (DateTime)row["last_updated"]
+                    };
+                }
+            ).ToList();
+            
+        }
+
         public void AddNotification(int type, string userName, string message, int status)
         {
             string storedProcedure = "dbo.AddNotification";

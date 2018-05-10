@@ -18,6 +18,11 @@ namespace webapi.Services
                 notificationDao.AddNotification(notification.Type, notification.User.UserName, notification.Message, notification.Status);
         }
 
+        public List<Notification> GetNotificationsForUser(string emailAddress)
+        {
+            return notificationDao.GetNotificationsForUser(emailAddress);
+        }
+
         // called when a new title is added
         public void GenerateNewBookArrivalNotifications(string title, string author)
         {

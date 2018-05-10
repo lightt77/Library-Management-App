@@ -4,12 +4,17 @@ loginModule.controller('LoginController', ['$scope', 'LoginService', '$window', 
         //console.log($scope.loginDetails);
         LoginService.login($scope.loginDetails).then(
             (response) => {
-                //console.log("success");
                 console.log(response);
                 // TODO: change this once session is added
                 $scope.currentUserEmail = $scope.loginDetails.EmailAddress;
+                
+                // persist session-id in a cookie
                 $cookies.put('session-id',response.data);
-                // console.log(response.headers);
+
+                // persist email-id in a cookie
+                // TODO: remove this when session functionality is complete
+                $cookies.put('logged-in-email-id',$scope.loginDetails.EmailAddress);
+
                 // redirect to catalogue page on successful login
                 $window.location.href = '#!/home/catalogue';
             },

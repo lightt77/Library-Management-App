@@ -564,3 +564,19 @@ END
 
 EXEC dbo.CheckIfEmailAddressAlreadyExists @email_address='NewEmaidsdl';
 
+------------------------------------------------------------------------------------------------------------------------------------------
+-- for fetching notifications for a particular user
+
+CREATE OR ALTER PROCEDURE dbo.GetNotificationForUser(@email_address VARCHAR(50))
+AS
+BEGIN
+	DECLARE @user_id int;
+	
+	SET @user_id=(Select user_id from dbo.users where dbo.users.email_address=@email_address);
+
+	-- get all notificactions for current user as well as notifications meant for all users
+	Select notification_type,notification_status,notification_message,created_on,last_updated from dbo.notifications where dbo.notifications.user_id=@user_id or dbo.notifications.user_id=1;
+
+END
+
+EXEC dbo.GetNotificationForUser @email_address='abhishek@acc.com';

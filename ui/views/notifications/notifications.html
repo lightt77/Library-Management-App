@@ -1,3 +1,9 @@
 <div ng-controller='NotificationController'>
-    notifications
+
+    <ul class='list-group'>
+        <li class='list-group-item' ng-mouseover='' ng-class="{'active':''}" ng-repeat='notification in notificationsList'>
+            {{notification.Message}}
+        </li>
+    </ul>
+
 </div>
