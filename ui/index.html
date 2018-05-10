@@ -42,7 +42,7 @@
     <div class="container"> 
         <!--TODO: set isLoggedIn to true once login is successful, make it false with successful logout-->
         <!-- <div ng-if="isLoggedIn" ng-include="'views/home/navs.html'"></div> -->
-        <div ng-if="true" ng-include="'views/home/navbar.html'"></div>
+        <div ng-if='isUserLoggedIn()' ng-include="'views/home/navbar.html'"></div>
         <div ng-view></div>
 
     </div>

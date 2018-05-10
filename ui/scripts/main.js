@@ -34,12 +34,16 @@ app.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpPr
             redirectTo: '/login'
         });
 
-        //$httpProvider.defaults.headers.common = { 'SessionId' : $cookies.get('session-id') };
+    //$httpProvider.defaults.headers.common = { 'SessionId' : $cookies.get('session-id') };
 }]);
 
-app.controller("MainController", function () {
+app.controller("MainController", ['$scope', '$cookies', function ($scope, $cookies) {
     //console.log("main controller running");
-});
+
+    $scope.isUserLoggedIn = function () {
+        return ($cookies.get('logged-in-email-id') != undefined);
+    };
+}]);
 
 
 // app.controller("HomeController",['$scope','$http',function($scope,$http){

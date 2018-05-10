@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-default" style="margin-bottom: 10px">
+<nav ng-controller="LoginController" class="navbar navbar-expand-lg navbar-default" style="margin-bottom: 10px">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
         aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -21,5 +21,5 @@
         </ul>
     </div>
 
-    <button class="btn btn-dark">Log out</button>
+    <button class="btn btn-dark" ng-click="logOut()">Log out</button>
 </nav>
