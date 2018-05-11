@@ -60,5 +60,34 @@ namespace webapi.Dao
 
             return resultCount > 0;
         }
+
+        // TODO: change this method after session implementation
+        public string GetUserNameForEmailAddress(string emailAddress)
+        {
+            string storedProcName = "dbo.GetUserNameForEmailAddress";
+            var parameterDictionary = new Dictionary<string, object>
+            {
+                { "@email_address", emailAddress }
+            };
+
+            DataSet resultDataSet = connectionDao.RunRetrievalStoredProc(storedProcName, parameterDictionary);
+
+            return (string)resultDataSet.Tables[0].Rows[0]["user_name"];
+        }
+
+        public bool CheckIfGivenEmailIsOfAdmin(string emailAddress)
+        {
+            string storedProcName = "dbo.CheckIfEmailAddressIsOfAdmin";
+            var parameterDictionary = new Dictionary<string, object>
+            {
+                { "@email_address", emailAddress }
+            };
+
+            DataSet resultDataSet = connectionDao.RunRetrievalStoredProc(storedProcName, parameterDictionary);
+
+            int resultCount = (int)resultDataSet.Tables[0].Rows[0]["count"];
+
+            return (resultCount != 0);
+        }
     }
 }

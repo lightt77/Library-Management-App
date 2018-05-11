@@ -2,6 +2,11 @@ loginModule.controller('LoginController', ['$scope', 'LoginService', '$window', 
 
     $scope.logOut = function () {
         $cookies.remove('logged-in-email-id');
+
+        // clear notificaction list
+        $scope.notificationsList = [];
+
+        // redirect to login page
         $window.location.href = '#!/login';
     }
 

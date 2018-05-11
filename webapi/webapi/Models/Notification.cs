@@ -11,6 +11,7 @@ namespace webapi.Models
         public Users User { get; set; }
         public int Status { get; set; }
         public string Message { get; set; }
+        public string RelatedData { get; set; }
         public DateTime LastUpdateDate { get; set; }
     }
 }

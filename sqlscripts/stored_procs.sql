@@ -464,7 +464,7 @@ EXEC dbo.CheckIfWishlistEntryExists @title_name = 'HP', @user_name='Abhishek';
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 
-CREATE OR ALTER PROCEDURE dbo.AddNotification(@type int,@user_name VARCHAR(50),@message VARCHAR(50),@status int)
+CREATE OR ALTER PROCEDURE dbo.AddNotification(@type int,@user_name VARCHAR(50),@message VARCHAR(50),@status int,@related_data VARCHAR(50))
 AS
 BEGIN
 	DECLARE @user_id int;
@@ -476,12 +476,18 @@ BEGIN
 	begin
 		SET @user_id=1;
 	end
+	
+	-- to denote all admins, use reserved user_id=3
+	IF(@user_name='All Admins')
+	begin
+		SET @user_id=3;
+	end
 
-	Insert into dbo.notifications (notification_type, user_id, notification_status, notification_message, created_on, last_updated)
-		values(@type, @user_id, @status, @message, SYSDATETIME(), SYSDATETIME());
+	Insert into dbo.notifications (notification_type, user_id, notification_status, notification_message, related_data, created_on, last_updated)
+		values(@type, @user_id, @status, @message, @related_data, SYSDATETIME(), SYSDATETIME());
 END
 
-EXEC dbo.AddNotification @user_name='Abhishek',@type=1,@message='Hello World',@status=0;
+EXEC dbo.AddNotification @user_name='Abhishek',@type=1,@message='dummy notification',@status=0,@related_data='dummy data';
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -580,3 +586,23 @@ BEGIN
 END
 
 EXEC dbo.GetNotificationForUser @email_address='abhishek@acc.com';
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE OR ALTER PROCEDURE dbo.GetUserNameForEmailAddress(@email_address VARCHAR(50))
+AS
+BEGIN
+	select user_name from dbo.users where dbo.users.email_address=@email_address;
+END
+
+EXEC dbo.GetUserNameForEmailAddress @email_address='abhishek@acc.com';
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE OR ALTER PROCEDURE dbo.CheckIfEmailAddressIsOfAdmin(@email_address VARCHAR(50))
+AS
+BEGIN
+	select Count(*) as count from dbo.users where dbo.users.email_address=@email_address AND dbo.users.role_id != 2;
+END
+
+EXEC dbo.CheckIfEmailAddressIsOfAdmin @email_address='abhishek@acc.com';

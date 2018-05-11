@@ -33,10 +33,10 @@ namespace webapi.Dao
                     };
                 }
             ).ToList();
-            
+
         }
 
-        public void AddNotification(int type, string userName, string message, int status)
+        public void AddNotification(int type, string userName, string message, int status, string relatedData)
         {
             string storedProcedure = "dbo.AddNotification";
             var parameterDictionary = new Dictionary<string, object>
@@ -44,7 +44,8 @@ namespace webapi.Dao
                 { "@type", type },
                 { "@user_name", userName },
                 { "@message", message },
-                { "@status", status }
+                { "@status", status },
+                { "@related_data", relatedData }
             };
 
             connectionDao.RunCUDStoredProc(storedProcedure, parameterDictionary);
@@ -71,16 +72,17 @@ namespace webapi.Dao
         {
             string storedProcedure = "dbo.GetAllBookReturnDateDueRecords";
             var parameterDictionary = new Dictionary<string, object>();
-            
+
             DataSet resultDataSet = connectionDao.RunRetrievalStoredProc(storedProcedure, parameterDictionary);
-            
+
             return resultDataSet.Tables[0].AsEnumerable().Select(
-                (row) => {
+                (row) =>
+                {
                     return new Rental()
                     {
-                        BookName=(string)row["title_name"],
-                        UserName=(string)row["user_name"],
-                        ReturnDate=(DateTime)row["return_date"]
+                        BookName = (string)row["title_name"],
+                        UserName = (string)row["user_name"],
+                        ReturnDate = (DateTime)row["return_date"]
                     };
                 }
             ).ToList();
@@ -94,7 +96,8 @@ namespace webapi.Dao
             DataSet resultDataSet = connectionDao.RunRetrievalStoredProc(storedProcedure, parameterDictionary);
 
             return resultDataSet.Tables[0].AsEnumerable().Select(
-                (row) => {
+                (row) =>
+                {
                     return new Rental()
                     {
                         BookName = (string)row["title_name"],

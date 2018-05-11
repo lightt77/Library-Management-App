@@ -74,5 +74,16 @@ namespace webapi.Services
 
             return HttpStatusCode.Accepted;
         }
+
+        // TODO: this method will change after session implementation
+        public string GetNameOfCurrentlyLoggedInUser(string currentUserEmailAddress)
+        {
+            return accountDao.GetUserNameForEmailAddress(currentUserEmailAddress);
+        }
+
+        public bool CheckIfGivenEmailIsOfAdmin(string emailAddress)
+        {
+            return accountDao.CheckIfGivenEmailIsOfAdmin(emailAddress);
+        }
     }
 }

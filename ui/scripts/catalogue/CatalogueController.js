@@ -37,5 +37,11 @@ angular.module('CatalogueModule').controller('CatalogueController', ['$scope', '
     );
 
 
+    $scope.issueBook=function(bookName){
+        //console.log(bookName);
+        catalogueService.makeBookIssueRequest(bookName);
+
+    }
+
 
 }]);
