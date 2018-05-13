@@ -4,7 +4,8 @@ var app = angular.module("App", ['ngRoute', 'ngCookies',
     'CatalogueModule',
     'LoginModule',
     'RegisterModule',
-    'NotificationModule'
+    'NotificationModule',
+    'AdminModule'
 ]);
 
 app.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpProvider) {

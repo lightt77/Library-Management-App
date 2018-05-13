@@ -5,35 +5,29 @@
     <meta name="viewport" content="width=device-width" />
     <script src="/Scripts/angular.min.js"></script>
     <script src="~/Scripts/angular-route.min.js"></script>
-    <script src="~/Scripts/UiApp/Layout/LayoutModule.js"></script>
-    <!-- <script src="~/Scripts/UiApp/Home/LayoutController.js"></script> -->
+    <script src="~/Scripts/App/Layout/LayoutModule.js"></script>
+    <script src="~/Scripts/App/Layout/LayoutController.js"></script>
+
+    <script src="~/Scripts/App/Login/LoginModule.js"></script>
+    <script src="~/Scripts/App/Login/LoginController.js"></script>
+
     <title>Library Management App</title>
 
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body ng-app="Layout">
-    @*<div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
-                </ul>
-            </div>
-        </div>
-    </div>*@
+<body ng-app="MainApp">
     <div class="container body-content" ng-controller="LayoutController">
         @RenderBody()
-        <div ng-view></div>
+
+        <input ng-model="a">
+        <input ng-model="a">
+        <p>{{a}}</p>
+
+        <a href="/books/all">Get All Books</a>
+        <a href="#!login">Login</a>
+
+        @*<div ng-view></div>*@
     </div>
 
     @Scripts.Render("~/bundles/jquery")

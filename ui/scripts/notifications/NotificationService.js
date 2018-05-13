@@ -16,5 +16,4 @@ angular.module('NotificationModule').service('NotificationService', ['$http', '$
     this.getAllNotificationsForUser = function () {
         return $http.get(DOMAIN_NAME + NOTIFICATIONS);
     };
-
 }]);

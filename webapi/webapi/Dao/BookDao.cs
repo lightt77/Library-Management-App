@@ -206,5 +206,18 @@ namespace webapi.Dao
 
             return resultCount != 0;
         }
+
+        public bool CheckIfTitleIsAvailable(string titleName)
+        {
+            string storedProcedure = "dbo.CheckIfBookIsAvailable";
+            var parameterDictionary = new Dictionary<string, object>
+            {
+                { "@title_name", titleName }
+            };
+
+            int resultCount = (int)connectionDao.RunRetrievalStoredProc(storedProcedure, parameterDictionary).Tables[0].Rows[0]["count"];
+
+            return resultCount != 0;
+        }
     }
 }

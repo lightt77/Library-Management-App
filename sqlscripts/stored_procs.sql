@@ -606,3 +606,28 @@ BEGIN
 END
 
 EXEC dbo.CheckIfEmailAddressIsOfAdmin @email_address='abhishek@acc.com';
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE OR ALTER PROCEDURE dbo.CheckIfBookIsAvailable(@title_name VARCHAR(50))
+AS
+BEGIN
+	select Count(*) as count from dbo.title 
+			where dbo.title.title_name=@title_name AND dbo.title.quantity>0;
+END
+
+EXEC dbo.CheckIfBookIsAvailable @title_name ='HP';
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE OR ALTER PROCEDURE dbo.GetNewRentalRequests
+AS
+BEGIN
+	select dbo.title.title_name,dbo.users.user_name from dbo.rental
+		join dbo.book on dbo.book.book_id=dbo.rental.book_id
+		join dbo.title on dbo.book.title_id=dbo.title.title_id
+		join dbo.users on dbo.users.user_id=dbo.rental.user_id
+		where dbo.rental.rental_status=0;
+END
+
+EXEC dbo.GetNewRentalRequests;

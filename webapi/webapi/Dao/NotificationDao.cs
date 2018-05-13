@@ -107,5 +107,24 @@ namespace webapi.Dao
             ).ToList();
         }
 
+
+        public List<Rental> GetNewRentalRequests()
+        {
+            string storedProcedure = "dbo.GetNewRentalRequests";
+            var parameterDictionary = new Dictionary<string, object>();
+
+            DataSet resultDataSet = connectionDao.RunRetrievalStoredProc(storedProcedure, parameterDictionary);
+
+            return resultDataSet.Tables[0].AsEnumerable().Select(
+                (row) =>
+                {
+                    return new Rental()
+                    {
+                        BookName = (string)row["title_name"],
+                        UserName = (string)row["user_name"]
+                    };
+                }
+            ).ToList();
+        }
     }
 }

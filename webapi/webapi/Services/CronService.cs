@@ -17,11 +17,7 @@ namespace webapi.Services
             //Thread cronThread = new Thread(Foo);
 
             //cronThread.Start();
-            Foo();
-        }
-
-        private static void Foo()
-        {
+         
             ISchedulerFactory schedulerFactory = new StdSchedulerFactory();
             IScheduler scheduler = schedulerFactory.GetScheduler();
 
@@ -50,6 +46,8 @@ namespace webapi.Services
             GenerateBookReturnDateDueNotifications();
 
             GenerateBookInWishlistAvailableNotifications();
+
+            GenerateBookIssueRequestNotifications();
         }
 
         private void GenerateBookReturnDateDueNotifications()
@@ -66,6 +64,14 @@ namespace webapi.Services
 
             foreach (var i in recordList)
                 notificationService.GenerateBookInWishlistAvailableNotifications(i.BookName, i.UserName);
+        }
+
+        private void GenerateBookIssueRequestNotifications()
+        {
+            List<Rental> recordList = notificationService.GetNewRentalRequests();
+
+            foreach (var record in recordList)
+                notificationService.GenerateNewBookIssueRequestNotifications(record.UserName, record.BookName);
         }
     }
 

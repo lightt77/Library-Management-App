@@ -14,20 +14,25 @@ angular.module('CatalogueModule').service('catalogueService', ['$http', '$cookie
     var DELETE_BOOK = 'Books/delete';
     var GET_USERS_FOR_BOOK = 'Books/users';
 
-    var MAKE_BOOK_ISSUE_REQUEST = 'users/book/issue';
+    var MAKE_BOOK_ISSUE_REQUEST = 'Books/issue';
 
     this.foo = function () {
-        console.log("Cataloguehadkjhaskjds Service works...");
+        console.log("Catalogue Service works...");
     };
+
+    this.addBook = function (bookDetails) {
+        return $http.post(DOMAIN_NAME + ADD_BOOK, JSON.stringify(bookDetails));
+    }
 
     this.getAllBooks = function () {
         return $http.get(DOMAIN_NAME + GET_ALL_BOOKS);
     };
 
-    this.makeBookIssueRequest = function (bookName) {
-        console.log(bookName);
-        $http.defaults.headers.common.BookName = bookName;
-
-        return $http.get(DOMAIN_NAME + MAKE_BOOK_ISSUE_REQUEST);
+    this.makeBookIssueRequest = function (bookDetails) {
+        console.log(bookDetails);
+        
+        return $http.post(DOMAIN_NAME + MAKE_BOOK_ISSUE_REQUEST,JSON.stringify(bookDetails));
     }
+
+
 }]);

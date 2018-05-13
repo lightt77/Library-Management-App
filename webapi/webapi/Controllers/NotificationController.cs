@@ -48,22 +48,5 @@ namespace webapi.Controllers
 
             return notificationService.GetNotificationsForUser(currentUserEmailAddress);
         }
-
-        [HttpGet]
-        [EnableCors(origins: "http://127.0.0.1:5500", headers: "*", methods: "*")]
-        [Route("users/book/issue")]
-        public void AddBookIssueNotification()
-        {
-            if (Request.Headers.GetValues("EmailId").Count() != 0)
-            {
-                string currentUserEmail = Request.Headers.GetValues("EmailId").First();
-                string bookName = Request.Headers.GetValues("BookName").First();
-
-                string nameOfCurrentlyLoggedInUser = accountService.GetNameOfCurrentlyLoggedInUser(currentUserEmail);
-
-                notificationService.GenerateNewBookIssueRequestNotifications(nameOfCurrentlyLoggedInUser,bookName);
-            }
-
-        }
     }
 }

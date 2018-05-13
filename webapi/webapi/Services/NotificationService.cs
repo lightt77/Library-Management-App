@@ -80,6 +80,7 @@ namespace webapi.Services
             });
         }
 
+        // called by cron job
         public void GenerateNewBookIssueRequestNotifications(string bookRecipientName, string bookName)
         {
             AddNotification(new Notification()
@@ -104,6 +105,11 @@ namespace webapi.Services
         public List<Rental> GetBooksInWishlistAvailableRecords()
         {
             return notificationDao.GetBooksInWishlistAvailableRecords();
+        }
+
+        public List<Rental> GetNewRentalRequests()
+        {
+            return notificationDao.GetNewRentalRequests();
         }
 
         public bool CheckIfNotificationExists(Notification notification)

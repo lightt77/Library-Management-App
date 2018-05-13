@@ -17,6 +17,11 @@ namespace webapi.Services
             return bookDao.GetAllBooks();
         }
 
+        public bool CheckForBookAvailability(string titleName)
+        {
+            return bookDao.CheckIfTitleIsAvailable(titleName);
+        }
+
         public List<Book> GetBooksByGenre(string genreName)
         {
             return bookDao.GetBooksByGenre(genreName);
@@ -45,25 +50,25 @@ namespace webapi.Services
 
                     //for multiple genres
                     for (int i = 1; i < book.Genre.Count; i++)
-                        bookDao.AddNewGenreToTitle(book.Title,book.Author,book.Genre[i]);
-                }   
+                        bookDao.AddNewGenreToTitle(book.Title, book.Author, book.Genre[i]);
+                }
             }
             else
             {
                 bookDao.AddBook(book.Title);
-            }   
+            }
         }
 
         private void AddTitle(string title, string author, int rating, int? price, string genre)
         {
-            bookDao.AddTitle(title, author, rating, price== null ? 100 : price, genre);
-            notificationService.GenerateNewBookArrivalNotifications(title,author);
+            bookDao.AddTitle(title, author, rating, price == null ? 100 : price, genre);
+            notificationService.GenerateNewBookArrivalNotifications(title, author);
         }
 
         public void DeleteBook(Book book)
         {
             //TODO: validate if the user is admin
-            
+
             bookDao.DeleteBook(book.Title, book.Author);
         }
 

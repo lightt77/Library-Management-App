@@ -6,7 +6,7 @@ using System.Web;
 
 namespace webapi.Dao
 {
-    public class AdminDao
+    public class RentalDao
     {
         private readonly ConnectionDao connectionDao = new ConnectionDao();
 

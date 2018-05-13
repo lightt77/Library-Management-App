@@ -17,8 +17,10 @@ namespace webapi.Controllers
     public class BookController : ApiController
     {
         private readonly BookService bookService = new BookService();
+        private readonly RentalService rentalService = new RentalService();
+        private readonly AccountService accountService = new AccountService();
 
-        [EnableCors(origins: "http://127.0.0.1:5500",headers:"*",methods:"*")]
+        [EnableCors(origins: "http://127.0.0.1:5500", headers: "*", methods: "*")]
         [Route("all")]
         [HttpGet]
         public List<Book> GetAllBooks()
@@ -60,6 +62,43 @@ namespace webapi.Controllers
         {
             //validate if admin
             return bookService.GetUsersForBook(book);
+        }
+
+        [HttpPost]
+        [EnableCors(origins: "http://127.0.0.1:5500", headers: "*", methods: "*")]
+        [Route("issue")]
+        public HttpResponseMessage IssueBook([FromBody]Book book)
+        {
+            string userEmailAddress;
+
+            if (Request.Headers.GetValues("EmailId").Count() == 0)
+            {
+                return new HttpResponseMessage()
+                {
+                    StatusCode = HttpStatusCode.BadRequest
+                };
+            }
+
+            userEmailAddress = Request.Headers.GetValues("EmailId").First();
+
+            // validate if book is available
+            if (!bookService.CheckForBookAvailability(book.Title))
+            {
+                return new HttpResponseMessage()
+                {
+                    StatusCode = HttpStatusCode.Forbidden
+                };
+            }
+
+            string userName = accountService.GetNameOfCurrentlyLoggedInUser(userEmailAddress);
+
+            // add rental with status unapproved
+            rentalService.AddRental(book.Title, userName, null);
+
+            return new HttpResponseMessage()
+            {
+                StatusCode = HttpStatusCode.Accepted
+            };
         }
     }
 }

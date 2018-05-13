@@ -11,7 +11,7 @@ namespace webapi.Controllers
 {
     public class AdminController : ApiController
     {
-        private readonly AdminService adminService = new AdminService();
+        private readonly RentalService adminService = new RentalService();
 
         [Route("rental/title/{titleName}/user/{userName}/noOfDays/{noOfDays}")]
         [HttpPut]

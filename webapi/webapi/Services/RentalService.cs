@@ -6,9 +6,9 @@ using webapi.Dao;
 
 namespace webapi.Services
 {
-    public class AdminService
+    public class RentalService
     {
-        private readonly AdminDao adminDao = new AdminDao();
+        private readonly RentalDao rentalDao = new RentalDao();
         private readonly UserDao userDao = new UserDao();
         private readonly BookDao bookDao = new BookDao();
 
@@ -17,7 +17,7 @@ namespace webapi.Services
             if (bookDao.CheckIfBookTitleExists(titleName) && userDao.CheckIfUserExists(userName))
             {
                 // default issue perod is 15 days
-                adminDao.AddRental(titleName, userName, noOfDaysToIssueFor == null ? 15 : noOfDaysToIssueFor);
+                rentalDao.AddRental(titleName, userName, noOfDaysToIssueFor == null ? 15 : noOfDaysToIssueFor);
             }
             else
             {

@@ -18,18 +18,18 @@ angular.module('CatalogueModule').controller('CatalogueController', ['$scope', '
         }
     };
 
-    function getGenresAsACommaSeperatedString(genres){
-        let output="";
+    function getGenresAsACommaSeperatedString(genres) {
+        let output = "";
 
-        for(var genre in genres)
-            output+=""+genre+",";
-        
+        for (var genre in genres)
+            output += "" + genre + ",";
+
         return output;
     };
 
     catalogueService.getAllBooks().then(
         (response) => {
-             $scope.booksList = response.data;
+            $scope.booksList = response.data;
         },
         (error) => {
             console.log(error);
@@ -37,11 +37,22 @@ angular.module('CatalogueModule').controller('CatalogueController', ['$scope', '
     );
 
 
-    $scope.issueBook=function(bookName){
+    $scope.issueBook = function (bookName) {
         //console.log(bookName);
-        catalogueService.makeBookIssueRequest(bookName);
+        catalogueService.makeBookIssueRequest({"Title":bookName});
 
     }
+
+    // catalogueService.addBook(bookDetails).then(
+    //     (response) => {
+    //         console.log("book added");
+    //         // redirect to catalogue page
+    //         $window.location.href = "#!/home/catalogue";
+    //     },
+    //     (error) => {
+    //         console.log(console.error);
+    //     }
+    // );
 
 
 }]);
