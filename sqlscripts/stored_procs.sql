@@ -631,3 +631,17 @@ BEGIN
 END
 
 EXEC dbo.GetNewRentalRequests;
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE OR ALTER PROCEDURE dbo.GetBooksWithUser(@user_email_address VARCHAR(50))
+AS
+BEGIN
+	select title_name,author,price from dbo.rental
+		join dbo.users on dbo.rental.user_id=dbo.users.user_id
+		join dbo.book on dbo.rental.book_id=dbo.book.book_id
+		join dbo.title on dbo.title.title_id=dbo.book.title_id
+		where dbo.users.email_address=@user_email_address;
+END
+
+EXEC dbo.GetBooksWithUser @user_email_address='abhishek@acc.com';

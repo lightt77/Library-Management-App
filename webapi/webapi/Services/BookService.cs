@@ -76,5 +76,10 @@ namespace webapi.Services
         {
             return bookDao.GetUsersForBook(book.Title);
         }
+
+        public List<Book> GetBooksWithUser(string emailAddress)
+        {
+            return bookDao.GetBooksWithUser(emailAddress);
+        }
     }
 }

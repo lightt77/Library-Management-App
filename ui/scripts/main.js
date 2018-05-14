@@ -5,7 +5,9 @@ var app = angular.module("App", ['ngRoute', 'ngCookies',
     'LoginModule',
     'RegisterModule',
     'NotificationModule',
-    'AdminModule'
+    'AdminModule',
+    'BookShelfModule',
+    'RequestModule'
 ]);
 
 app.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpProvider) {
@@ -22,8 +24,14 @@ app.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpPr
         .when('/home/catalogue', {
             templateUrl: 'views/catalogue/catalogue.html'
         })
+        .when('/home/bookshelf', {
+            templateUrl: 'views/bookshelf/bookshelf.html'
+        })
         .when('/home/wishlist', {
             templateUrl: 'views/wishlist/wishlist.html'
+        })
+        .when('/home/requests', {
+            templateUrl: 'views/requests/requests.html'
         })
         .when('/home/notifications', {
             templateUrl: 'views/notifications/notifications.html'

@@ -1,0 +1,19 @@
+<div ng-controller='BookShelfController'>
+
+    <div ng-repeat='book in booksWithCurrentUser' class='container'>
+
+        <div class='row'>
+            <div class='col-sm-3'>
+                <div class='card' style='margin:10px'>
+                    <div class='card-body'>
+                        <h5 class="card-title" ng-model="selectedBookTitle">{{book.Title}}</h5>
+                        <p class="card-text">{{book.Title}} by {{book.Author}}</p>
+                        <button class='btn btn-primary' ng-click="returnBook(book)">Return</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

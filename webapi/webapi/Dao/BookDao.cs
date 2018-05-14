@@ -111,7 +111,7 @@ namespace webapi.Dao
 
 
         // by default also adds an entry in the book table if a new title is added
-        public void AddTitle(string title,string author,int rating,int? price,string genre)
+        public void AddTitle(string title, string author, int rating, int? price, string genre)
         {
             string storedProcName = "dbo.AddTitle";
             var parameterDictionary = new Dictionary<string, object>
@@ -218,6 +218,28 @@ namespace webapi.Dao
             int resultCount = (int)connectionDao.RunRetrievalStoredProc(storedProcedure, parameterDictionary).Tables[0].Rows[0]["count"];
 
             return resultCount != 0;
+        }
+
+        public List<Book> GetBooksWithUser(string emailAddress)
+        {
+            string storedProcedure = "dbo.GetBooksWithUser";
+            var parameterDictionary = new Dictionary<string, object>
+            {
+                { "@user_email_address", emailAddress }
+            };
+
+            DataSet resultDataSet = connectionDao.RunRetrievalStoredProc(storedProcedure, parameterDictionary);
+
+            return resultDataSet.Tables[0].AsEnumerable().Select(
+                    (row) => {
+                        return new Book()
+                        {
+                            Author=(string)row["author"],
+                            Title=(string)row["title_name"],
+                        };
+                    }
+                ).ToList();
+
         }
     }
 }

@@ -9,6 +9,7 @@ namespace webapi.Models
     {
         public Book()
         {
+            // initialise an empty list
             Genre = new List<string>();
         }
 

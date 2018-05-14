@@ -64,6 +64,24 @@ namespace webapi.Controllers
             return bookService.GetUsersForBook(book);
         }
 
+        [HttpGet]
+        [EnableCors(origins: "http://127.0.0.1:5500", headers: "*", methods: "*")]
+        [Route("shelf")]
+        public List<Book> GetBooksWithUser()
+        {
+            string userEmailAddress;
+
+            if (Request.Headers.GetValues("EmailId").Count() == 0)
+            {
+                // return empty list
+                return new List<Book>();
+            }
+            
+            userEmailAddress = Request.Headers.GetValues("EmailId").First();
+
+            return bookService.GetBooksWithUser(userEmailAddress);
+        }
+
         [HttpPost]
         [EnableCors(origins: "http://127.0.0.1:5500", headers: "*", methods: "*")]
         [Route("issue")]
