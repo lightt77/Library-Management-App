@@ -18,12 +18,15 @@ angular.module('CatalogueModule').controller('CatalogueController', ['$scope', '
         }
     };
 
-    function getGenresAsACommaSeperatedString(genres) {
+    $scope.getGenresAsACommaSeperatedString = function (genres) {
         let output = "";
 
-        for (var genre in genres)
-            output += "" + genre + ",";
+        for (var i in genres) {
+            output += "" + genres[i];
 
+            if (i < genres.length-1)
+                output += ",";
+        }
         return output;
     };
 
@@ -39,7 +42,7 @@ angular.module('CatalogueModule').controller('CatalogueController', ['$scope', '
 
     $scope.issueBook = function (bookName) {
         //console.log(bookName);
-        catalogueService.makeBookIssueRequest({"Title":bookName});
+        catalogueService.makeBookIssueRequest({ "Title": bookName });
 
     }
 
