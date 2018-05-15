@@ -110,6 +110,8 @@ namespace webapi.Controllers
 
             string userName = accountService.GetNameOfCurrentlyLoggedInUser(userEmailAddress);
 
+            //TODO: check if rental does not already exists
+
             // add rental with status unapproved
             rentalService.AddRental(book.Title, userName, null);
 

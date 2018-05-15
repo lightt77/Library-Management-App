@@ -645,3 +645,34 @@ BEGIN
 END
 
 EXEC dbo.GetBooksWithUser @user_email_address='abhishek@acc.com';
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE OR ALTER PROCEDURE dbo.GetAllPendingRequests
+AS
+BEGIN
+	select user_name,title_name,issue_date,return_date,rental_status from dbo.rental
+		join dbo.users on dbo.users.user_id=dbo.rental.user_id
+		join dbo.book on dbo.book.book_id=dbo.rental.book_id
+		join dbo.title on dbo.book.title_id=dbo.title.title_id
+		where dbo.rental.rental_status=0;
+END
+
+EXEC dbo.GetAllPendingRequests;
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE OR ALTER PROCEDURE dbo.HandleRentalRequest(@user_name VARCHAR(50),@title_name VARCHAR(50),@rental_status int)
+AS
+BEGIN
+	Update dbo.rental
+	Set rental_status=@rental_status,last_updated=SYSDATETIME()
+		from dbo.rental
+		join dbo.users on dbo.rental.user_id=dbo.users.user_id
+		join dbo.book on dbo.book.book_id=dbo.rental.book_id
+		join dbo.title on dbo.book.title_id=dbo.title.title_id
+	where user_name=@user_name AND title_name=@title_name;
+
+END
+
+EXEC dbo.HandleRentalRequest @user_name='Abhishek',@title_name='2',@rental_status='2';

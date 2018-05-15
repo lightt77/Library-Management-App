@@ -1,0 +1,13 @@
+<div ng-controller='RequestController'>
+
+    <ul class='list-group'>
+        <li class='list-group-item' ng-repeat='rental in pendingRentalsList'>
+            {{rental.UserName}} wishes to issue {{rental.BookName}}
+            <span class="float-right">
+                <button class="btn btn-success" ng-click="approve(rental)">Approve</button>
+                <button class="btn btn-danger" ng-click="reject(rental)">Reject</button>
+            </span>
+        </li>
+    </ul>
+
+</div>

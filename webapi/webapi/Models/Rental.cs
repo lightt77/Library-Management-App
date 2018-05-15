@@ -11,6 +11,6 @@ namespace webapi.Models
         public string BookName { get; set; }
         public DateTime IssueDate { get; set; }
         public DateTime ReturnDate { get; set; }
-        public int RentalStatus { get; set; } 
+        public int RentalStatus { get; set; }
     }
 }

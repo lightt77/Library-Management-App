@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using webapi.Dao;
+using webapi.Models;
 
 namespace webapi.Services
 {
@@ -26,5 +27,30 @@ namespace webapi.Services
             }
             
         }
+
+        public void RejectRental(string userName,string bookName)
+        {
+            rentalDao.HandleRental(bookName, userName, (int)RentalStatus.REJECTED);
+        }
+
+        public void ApproveRental(string userName, string bookName)
+        {
+            rentalDao.HandleRental(bookName, userName, (int)RentalStatus.APPROVED);
+        }
+
+        public List<Rental> GetPendingRentalRequests()
+        {
+            return rentalDao.GetPendingRentalRequests();
+        }
+
+        public enum RentalStatus
+        {
+            UNAPPROVED,
+            REJECTED,
+            APPROVED,
+            RETURNED
+        }
     }
+
+
 }
