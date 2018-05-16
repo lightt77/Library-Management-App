@@ -1,6 +1,6 @@
 angular.module('NotificationModule', []).controller('NotificationController', ['$scope', '$cookies', '$interval', 'NotificationService', function ($scope, $cookies, $interval, NotificationService) {
 
-    let NOTIFICATION_REFRESH_INTERVAL_IN_SECONDS = 3;
+    let NOTIFICATION_REFRESH_INTERVAL_IN_SECONDS = 60;
 
     $scope.notificationsList = [];
 

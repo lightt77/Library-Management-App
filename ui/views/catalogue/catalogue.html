@@ -27,8 +27,11 @@
                         <h5 class="card-title" ng-model="selectedBookTitle">{{book.Title}}</h5>
                         <p class="card-text">{{book.Title}} by {{book.Author}}
                             <br/> Genres: {{getGenresAsACommaSeperatedString(book.Genre)}}
+                            <br> {{book.Quantity}} copies available
                         </p>
-                        <button class="btn btn-primary" ng-click="issueBook(book.Title)">Get this book</a>
+                        <button class="btn btn-primary" ng-click="issueBook(book.Title)" ng-if="book.Quantity>0">Get this book</a>
+                            <button class="btn btn-xs" ng-click="addToWishList(book.Title)" ng-if="book.Quantity==0">Add to wishlist</a>
+                        
                     </div>
                 </div>
             </div>

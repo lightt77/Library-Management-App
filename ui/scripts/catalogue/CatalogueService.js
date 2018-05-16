@@ -15,6 +15,7 @@ angular.module('CatalogueModule').service('catalogueService', ['$http', '$cookie
     var GET_USERS_FOR_BOOK = 'Books/users';
 
     var MAKE_BOOK_ISSUE_REQUEST = 'Books/issue';
+    var ADD_TO_WISHLIST = 'user/wishlist';
 
     this.foo = function () {
         console.log("Catalogue Service works...");
@@ -29,10 +30,15 @@ angular.module('CatalogueModule').service('catalogueService', ['$http', '$cookie
     };
 
     this.makeBookIssueRequest = function (bookDetails) {
-        console.log(bookDetails);
-        
-        return $http.post(DOMAIN_NAME + MAKE_BOOK_ISSUE_REQUEST,JSON.stringify(bookDetails));
+        //console.log(bookDetails);
+
+        return $http.post(DOMAIN_NAME + MAKE_BOOK_ISSUE_REQUEST, JSON.stringify(bookDetails));
     }
+
+    this.addToWishList = function (bookDetails) {
+        console.log(bookDetails);
+        return $http.post(DOMAIN_NAME + ADD_TO_WISHLIST, JSON.stringify(bookDetails));
+    };
 
 
 }]);

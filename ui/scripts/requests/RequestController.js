@@ -1,6 +1,7 @@
 angular.module('RequestModule').controller('RequestController',['$scope','RequestService',function($scope,RequestService){
     console.log("requests");
 
+    // TODO: auto-refresh periodically
     RequestService.getPendingRequests()
         .then(
             (response)=>{

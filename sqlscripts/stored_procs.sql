@@ -319,21 +319,16 @@ PRINT @userExist;
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 
-CREATE OR ALTER PROCEDURE dbo.CheckAdmin(@user_name nvarchar(50), @checkAdmin int out)
+CREATE OR ALTER PROCEDURE dbo.CheckAdmin(@email_address nvarchar(50))
 AS
 DECLARE @user_id int;
 DECLARE @role_id int;
 BEGIN
- SET @user_id = (SELECT user_id FROM dbo.users WHERE dbo.users.user_name = @user_name);
- SET @role_id = (SELECT role_id FROM dbo.users WHERE dbo.users.user_id = @user_id);
- IF @role_id = 1 OR @role_id = 3
-  SET @checkAdmin = 1;
- ELSE
-  SET @checkAdmin = 0; 
+	SET @user_id = (SELECT user_id FROM dbo.users WHERE dbo.users.email_address = @email_address);
+ 	SELECT count(*) FROM dbo.users WHERE dbo.users.user_id = @user_id AND (dbo.users.role_id = 1 OR dbo.users.role_id = 3);
 END
-DECLARE @checkAdministrator int;
-Execute dbo.CheckAdmin 'user1', @checkAdministrator out;
-PRINT @checkAdministrator;
+
+EXEC dbo.CheckAdmin @email_address='karthik@acc.com'
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 
