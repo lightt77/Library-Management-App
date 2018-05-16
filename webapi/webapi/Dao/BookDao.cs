@@ -43,6 +43,7 @@ namespace webapi.Dao
                 book.Title = (string)titleTable.Rows[i]["title_name"];
                 book.Genre = new List<string>();
                 book.Author = (string)titleTable.Rows[i]["author"];
+                book.Quantity = (int)titleTable.Rows[i]["quantity"];
 
                 for (int j = 0; j < genreTable.Rows.Count; j++)
                 {
@@ -208,6 +209,19 @@ namespace webapi.Dao
         }
 
         public bool CheckIfTitleIsAvailable(string titleName)
+        {
+            string storedProcedure = "dbo.CheckIfBookIsAvailable";
+            var parameterDictionary = new Dictionary<string, object>
+            {
+                { "@title_name", titleName }
+            };
+
+            int resultCount = (int)connectionDao.RunRetrievalStoredProc(storedProcedure, parameterDictionary).Tables[0].Rows[0]["count"];
+
+            return resultCount != 0;
+        }
+
+        public bool CheckIfBookForGivenTitleIsAvailable(string titleName)
         {
             string storedProcedure = "dbo.CheckIfBookIsAvailable";
             var parameterDictionary = new Dictionary<string, object>

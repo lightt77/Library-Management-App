@@ -83,6 +83,14 @@ AS
 		SET @title_id=(Select title_id from dbo.title where title_name=@title_name);
 		INSERT INTO dbo.book(title_id,created_on,last_updated)
 			VALUES (@title_id,SYSDATETIME(),SYSDATETIME());
+
+		-- update quantity in title table
+		DECLARE @updated_book_quantity INT;
+		SET @updated_book_quantity=(Select Count(*) from dbo.book where dbo.book.title_id=@title_id AND dbo.book.availability_status=1);
+		
+		UPDATE dbo.title
+			Set quantity=@updated_book_quantity
+			where dbo.title.title_id=@title_id;
 	end
 GO
 
@@ -203,27 +211,6 @@ EXEC dbo.FindUsersForBook @title_name = 'abc'
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 
-CREATE OR ALTER PROCEDURE dbo.AddRental (@user_name nvarchar(50), @title_name nvarchar(50), @no_of_days int)
-AS
-DECLARE @user_id int;
-DECLARE @book_id int;
-DECLARE @title_id int;
-BEGIN
-
-	SET @user_id = (SELECT user_id FROM dbo.users WHERE user_name = @user_name);
-	SET @title_id = (SELECT title_id FROM dbo.title WHERE title_name = @title_name); 
- 
-	SET @book_id = (Select MIN(dbo.book.book_id) from dbo.book
-					where dbo.book.title_id=@title_id AND dbo.book.availability_status = 1);
-
-	INSERT INTO dbo.rental(user_id, book_id,issue_date,return_date,rental_status,created_on,last_updated)
-		VALUES (@user_id,@book_id,SYSDATETIME(),DATEADD(DAY,@no_of_days,SYSDATETIME()),0,SYSDATETIME(),SYSDATETIME());
-END
-
-EXEC dbo.AddRental @user_name = 'Abhishek', @title_name = 'CLRS', @no_of_days=15;
-
-------------------------------------------------------------------------------------------------------------------------------------------
-
 CREATE OR ALTER PROCEDURE dbo.CheckAdmin(@user_name nvarchar(50), @checkAdmin int out)
 AS
 DECLARE @user_id int;
@@ -282,12 +269,29 @@ BEGIN
 		SET @book_id = (Select MIN(dbo.book.book_id) from dbo.book
 						where dbo.book.title_id=@title_id AND dbo.book.availability_status = 1);
 
+		-- make the book unavailable
+		UPDATE dbo.book
+		SET availability_status=0 where book_id=@book_id;
+
+		--DECLARE @quantity_of_books_left INT;
+		--SET @quantity_of_books_left=(Select Count(*) from dbo.book where book_id=@book_id AND availability_status=1);
+
+		-- decrement quantity of the book
+		--UPDATE dbo.title
+		--SET quantity=@quantity_of_books_left where dbo.title.title_id=@title_id;
+
+		-- update quantity in title table
+		DECLARE @updated_book_quantity INT;
+		SET @updated_book_quantity=(Select Count(*) from dbo.book where dbo.book.title_id=@title_id AND dbo.book.availability_status=1);
+		
+		UPDATE dbo.title
+			Set quantity=@updated_book_quantity
+			where dbo.title.title_id=@title_id;
+
 		INSERT INTO dbo.rental(user_id, book_id,issue_date,return_date,rental_status,created_on,last_updated)
 			VALUES (@user_id,@book_id,SYSDATETIME(),DATEADD(DAY,@no_of_days,SYSDATETIME()),0,SYSDATETIME(),SYSDATETIME());
-	
 END
-
-EXEC dbo.AddRental @user_name = 'Abhishek', @title_name = 'CLRS', @no_of_days=15;
+EXEC dbo.AddRental @user_name = 'Abhishek', @title_name = 'title22', @no_of_days=15;
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -673,6 +677,35 @@ BEGIN
 		join dbo.title on dbo.book.title_id=dbo.title.title_id
 	where user_name=@user_name AND title_name=@title_name;
 
+	-- if rental is rejected, make the corresponding book available again
+	IF(@rental_status=1)
+	begin
+
+		DECLARE @book_id INT;
+
+		SET @book_id=(Select dbo.rental.book_id from dbo.rental
+						join dbo.users on dbo.rental.user_id=dbo.users.user_id
+						join dbo.book on dbo.book.book_id=dbo.rental.book_id
+						join dbo.title on dbo.book.title_id=dbo.title.title_id
+						where user_name=@user_name AND title_name=@title_name);
+		
+		Update dbo.book
+			Set availability_status=1,last_updated=SYSDATETIME() where book_id=@book_id;
+		
+	end 
+
 END
 
 EXEC dbo.HandleRentalRequest @user_name='Abhishek',@title_name='2',@rental_status='2';
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE OR ALTER PROCEDURE dbo.CheckIfBookIsAvailable(@title_name VARCHAR(50))
+AS
+BEGIN
+	Select Count(*) as count from dbo.book 
+		join dbo.title on dbo.title.title_id=dbo.book.title_id
+		where dbo.title.title_name=@title_name and dbo.book.availability_status=1; 
+END
+
+EXEC dbo.CheckIfBookIsAvailable @title_name='title12';

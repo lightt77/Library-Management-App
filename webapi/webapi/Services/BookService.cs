@@ -19,7 +19,7 @@ namespace webapi.Services
 
         public bool CheckForBookAvailability(string titleName)
         {
-            return bookDao.CheckIfTitleIsAvailable(titleName);
+            return bookDao.CheckIfTitleIsAvailable(titleName) && bookDao.CheckIfBookForGivenTitleIsAvailable(titleName);
         }
 
         public List<Book> GetBooksByGenre(string genreName)

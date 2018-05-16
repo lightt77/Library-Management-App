@@ -18,5 +18,6 @@ namespace webapi.Models
         public string Author { get; set; }
         public int Rating { get; set; }
         public int? Price { get; set; }
+        public int Quantity { get; set; }
     }
 }
