@@ -1,6 +1,6 @@
 angular.module('CatalogueModule').controller('CatalogueController', ['$scope', 'catalogueService', '$interval', 'AdminService', function ($scope, catalogueService, $interval, AdminService) {
 
-    var BOOK_LIST_INTERVAL_IN_SECONDS = 10;
+    var BOOK_LIST_INTERVAL_IN_SECONDS = 3;
 
     $scope.booksList = [];
     $scope.searchBookBy = 'Title';
@@ -56,11 +56,11 @@ angular.module('CatalogueModule').controller('CatalogueController', ['$scope', '
         catalogueService.makeBookIssueRequest({ "Title": bookName });
 
         // decrement quantity
-        for (var i in $scope.booksList) {
-            if (i.Title == bookName && i.Quantity != 0) {
-                i.Quantity--;
-            }
-        }
+        // for (var i in $scope.booksList) {
+        //     if (i.Title == bookName && i.Quantity != 0) {
+        //         i.Quantity--;
+        //     }
+        // }
     }
 
     $scope.addToWishList = function (bookName) {

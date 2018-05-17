@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web;
+using webapi.Models;
 
 namespace webapi.Dao
 {
@@ -33,6 +34,27 @@ namespace webapi.Dao
             };
 
             connectionDao.RunCUDStoredProc(storedProcedure, parameterDictionary);
+        }
+
+        public List<Book> GetWishlistEntriesForUser(string emailAddress)
+        {
+            string storedProcedure = "dbo.GetWishlistEntriesForUser";
+            var parameterDictionary = new Dictionary<string, object>
+            {
+                { "@email_address", emailAddress}
+            };
+
+            DataSet resultDataSet = connectionDao.RunRetrievalStoredProc(storedProcedure, parameterDictionary);
+
+            return resultDataSet.Tables[0].AsEnumerable().Select(
+                    (row) => {
+                        return new Book()
+                        {
+                            Author = (string)row["author"],
+                            Title = (string)row["title_name"],
+                        };
+                    }
+                ).ToList();
         }
 
         public bool CheckIfWishListEntryExists(string userName, string bookName)

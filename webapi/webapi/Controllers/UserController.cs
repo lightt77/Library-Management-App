@@ -5,6 +5,7 @@ using System.Net;
 using System.Web.Http.Cors;
 using webapi.Models;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace webapi.Controllers
 {
@@ -18,6 +19,24 @@ namespace webapi.Controllers
         //{
         //    userService.AddToWishList(userName, bookName);
         //}
+
+        [EnableCors(origins: "http://127.0.0.1:5500", headers: "*", methods: "*")]
+        [Route("user/wishlist")]
+        [HttpGet]
+        public List<Book> GetWishlistEntries()
+        {
+            string userEmailAddress;
+
+            if (Request.Headers.GetValues("EmailId").Count() == 0)
+            {
+                return new List<Book>();
+            }
+
+            userEmailAddress = Request.Headers.GetValues("EmailId").First();
+            
+            return userService.GetWishlistEntriesForUser(userEmailAddress);
+        }
+        
 
         [EnableCors(origins: "http://127.0.0.1:5500", headers: "*", methods: "*")]
         [Route("user/wishlist")]
