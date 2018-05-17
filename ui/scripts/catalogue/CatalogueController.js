@@ -1,6 +1,6 @@
-angular.module('CatalogueModule').controller('CatalogueController', ['$scope', 'catalogueService', '$interval', function ($scope, catalogueService, $interval) {
+angular.module('CatalogueModule').controller('CatalogueController', ['$scope', 'catalogueService', '$interval', 'AdminService', function ($scope, catalogueService, $interval, AdminService) {
 
-    var BOOK_LIST_INTERVAL_IN_SECONDS = 5;
+    var BOOK_LIST_INTERVAL_IN_SECONDS = 10;
 
     $scope.booksList = [];
     $scope.searchBookBy = 'Title';
@@ -36,7 +36,8 @@ angular.module('CatalogueModule').controller('CatalogueController', ['$scope', '
         catalogueService.getAllBooks().then(
             (response) => {
                 $scope.booksList = response.data;
-                //console.log(response.data);
+                //$scope.adminStatus=AdminService.checkAdminStatus();
+                //console.log($scope.adminStatus);
             },
             (error) => {
                 console.log(error);
@@ -48,10 +49,10 @@ angular.module('CatalogueModule').controller('CatalogueController', ['$scope', '
     getAllBooks();
 
     // periodically refresh books
-     $interval(getAllBooks, BOOK_LIST_INTERVAL_IN_SECONDS * 1000);
+    $interval(getAllBooks, BOOK_LIST_INTERVAL_IN_SECONDS * 1000);
 
     $scope.issueBook = function (bookName) {
-        console.log("issue book "+bookName);
+        console.log("issue book " + bookName);
         catalogueService.makeBookIssueRequest({ "Title": bookName });
 
         // decrement quantity
@@ -64,8 +65,13 @@ angular.module('CatalogueModule').controller('CatalogueController', ['$scope', '
 
     $scope.addToWishList = function (bookName) {
         console.log("Adding " + bookName + " to wishlist");
-        catalogueService.addToWishList({'Title':bookName});
+        catalogueService.addToWishList({ 'Title': bookName });
     };
+
+    // $scope.isUserAdmin = function () {
+    //     console.log(AdminService.checkAdminStatus());
+    //     return AdminService.checkAdminStatus();
+    // };
 
     // catalogueService.addBook(bookDetails).then(
     //     (response) => {

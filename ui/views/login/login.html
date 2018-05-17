@@ -1,4 +1,4 @@
-<div ng-controller="LoginController">
+<!-- <div ng-controller="LoginController">
     <div class="row">
         <div class="col-sm-6 col-sm-offset-3">
             <form name="LoginForm" ng-submit="login()" novalidate>
@@ -22,4 +22,49 @@
             </form>
         </div>
     </div>
-</div>
+</div> -->
+
+
+
+
+<html>
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="login.css">
+  <!--<script src="login.js"></script>-->
+</head>
+<body>
+  <div class="container" ng-controller="LoginController">
+       <div class="card card-container">
+          <!--<h3> Welcome to Library Management App</h3>-->
+           <!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> -->
+           <!--img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
+           <p id="profile-name" class="profile-name-card"></p>-->
+           <form class="form-signin" name="LoginForm" ng-submit="login()" novalidate>
+               <span id="reauth-email" class="reauth-email"></span>
+               <input class="form-control" name="emailAddress" type="email" id="inputEmail"  placeholder="Enter your Email" ng-model="loginDetails.EmailAddress" required autofocus>
+               <span style="color:red" ng-show="LoginForm.emailAddress.$dirty && LoginForm.emailAddress.$invalid">
+                 <span ng-show="LoginForm.emailAddress.$error.required">Email is required.</span>
+                 <span ng-show="LoginForm.emailAddress.$error.email">Invalid email address.</span>
+               </span>
+               <input class="form-control" name="password" type="password" id="inputPassword" placeholder="Password" ng-model="loginDetails.Password" required>
+               <span style="color:red" ng-show="LoginForm.password.$dirty && LoginForm.password.$invalid">
+                <span ng-show="LoginForm.password.$error.required">Password is required.</span>
+                </span>
+               <!-- <div id="remember" class="checkbox">
+                   <label>
+                       <input type="checkbox" value="remember-me"> Remember me
+                   </label>
+               </div> -->
+               <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit"  ng-disabled="LoginForm.emailAddress.$invalid ||
+                                                                           LoginForm.password.$invalid">Sign in</button>
+           </form>
+           <!-- <a href="#" class="forgot-password">
+               Forgot the password?
+           </a> -->
+       </div>
+   </div>
+</body>

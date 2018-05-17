@@ -52,6 +52,10 @@ app.controller("MainController", ['$scope', '$cookies', function ($scope, $cooki
     $scope.isUserLoggedIn = function () {
         return ($cookies.get('logged-in-email-id') != undefined);
     };
+
+    $scope.isUserAdmin=function(){
+        return ($cookies.get('admin-status')=="true");
+    }
 }]);
 
 

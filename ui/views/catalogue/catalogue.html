@@ -15,6 +15,13 @@
         <option value="Genre">Genre</option>
     </select>
 
+    <!-- <form class="form-inline my-2 my-lg-0"> -->
+        <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" ng-model="search.Title" ng-show="searchBookBy=='Title'">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" ng-model="search.Author" ng-show="searchBookBy=='Author'">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" ng-model="search.Genre" ng-show="searchBookBy=='Genre'"> -->
+        <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
+    <!-- </form> -->
+
     <br>
     <br>
 
@@ -31,7 +38,7 @@
                         </p>
                         <button class="btn btn-primary" ng-click="issueBook(book.Title)" ng-if="book.Quantity>0">Get this book</a>
                             <button class="btn btn-xs" ng-click="addToWishList(book.Title)" ng-if="book.Quantity==0">Add to wishlist</a>
-                        
+
                     </div>
                 </div>
             </div>
@@ -39,6 +46,10 @@
             <br>
             <br>
         </div>
+    </div>
+
+    <div ng-if='isUserAdmin()'>
+        <button>Add Book</button>
     </div>
 
 </div>

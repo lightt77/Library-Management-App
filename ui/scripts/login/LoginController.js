@@ -1,7 +1,9 @@
-loginModule.controller('LoginController', ['$scope', 'LoginService', '$window', '$cookies', function ($scope, LoginService, $window, $cookies) {
+loginModule.controller('LoginController', ['$scope', 'LoginService', '$window', '$cookies', 'AdminService', function ($scope, LoginService, $window, $cookies, AdminService) {
 
     $scope.logOut = function () {
         $cookies.remove('logged-in-email-id');
+        $cookies.remove('session-id');
+        $cookies.remove('admin-status');
 
         // clear notificaction list
         $scope.notificationsList = [];
@@ -25,11 +27,20 @@ loginModule.controller('LoginController', ['$scope', 'LoginService', '$window', 
                 // TODO: remove this when session functionality is complete
                 $cookies.put('logged-in-email-id', $scope.loginDetails.EmailAddress);
 
+                AdminService.checkIfUserIsAdmin().then(
+                    (response) => {
+                        $cookies.put('admin-status', response.data);
+                        //$scope.adminStatus = $cookies.get('admin-status');
+                    },
+                    (error) => {
+                        console.log(error);
+                    }
+                );
+
                 // redirect to catalogue page on successful login
                 $window.location.href = '#!/home/catalogue';
             },
             (error) => {
-                console.log("error");
                 console.log(error);
             }
         );
