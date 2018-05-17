@@ -40,6 +40,9 @@ app.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpPr
         .when('/home/admin', {
             templateUrl: 'views/admin/admin.html'
         })
+        .when('/home/addBookForm', {
+            templateUrl: 'views/catalogue/addBookForm.html'
+        })
         .otherwise({
             redirectTo: '/login'
         });

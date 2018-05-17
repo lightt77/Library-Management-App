@@ -1,17 +1,22 @@
 <div ng-controller="WishlistController">
-    <div ng-repeat='entry in wishlistRecords' class='container'>
 
-        <div class='row'>
-            <div class='col-sm-3'>
-                <div class='card' style='margin:10px'>
-                    <div class='card-body'>
-                        <h5 class="card-title" ng-model="selectedBookTitle">{{book.Title}}</h5>
-                        <p class="card-text">{{entry.Title}} by {{entry.Author}}</p>
-                        <button class='btn btn-primary' ng-click="returnBook(entry)">Return</button>
+    <div class="container">
+        <div class="row">
+            <div ng-repeat='entry in wishlistRecords'>
+
+
+                <div class='col-sm-12'>
+                    <div class='card' style='margin:10px'>
+                        <div class='card-body'>
+                            <h5 class="card-title" ng-model="selectedBookTitle">{{book.Title}}</h5>
+                            <p class="card-text">{{entry.Title}} by {{entry.Author}}</p>
+                            <button class='btn btn-primary' ng-click="returnBook(entry)">Return</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
+
+        </div>
     </div>
 </div>

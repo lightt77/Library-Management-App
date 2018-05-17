@@ -32,6 +32,11 @@ angular.module('CatalogueModule').controller('CatalogueController', ['$scope', '
         return output;
     };
 
+    $scope.routeToAddBooksForm = function(){
+        // redirect to add book form
+        //$window.location.href = '#!/home/addBookForm';
+    };
+
     getAllBooks = function () {
         catalogueService.getAllBooks().then(
             (response) => {
