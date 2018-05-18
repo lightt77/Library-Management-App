@@ -1,25 +1,26 @@
-<div>
-    <form name="AddBookForm" ng-submit="addBook(bookDetails)" ng-controller='CatalogueController' novalidate>
+<div ng-controller="CatalogueController">
+    <form name="AddBookForm" ng-submit="addNewBook(bookDetails)" ng-controller='CatalogueController' novalidate>
         <div class="form-group">
             <label for="Book Name">Book Name:</label>
-            <input class="form-control" type="text" placeholder="Enter Book Name" ng-model="bookDetails.bookName" ng-required="true">
+            <input class="form-control" type="text" name="title" placeholder="Enter Book Name" ng-model="bookDetails.Title" ng-required="true">
         </div>
         <div class="form-group">
             <label for="Author">Author:</label>
-            <input class="form-control" type="text" placeholder="Enter Author" ng-model="bookDetails.authorName" ng-required="true">
+            <input class="form-control" type="text" name="author" placeholder="Enter Author" ng-model="bookDetails.Author" ng-required="true">
         </div>
         <div class="form-group">
             <label for="Rating">Rating:</label>
-            <input class="form-control" type="text" placeholder="Enter Rating" ng-model="bookDetails.rating" ng-required="true">
+            <input class="form-control" type="number" name="rating" min="1" max="5" placeholder="Enter Rating" ng-model="bookDetails.Rating" ng-required="true">
         </div>
         <div class="form-group">
             <label for="Price">Price:</label>
-            <input class="form-control" type="text" placeholder="Enter Price" ng-model="bookDetails.price" ng-required="true">
+            <input class="form-control" type="number" name="price" placeholder="Enter Price" ng-model="bookDetails.Price" ng-required="true">
         </div>
         <div class="form-group">
             <label for="Genre">Genre:</label>
-            <input class="form-control" type="text" placeholder="Enter Genre" ng-model="bookDetails.genre" ng-required="true">
+            <input class="form-control" type="text" name="genre" placeholder="Enter Genre" ng-model="bookDetails.Genre" ng-required="true">
         </div>
-        <button type="button" class="btn btn-primary"> Add Book </button>
+        <button type="submit" class="btn btn-primary" ng-disabled="AddBookForm.title.$invalid ||
+        AddBookForm.author.$invalid || AddBookForm.rating.$invalid || AddBookForm.price.$invalid || AddBookForm.genre.$invalid"> Add Book </button>
     </form>
 </div>

@@ -1,24 +1,24 @@
-angular.module('RequestModule').controller('RequestController',['$scope','RequestService',function($scope,RequestService){
+angular.module('RequestModule').controller('RequestController', ['$scope', 'RequestService', function ( $scope, RequestService) {
     console.log("requests");
 
     // TODO: auto-refresh periodically
     RequestService.getPendingRequests()
         .then(
-            (response)=>{
+            (response) => {
                 console.log(response.data);
-                $scope.pendingRentalsList=response.data;
+                $scope.pendingRentalsList = response.data;
             },
-            (error)=>{
+            (error) => {
                 console.log(error);
             }
         );
-    
-    $scope.approve=function(rentalDetails){
+
+    $scope.approve = function (rentalDetails) {
         console.log(rentalDetails);
         RequestService.approve(rentalDetails);
     };
 
-    $scope.reject=function(rentalDetails){
+    $scope.reject = function (rentalDetails) {
         console.log(rentalDetails);
         RequestService.reject(rentalDetails);
     };

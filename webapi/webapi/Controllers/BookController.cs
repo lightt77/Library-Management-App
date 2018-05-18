@@ -38,6 +38,7 @@ namespace webapi.Controllers
             return bookService.GetBooksByAuthor(authorName);
         }
 
+        [EnableCors(origins: "http://127.0.0.1:5500", headers: "*", methods: "*")]
         [HttpPost]
         [Route("add")]
         public void AddBook([FromBody]Book book)
