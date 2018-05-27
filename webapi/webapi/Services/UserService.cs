@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using webapi.Dao;
+using webapi.Models;
 
 namespace webapi.Services
 {
@@ -10,6 +11,11 @@ namespace webapi.Services
     {
         private readonly UserDao userDao = new UserDao();
         private readonly BookDao bookDao = new BookDao();
+
+        public List<Book> GetWishlistEntriesForUser(string userEmailAddress)
+        {
+            return userDao.GetWishlistEntriesForUser(userEmailAddress);
+        }
 
         public void AddToWishList(string userName, string bookName)
         {

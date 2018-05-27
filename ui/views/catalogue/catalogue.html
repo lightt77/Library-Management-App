@@ -3,17 +3,30 @@
 
     <!-- <input style="margin: 10px;width: 400px; border-style: double; border-color: black; border-width: 1px" class="form-control"
         type="text" placeholder="Search" ng-model="search.Title" ng-show="searchBookBy=='Title'"> -->
-    <input type="text" placeholder="Search" ng-model="search.Title" ng-show="searchBookBy=='Title'">
-    <input type="text" placeholder="Search" ng-model="search.Author" ng-show="searchBookBy=='Author'">
-    <input type="text" placeholder="Search" ng-model="search.Genre" ng-show="searchBookBy=='Genre'">
 
-    <label>Search By:</label>
-    <select ng-model="searchBookBy" ng-change="clearSearchFields()" required>
-        <option value="" selected>Choose here</option>
-        <option value="Title">Title</option>
-        <option value="Author">Author</option>
-        <option value="Genre">Genre</option>
-    </select>
+    <div style="margin-top:10px;">
+        <input type="text" placeholder="Search" ng-model="search.Title" ng-show="searchBookBy=='Title'">
+        <input type="text" placeholder="Search" ng-model="search.Author" ng-show="searchBookBy=='Author'">
+        <input type="text" placeholder="Search" ng-model="search.Genre" ng-show="searchBookBy=='Genre'">
+
+        <label>Search By:</label>
+        <select ng-model="searchBookBy" ng-change="clearSearchFields()" required style="margin-left:10px;">
+            <option value="" selected>Choose here</option>
+            <option value="Title">Title</option>
+            <option value="Author">Author</option>
+            <option value="Genre">Genre</option>
+        </select>
+        <span style="margin-left:100px;">
+            <button class='btn btn-primary' ng-if='isUserAdmin()' ng-click="routeToAddBooksForm()">Add Book</button>
+        </span>
+    </div>
+
+    <!-- <form class="form-inline my-2 my-lg-0"> -->
+    <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" ng-model="search.Title" ng-show="searchBookBy=='Title'">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" ng-model="search.Author" ng-show="searchBookBy=='Author'">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" ng-model="search.Genre" ng-show="searchBookBy=='Genre'"> -->
+    <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
+    <!-- </form> -->
 
     <br>
     <br>
@@ -31,7 +44,7 @@
                         </p>
                         <button class="btn btn-primary" ng-click="issueBook(book.Title)" ng-if="book.Quantity>0">Get this book</a>
                             <button class="btn btn-xs" ng-click="addToWishList(book.Title)" ng-if="book.Quantity==0">Add to wishlist</a>
-                        
+
                     </div>
                 </div>
             </div>
@@ -40,5 +53,4 @@
             <br>
         </div>
     </div>
-
 </div>

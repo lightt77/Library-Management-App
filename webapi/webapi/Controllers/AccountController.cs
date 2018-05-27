@@ -7,6 +7,7 @@ using System.Web;
 using System.Net.Http.Headers;
 using System;
 using System.Web.SessionState;
+using System.Linq;
 
 namespace webapi.Controllers
 {
@@ -68,11 +69,6 @@ namespace webapi.Controllers
             };
         }
 
-        public void ProcessRequest(HttpContext context)
-        {
-            throw new NotImplementedException();
-        }
-
         [EnableCors(origins: "http://127.0.0.1:5500", headers: "*", methods: "*")]
         [Route("users/register")]
         [HttpPost]
@@ -84,5 +80,22 @@ namespace webapi.Controllers
             };
         }
 
+        [EnableCors(origins: "http://127.0.0.1:5500", headers: "*", methods: "*")]
+        [Route("users/admin")]
+        [HttpGet]
+        public bool CheckAdmin()
+        {
+            string userEmailAddress;
+
+            if (Request.Headers.GetValues("EmailId").Count() == 0)
+            {
+                return false;
+            }
+
+            userEmailAddress = Request.Headers.GetValues("EmailId").First();
+
+            return accountService.CheckIfGivenEmailIsOfAdmin(userEmailAddress);
+        }
+        
     }
 }

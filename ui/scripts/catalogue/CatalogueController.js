@@ -1,6 +1,6 @@
-angular.module('CatalogueModule').controller('CatalogueController', ['$scope', 'catalogueService', '$interval', function ($scope, catalogueService, $interval) {
+angular.module('CatalogueModule').controller('CatalogueController', ['$window', '$scope', 'catalogueService', '$interval', 'AdminService', function ($window, $scope, catalogueService, $interval, AdminService) {
 
-    var BOOK_LIST_INTERVAL_IN_SECONDS = 5;
+    var BOOK_LIST_INTERVAL_IN_SECONDS = 3;
 
     $scope.booksList = [];
     $scope.searchBookBy = 'Title';
@@ -32,11 +32,23 @@ angular.module('CatalogueModule').controller('CatalogueController', ['$scope', '
         return output;
     };
 
+    $scope.routeToAddBooksForm = function () {
+        // redirect to add book form
+        $window.location.href = '#!/home/addBookForm';
+    };
+
+    $scope.addNewBook = function () {
+        console.log($scope.bookDetails);
+        catalogueService.addBook($scope.bookDetails);
+        $window.location.href = "#!/home/catalogue";
+    };
+
     getAllBooks = function () {
         catalogueService.getAllBooks().then(
             (response) => {
                 $scope.booksList = response.data;
-                //console.log(response.data);
+                //$scope.adminStatus=AdminService.checkAdminStatus();
+                //console.log($scope.adminStatus);
             },
             (error) => {
                 console.log(error);
@@ -48,24 +60,29 @@ angular.module('CatalogueModule').controller('CatalogueController', ['$scope', '
     getAllBooks();
 
     // periodically refresh books
-     $interval(getAllBooks, BOOK_LIST_INTERVAL_IN_SECONDS * 1000);
+    $interval(getAllBooks, BOOK_LIST_INTERVAL_IN_SECONDS * 1000);
 
     $scope.issueBook = function (bookName) {
-        console.log("issue book "+bookName);
+        console.log("issue book " + bookName);
         catalogueService.makeBookIssueRequest({ "Title": bookName });
 
         // decrement quantity
-        for (var i in $scope.booksList) {
-            if (i.Title == bookName && i.Quantity != 0) {
-                i.Quantity--;
-            }
-        }
+        // for (var i in $scope.booksList) {
+        //     if (i.Title == bookName && i.Quantity != 0) {
+        //         i.Quantity--;
+        //     }
+        // }
     }
 
     $scope.addToWishList = function (bookName) {
         console.log("Adding " + bookName + " to wishlist");
-        catalogueService.addToWishList({'Title':bookName});
+        catalogueService.addToWishList({ 'Title': bookName });
     };
+
+    // $scope.isUserAdmin = function () {
+    //     console.log(AdminService.checkAdminStatus());
+    //     return AdminService.checkAdminStatus();
+    // };
 
     // catalogueService.addBook(bookDetails).then(
     //     (response) => {

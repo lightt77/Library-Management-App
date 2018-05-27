@@ -1,4 +1,5 @@
-angular.module('LoginModule').service('LoginService', ['$http', function ($http) {
+angular.module('LoginModule').service('LoginService', ['$http', '$cookies', function ($http, $cookies) {
+
 
     var DOMAIN_NAME = 'http://localhost:59684/';
     var LOGIN = 'users/login';
@@ -8,6 +9,9 @@ angular.module('LoginModule').service('LoginService', ['$http', function ($http)
     };
 
     this.login = function (loginDetails) {
+        // send email-id with the request-header
+        $http.defaults.headers.common.EmailId = $cookies.get('logged-in-email-id');
+
         console.log(JSON.stringify(loginDetails));
 
         return $http.post(DOMAIN_NAME + LOGIN, JSON.stringify(loginDetails));

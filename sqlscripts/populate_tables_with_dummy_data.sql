@@ -66,19 +66,25 @@ INSERT INTO dbo.users (role_id,user_name,email_address,password,mobile_number,cr
 VALUES (3,'reserved slot 10','reservedslot10@acc.com','World','897651234',SYSDATETIME(),SYSDATETIME());
 
 INSERT INTO dbo.users (role_id,user_name,email_address,password,mobile_number,created_on,last_updated)
-VALUES (1,'Abhishek','abhishek@acc.com','HelloWorld','897651234',SYSDATETIME(),SYSDATETIME());
+VALUES (1,'Abhishek','abhishek@acc.com','abc','897651234',SYSDATETIME(),SYSDATETIME());
 
 INSERT INTO dbo.users (role_id,user_name,email_address,password,mobile_number,created_on,last_updated)
-VALUES (1,'Karthik','karthik@acc.com','HelloWorld','897656764',SYSDATETIME(),SYSDATETIME());
+VALUES (1,'Karthik','karthik@acc.com','abc','897656764',SYSDATETIME(),SYSDATETIME());
 
 INSERT INTO dbo.users (role_id,user_name,email_address,password,mobile_number,created_on,last_updated)
-VALUES (2,'user1','admin1@acc.com','HelloWorld','897656764',SYSDATETIME(),SYSDATETIME());
+VALUES (2,'user1','user1@acc.com','abc','897656764',SYSDATETIME(),SYSDATETIME());
 
 INSERT INTO dbo.users (role_id,user_name,email_address,password,mobile_number,created_on,last_updated)
-VALUES (1,'admin1','user1@acc.com','HelloWorld','897656764',SYSDATETIME(),SYSDATETIME());
+VALUES (1,'admin1','admin1@acc.com','abc','897656764',SYSDATETIME(),SYSDATETIME());
 
 INSERT INTO dbo.users (role_id,user_name,email_address,password,mobile_number,created_on,last_updated)
-VALUES (3,'useradmin1','adminuser1@acc.com','HelloWorld','897656764',SYSDATETIME(),SYSDATETIME());
+VALUES (3,'useradmin1','useradmin1@acc.com','abc','897656764',SYSDATETIME(),SYSDATETIME());
+
+INSERT INTO dbo.users (role_id,user_name,email_address,password,mobile_number,created_on,last_updated)
+VALUES (2,'newuser1','newuser1@acc.com','abc','897656764',SYSDATETIME(),SYSDATETIME());
+
+INSERT INTO dbo.users (role_id,user_name,email_address,password,mobile_number,created_on,last_updated)
+VALUES (1,'newadmin1','newadmin1@acc.com','abc','897656764',SYSDATETIME(),SYSDATETIME());
 
 SELECT * from dbo.users;
 
@@ -99,6 +105,8 @@ INSERT INTO dbo.genre(genre_name, created_on,last_updated)
 VALUES ('Horror',SYSDATETIME(),SYSDATETIME());
 INSERT INTO dbo.genre(genre_name,created_on,last_updated)
 VALUES ('Fantasy',SYSDATETIME(),SYSDATETIME());
+INSERT INTO dbo.genre(genre_name,created_on,last_updated)
+VALUES ('General',SYSDATETIME(),SYSDATETIME());
 
 SELECT * from dbo.genre;
 
@@ -110,15 +118,19 @@ INSERT INTO dbo.title_genre_map(title_id, genre_id,created_on,last_updated)
 VALUES (2,2,SYSDATETIME(),SYSDATETIME());
 INSERT INTO dbo.title_genre_map(title_id, genre_id,created_on,last_updated)
 VALUES (2,1,SYSDATETIME(),SYSDATETIME());
+INSERT INTO dbo.title_genre_map(title_id, genre_id,created_on,last_updated)
+VALUES (3,2,SYSDATETIME(),SYSDATETIME());
+INSERT INTO dbo.title_genre_map(title_id, genre_id,created_on,last_updated)
+VALUES (4,3,SYSDATETIME(),SYSDATETIME());
 
 SELECT * FROM dbo.title_genre_map;
 
 ---------------------------------------------------------------------------------------------
 
 INSERT INTO dbo.rental(user_id, book_id,issue_date,return_date,rental_status,created_on,last_updated)
-VALUES (11,2,SYSDATETIME(),SYSDATETIME(),0,SYSDATETIME(),SYSDATETIME());
+VALUES (11,2,DATEADD(DAY,-15,SYSDATETIME()), SYSDATETIME(),2,SYSDATETIME(),SYSDATETIME());
 INSERT INTO dbo.rental(user_id, book_id,issue_date,return_date,rental_status,created_on,last_updated)
-VALUES (12,1,SYSDATETIME(),SYSDATETIME(),0,SYSDATETIME(),SYSDATETIME());
+VALUES (12,1,DATEADD(DAY,-15,SYSDATETIME()), SYSDATETIME(),2,SYSDATETIME(),SYSDATETIME());
 
 SELECT * FROM dbo.rental;
 

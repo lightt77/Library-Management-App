@@ -7,7 +7,8 @@ var app = angular.module("App", ['ngRoute', 'ngCookies',
     'NotificationModule',
     'AdminModule',
     'BookShelfModule',
-    'RequestModule'
+    'RequestModule',
+    'WishlistModule'
 ]);
 
 app.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpProvider) {
@@ -39,6 +40,9 @@ app.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpPr
         .when('/home/admin', {
             templateUrl: 'views/admin/admin.html'
         })
+        .when('/home/addBookForm', {
+            templateUrl: 'views/catalogue/addBookForm.html'
+        })
         .otherwise({
             redirectTo: '/login'
         });
@@ -51,6 +55,14 @@ app.controller("MainController", ['$scope', '$cookies', function ($scope, $cooki
 
     $scope.isUserLoggedIn = function () {
         return ($cookies.get('logged-in-email-id') != undefined);
+    };
+
+    $scope.isUserAdmin = function () {
+        return ($cookies.get('admin-status') == "true");
+    };
+
+    $scope.getCurrentUserEmailId = function () {
+        return ($cookies.get('logged-in-email-id')).split('@')[0];
     };
 }]);
 

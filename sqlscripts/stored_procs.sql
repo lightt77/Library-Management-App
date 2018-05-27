@@ -640,7 +640,7 @@ BEGIN
 		join dbo.users on dbo.rental.user_id=dbo.users.user_id
 		join dbo.book on dbo.rental.book_id=dbo.book.book_id
 		join dbo.title on dbo.title.title_id=dbo.book.title_id
-		where dbo.users.email_address=@user_email_address;
+		where dbo.users.email_address=@user_email_address AND dbo.rental.rental_status=2;
 END
 
 EXEC dbo.GetBooksWithUser @user_email_address='abhishek@acc.com';
@@ -704,3 +704,18 @@ BEGIN
 END
 
 EXEC dbo.CheckIfBookIsAvailable @title_name='title12';
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE OR ALTER PROCEDURE dbo.GetWishlistEntriesForUser(@email_address VARCHAR(50))
+AS
+BEGIN
+	DECLARE @user_id INT;
+	SET @user_id=(Select user_id from dbo.users where dbo.users.email_address=@email_address);
+
+	Select title_name,author from dbo.wishlist
+		join dbo.title on dbo.title.title_id=dbo.wishlist.title_id
+		where user_id=@user_id;  
+END
+
+EXEC dbo.GetWishlistEntriesForUser @email_address='user1@acc.com';
