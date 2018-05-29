@@ -36,7 +36,7 @@ angular.module('CatalogueModule').service('catalogueService', ['$http', '$cookie
     }
 
     this.addToWishList = function (bookDetails) {
-        console.log(bookDetails);
+        // console.log(bookDetails);
         return $http.post(DOMAIN_NAME + ADD_TO_WISHLIST, JSON.stringify(bookDetails));
     };
 

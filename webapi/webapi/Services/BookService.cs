@@ -81,5 +81,10 @@ namespace webapi.Services
         {
             return bookDao.GetBooksWithUser(emailAddress);
         }
+
+        public void ReturnBook(Book book, string userEmailAddress)
+        {
+            bookDao.ReturnBookForUser(userEmailAddress, book.Title);
+        }
     }
 }

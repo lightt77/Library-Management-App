@@ -245,15 +245,28 @@ namespace webapi.Dao
             DataSet resultDataSet = connectionDao.RunRetrievalStoredProc(storedProcedure, parameterDictionary);
 
             return resultDataSet.Tables[0].AsEnumerable().Select(
-                    (row) => {
+                    (row) =>
+                    {
                         return new Book()
                         {
-                            Author=(string)row["author"],
-                            Title=(string)row["title_name"],
+                            Author = (string)row["author"],
+                            Title = (string)row["title_name"],
                         };
                     }
                 ).ToList();
 
+        }
+
+        public void ReturnBookForUser(string userEmailAddress, string bookName)
+        {
+            string storedProcedure = "dbo.ReturnBook";
+            var parameterDictionary = new Dictionary<string, object>
+            {
+                { "@user_email_address", userEmailAddress },
+                { "@book_name", bookName }
+            };
+
+            connectionDao.RunCUDStoredProc(storedProcedure, parameterDictionary);
         }
     }
 }

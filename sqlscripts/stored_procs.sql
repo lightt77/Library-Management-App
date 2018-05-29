@@ -719,3 +719,39 @@ BEGIN
 END
 
 EXEC dbo.GetWishlistEntriesForUser @email_address='user1@acc.com';
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE OR ALTER PROCEDURE dbo.ReturnBook(@user_email_address VARCHAR(50), @book_name VARCHAR(50))
+AS
+BEGIN
+	DECLARE @user_id INT;
+	SET @user_id=(Select user_id from dbo.users where dbo.users.email_address=@user_email_address);
+
+	DECLARE @target_rental_id INT;
+	DECLARE @target_book_id INT;
+
+	-- fetch rental id of the rental which matches the user and the book 
+	SET @target_rental_id = (Select TOP(1) rental_id from dbo.rental
+								join dbo.book on rental.book_id=book.book_id
+								join dbo.title on book.title_id=title.title_id
+								where dbo.rental.user_id=@user_id AND title.title_name=@book_name AND rental_status=2);
+
+	-- update its rental status to returned
+	UPDATE dbo.rental
+		SET dbo.rental.rental_status=3 where rental_id=@target_rental_id;
+
+	SET @target_book_id=(Select book_id from dbo.rental where dbo.rental.rental_id=@target_rental_id);
+
+	-- update availability status of the returned book
+	UPDATE dbo.book
+		SET dbo.book.availability_status=1 where book_id=@target_book_id;
+
+	-- update quantity of the returned book title
+	UPDATE dbo.title
+		SET dbo.title.quantity = (Select Count(*) from dbo.title join dbo.book on title.title_id=book.title_id
+										where dbo.book.book_id=@target_book_id);
+END
+
+EXEC dbo.ReturnBook @user_email_address='user1@acc.com', @book_name='title4';
+	

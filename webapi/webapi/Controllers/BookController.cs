@@ -73,7 +73,7 @@ namespace webapi.Controllers
                 // return empty list
                 return new List<Book>();
             }
-            
+
             userEmailAddress = Request.Headers.GetValues("EmailId").First();
 
             return bookService.GetBooksWithUser(userEmailAddress);
@@ -111,6 +111,31 @@ namespace webapi.Controllers
 
             // add rental with status unapproved
             rentalService.AddRental(book.Title, userName, null);
+
+            return new HttpResponseMessage()
+            {
+                StatusCode = HttpStatusCode.Accepted
+            };
+        }
+
+        [EnableCors(origins: "http://127.0.0.1:5500", headers: "*", methods: "*")]
+        [Route("return")]
+        [HttpPost]
+        public HttpResponseMessage AddToWishList([FromBody]Book book)
+        {
+            string userEmailAddress;
+
+            if (Request.Headers.GetValues("EmailId").Count() == 0)
+            {
+                return new HttpResponseMessage()
+                {
+                    StatusCode = HttpStatusCode.BadRequest
+                };
+            }
+
+            userEmailAddress = Request.Headers.GetValues("EmailId").First();
+
+            bookService.ReturnBook(book, userEmailAddress);
 
             return new HttpResponseMessage()
             {
