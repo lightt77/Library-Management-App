@@ -100,6 +100,11 @@ VALUES (3,SYSDATETIME(),SYSDATETIME());
 SELECT * from dbo.book;
 
 --------------------------------------------------------------------------------------------
+-- synchronise quantity in title table with actual quantity of he books
+UPDATE dbo.title
+	SET dbo.title.quantity=(SELECT Count(*) FROM dbo.book WHERE title.title_id=book.title_id);
+
+--------------------------------------------------------------------------------------------
 
 INSERT INTO dbo.genre(genre_name, created_on,last_updated)
 VALUES ('Horror',SYSDATETIME(),SYSDATETIME());
@@ -127,21 +132,21 @@ SELECT * FROM dbo.title_genre_map;
 
 ---------------------------------------------------------------------------------------------
 
-INSERT INTO dbo.rental(user_id, book_id,issue_date,return_date,rental_status,created_on,last_updated)
-VALUES (11,2,DATEADD(DAY,-15,SYSDATETIME()), SYSDATETIME(),2,SYSDATETIME(),SYSDATETIME());
-INSERT INTO dbo.rental(user_id, book_id,issue_date,return_date,rental_status,created_on,last_updated)
-VALUES (12,1,DATEADD(DAY,-15,SYSDATETIME()), SYSDATETIME(),2,SYSDATETIME(),SYSDATETIME());
+-- INSERT INTO dbo.rental(user_id, book_id,issue_date,return_date,rental_status,created_on,last_updated)
+-- VALUES (11,2,DATEADD(DAY,-15,SYSDATETIME()), SYSDATETIME(),2,SYSDATETIME(),SYSDATETIME());
+-- INSERT INTO dbo.rental(user_id, book_id,issue_date,return_date,rental_status,created_on,last_updated)
+-- VALUES (12,1,DATEADD(DAY,-15,SYSDATETIME()), SYSDATETIME(),2,SYSDATETIME(),SYSDATETIME());
 
-SELECT * FROM dbo.rental;
+-- SELECT * FROM dbo.rental;
 
 ---------------------------------------------------------------------------------------------
 
-INSERT INTO dbo.wishlist(user_id, title_id, created_on, last_updated)
-VALUES (12,3,SYSDATETIME(),SYSDATETIME());
-INSERT INTO dbo.wishlist(user_id, title_id, created_on, last_updated)
-VALUES (11,4,SYSDATETIME(),SYSDATETIME());
+-- INSERT INTO dbo.wishlist(user_id, title_id, created_on, last_updated)
+-- VALUES (12,3,SYSDATETIME(),SYSDATETIME());
+-- INSERT INTO dbo.wishlist(user_id, title_id, created_on, last_updated)
+-- VALUES (11,4,SYSDATETIME(),SYSDATETIME());
 
-select * from dbo.wishlist; 
+-- select * from dbo.wishlist; 
 
 ---------------------------------------------------------------------------------------------
 
