@@ -8,6 +8,7 @@ using System.Net.Http.Headers;
 using System;
 using System.Web.SessionState;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace webapi.Controllers
 {
@@ -37,7 +38,13 @@ namespace webapi.Controllers
                 //    throw new Exception("Session is null");
 
                 //HttpContext.Current.Session[HttpContext.Current.Session.SessionID] = user;
-                HttpContext.Current.Session.Add(HttpContext.Current.Session.SessionID, user);
+                HttpContext.Current.Session.Add(HttpContext.Current.Session.SessionID, new Dictionary<string, object>());
+                var data= (Dictionary<string, object>)HttpContext.Current.Session[HttpContext.Current.Session.SessionID];
+
+                data.Add("user", user);
+                data.Add("name", "Abhishek");
+
+                //HttpContext.Current.Session.Add(HttpContext.Current.Session.SessionID, "Abhishek");
 
                 var savedUser = HttpContext.Current.Session[HttpContext.Current.Session.SessionID];
                 // add a cookie to the response with email address of the user

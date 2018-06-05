@@ -6,6 +6,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using System.Web.SessionState;
 using webapi.Services;
 
 namespace webapi
@@ -19,7 +20,13 @@ namespace webapi
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            
             CronService.ScheduleJobs();
+        }
+
+        protected void Session_Start(Object sender, EventArgs e)
+        {
+            Session["Hello"] = "Wordl";
         }
 
         protected void Application_PostAuthorizeRequest()

@@ -17,7 +17,17 @@ app.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpPr
             templateUrl: 'views/home.html',
         })
         .when('/login', {
-            templateUrl: 'views/login/login.html'
+            templateUrl: 'views/login/login.html',
+            //resolve trial
+            resolve:{
+                app:function($q){
+                    var defer=$q.defer();
+                    //console.log($scope.isUserLoggedIn());
+                    if(true)
+                        defer.resolve();
+                    return defer.promise;
+                }
+            }
         })
         .when('/register', {
             templateUrl: 'views/register/register.html'
@@ -47,6 +57,10 @@ app.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpPr
             redirectTo: '/login'
         });
 
+        var foo=function(){
+            //console.log("foo called");
+            return false;
+        }
     //$httpProvider.defaults.headers.common = { 'SessionId' : $cookies.get('session-id') };
 }]);
 

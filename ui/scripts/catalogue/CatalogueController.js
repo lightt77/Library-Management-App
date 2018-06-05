@@ -44,6 +44,7 @@ angular.module('CatalogueModule').controller('CatalogueController', ['$window', 
     };
 
     getAllBooks = function () {
+        console.log("getAllBooks() called");
         catalogueService.getAllBooks().then(
             (response) => {
                 $scope.booksList = response.data;

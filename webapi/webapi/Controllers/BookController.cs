@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using webapi.Models;
@@ -21,6 +22,8 @@ namespace webapi.Controllers
         [HttpGet]
         public List<Book> GetAllBooks()
         {
+            var data = (Dictionary<string, object>)HttpContext.Current.Session[HttpContext.Current.Session.SessionID];
+
             return bookService.GetAllBooks();
         }
 
