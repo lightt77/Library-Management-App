@@ -748,9 +748,8 @@ BEGIN
 		SET dbo.book.availability_status=1 where book_id=@target_book_id;
 
 	-- update quantity of the returned book title
-	UPDATE dbo.title
-		SET dbo.title.quantity = (Select Count(*) from dbo.title join dbo.book on title.title_id=book.title_id
-										where dbo.book.book_id=@target_book_id);
+	update dbo.title
+	set dbo.title.quantity=(Select Count(*) from dbo.book where dbo.title.title_id=dbo.book.title_id);
 END
 
 EXEC dbo.ReturnBook @user_email_address='user1@acc.com', @book_name='title4';
