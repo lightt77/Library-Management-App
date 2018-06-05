@@ -19,48 +19,116 @@ app.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpPr
         .when('/login', {
             templateUrl: 'views/login/login.html',
             //resolve trial
-            resolve:{
-                app:function($q){
-                    var defer=$q.defer();
-                    //console.log($scope.isUserLoggedIn());
-                    if(true)
+            resolve: {
+                app: function ($q) {
+                    var defer = $q.defer();
+                    if (!isLoggedIn())
                         defer.resolve();
                     return defer.promise;
                 }
             }
         })
         .when('/register', {
-            templateUrl: 'views/register/register.html'
+            templateUrl: 'views/register/register.html',
+            resolve: {
+                app: function ($q) {
+                    var defer = $q.defer();
+                    if (!isLoggedIn())
+                        defer.resolve();
+                    return defer.promise;
+                }
+            }
         })
         .when('/home/catalogue', {
-            templateUrl: 'views/catalogue/catalogue.html'
+            templateUrl: 'views/catalogue/catalogue.html',
+            resolve: {
+                app: function ($q) {
+                    var defer = $q.defer();
+                    if (isLoggedIn())
+                        defer.resolve();
+                    return defer.promise;
+                }
+            }
         })
         .when('/home/bookshelf', {
-            templateUrl: 'views/bookshelf/bookshelf.html'
+            templateUrl: 'views/bookshelf/bookshelf.html',
+            resolve: {
+                app: function ($q) {
+                    var defer = $q.defer();
+                    if (isLoggedIn())
+                        defer.resolve();
+                    return defer.promise;
+                }
+            }
         })
         .when('/home/wishlist', {
-            templateUrl: 'views/wishlist/wishlist.html'
+            templateUrl: 'views/wishlist/wishlist.html',
+            resolve: {
+                app: function ($q) {
+                    var defer = $q.defer();
+                    if (isLoggedIn())
+                        defer.resolve();
+                    return defer.promise;
+                }
+            }
         })
         .when('/home/requests', {
-            templateUrl: 'views/requests/requests.html'
+            templateUrl: 'views/requests/requests.html',
+            resolve: {
+                app: function ($q) {
+                    var defer = $q.defer();
+                    if (isLoggedIn())
+                        defer.resolve();
+                    return defer.promise;
+                }
+            }
         })
         .when('/home/notifications', {
-            templateUrl: 'views/notifications/notifications.html'
+            templateUrl: 'views/notifications/notifications.html',
+            resolve: {
+                app: function ($q) {
+                    var defer = $q.defer();
+                    if (isLoggedIn())
+                        defer.resolve();
+                    return defer.promise;
+                }
+            }
         })
         .when('/home/admin', {
-            templateUrl: 'views/admin/admin.html'
+            templateUrl: 'views/admin/admin.html',
+            resolve: {
+                app: function ($q) {
+                    var defer = $q.defer();
+                    if (isLoggedIn())
+                        defer.resolve();
+                    return defer.promise;
+                }
+            }
         })
         .when('/home/addBookForm', {
-            templateUrl: 'views/catalogue/addBookForm.html'
+            templateUrl: 'views/catalogue/addBookForm.html',
+            resolve: {
+                app: function ($q) {
+                    var defer = $q.defer();
+                    if (isLoggedIn())
+                        defer.resolve();
+                    return defer.promise;
+                }
+            }
         })
         .otherwise({
             redirectTo: '/login'
         });
 
-        var foo=function(){
-            //console.log("foo called");
-            return false;
+    var isLoggedIn = function () {
+        console.log("our cookies are " + document.cookie);
+
+        if (document.cookie.indexOf("logged-in-email-id") >= 0) {
+            return true;
         }
+
+        return false;
+    }
     //$httpProvider.defaults.headers.common = { 'SessionId' : $cookies.get('session-id') };
 }]);
 
