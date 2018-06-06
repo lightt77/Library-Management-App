@@ -7,6 +7,16 @@ angular.module('BookShelfModule').controller('BookShelfController', ['$scope', '
 
     $scope.returnBook = function (bookDetails) {
         console.log(bookDetails);
+
+        BookShelfService.returnBook(bookDetails)
+            .then(
+                (response) => {
+                    console.log(response);
+                },
+                (error) => {
+                    console.log(error);
+                }
+            )
     };
 
     BookShelfService.getAllBooksForCurrentUser()
