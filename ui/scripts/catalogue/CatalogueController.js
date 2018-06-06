@@ -38,6 +38,9 @@ angular.module('CatalogueModule').controller('CatalogueController', ['$window', 
     };
 
     $scope.addNewBook = function () {
+        // parse genres from the comma-seperated list into genre array
+        $scope.bookDetails.Genre=$scope.commaSeperatedGenresList.split(",");
+
         console.log($scope.bookDetails);
         catalogueService.addBook($scope.bookDetails);
         $window.location.href = "#!/home/catalogue";
